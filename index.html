@@ -1,40 +1,3056 @@
-html примерно с таким кодом
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
-    <title>Список задач</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD — Сервисы</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fb 0%, #e8ecf4 50%, #dce2ec 100%);
+            color: #1a1a1e;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .auth-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1e 0%, #2d2d35 100%);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(184, 150, 46, 0.05) 0%, transparent 70%);
+            animation: rotateBg 20s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .auth-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-box .logo {
+            font-size: 2.8rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-box .logo span {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 400;
+        }
+
+        .auth-box .subtitle {
+            text-align: center;
+            color: #8b97a8;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-radius: 60px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .auth-tabs button {
+            flex: 1;
+            padding: 0.7rem;
+            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #8b97a8;
+        }
+
+        .auth-tabs button.active {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            box-shadow: 0 4px 15px rgba(184, 150, 46, 0.2);
+        }
+
+        .auth-tabs button:hover:not(.active) {
+            background: #f0f2f5;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.06);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 4px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #2d3748;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #b8962e;
+            cursor: pointer;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-auth:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+
+        .auth-error {
+            color: #a14f4f;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .auth-error.show {
+            display: block;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #b8962e;
+            cursor: pointer;
+        }
+
+        .remember-me label {
+            font-size: 0.9rem;
+            color: #4b5563;
+            cursor: pointer;
+        }
+
+        .check-user-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 14, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .check-user-overlay.active {
+            display: flex;
+        }
+
+        .check-user-box {
+            background: white;
+            border-radius: 30px;
+            padding: 2.5rem 3rem;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .check-user-box .avatar-big {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+
+        .check-user-box h2 {
+            font-weight: 300;
+            color: #1a1a1e;
+            margin-bottom: 0.3rem;
+        }
+
+        .check-user-box .user-email {
+            color: #8b97a8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .check-user-box .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .check-user-box .btn-group button {
+            padding: 0.6rem 2rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .check-user-box .btn-yes {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            box-shadow: 0 4px 15px rgba(184, 150, 46, 0.3);
+        }
+
+        .check-user-box .btn-yes:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(184, 150, 46, 0.4);
+        }
+
+        .check-user-box .btn-no {
+            background: #e2e8f0;
+            color: #4b5563;
+        }
+
+        .check-user-box .btn-no:hover {
+            background: #a14f4f;
+            color: white;
+        }
+
+        .main-page {
+            display: none;
+        }
+
+        .main-page.active {
+            display: block;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 2px solid #d4af37;
+            margin-bottom: 2rem;
+        }
+
+        .main-header .logo {
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .main-header .logo span {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 400;
+        }
+
+        .main-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .main-header .user-info .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(184, 150, 46, 0.3);
+        }
+
+        .main-header .user-name {
+            font-weight: 500;
+        }
+
+        .main-header .user-role {
+            font-size: 0.7rem;
+            color: #8b97a8;
+            background: #f0f2f5;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+        }
+
+        .btn-logout {
+            padding: 0.4rem 1.2rem;
+            border: 1px solid #e5b3b3;
+            border-radius: 60px;
+            background: none;
+            color: #a14f4f;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .btn-logout:hover {
+            background: #a14f4f;
+            color: white;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+        }
+
+        .section-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(184, 150, 46, 0.15);
+            border-color: #d4af37;
+        }
+
+        .section-card .section-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+        }
+
+        .section-card .section-info {
+            padding: 1.5rem;
+        }
+
+        .section-card .section-info h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .section-card .section-info p {
+            color: #8b97a8;
+            font-size: 0.9rem;
+        }
+
+        .section-card .section-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            background: #b8962e;
+            color: white;
+            margin-top: 0.5rem;
+        }
+
+        .panels-container {
+            display: none;
+        }
+
+        .panels-container.active {
+            display: block;
+        }
+
+        .service-panel {
+            display: none;
+        }
+
+        .service-panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .panel-header h2 {
+            font-size: 1.6rem;
+            font-weight: 300;
+            border-left: 4px solid #d4af37;
+            padding-left: 1rem;
+        }
+
+        .btn-back {
+            padding: 0.4rem 1.2rem;
+            border: 1px solid #d0d7e2;
+            border-radius: 60px;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        .btn-back:hover {
+            border-color: #b8962e;
+            color: #b8962e;
+        }
+
+        .btn {
+            padding: 0.5rem 1.8rem;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+
+        .btn-sm {
+            padding: 0.25rem 1rem;
+            font-size: 0.75rem;
+            border-radius: 40px;
+            border: 1px solid #d0d7e2;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: #4b5563;
+        }
+
+        .btn-sm:hover {
+            border-color: #b8962e;
+            color: #b8962e;
+            transform: translateY(-2px);
+        }
+
+        .btn-sm.gold {
+            border-color: #d4af37;
+            color: #b8962e;
+        }
+
+        .btn-sm.gold:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+        }
+
+        .btn-sm.danger {
+            border-color: #e5b3b3;
+            color: #a14f4f;
+        }
+
+        .btn-sm.danger:hover {
+            background: #a14f4f;
+            color: white;
+        }
+
+        .btn-sm.green {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .btn-sm.green:hover {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-sm.purple {
+            border-color: #8e44ad;
+            color: #8e44ad;
+        }
+
+        .btn-sm.purple:hover {
+            background: #8e44ad;
+            color: white;
+        }
+
+        .btn-sm.blue {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .btn-sm.blue:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.3rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 12px 40px rgba(184, 150, 46, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .card-id {
+            font-size: 0.75rem;
+            color: #8b97a8;
+            font-weight: 500;
+        }
+
+        .card-status {
+            font-size: 0.7rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        .card-detail {
+            font-size: 0.9rem;
+            margin: 2px 0;
+        }
+
+        .card-actions {
+            margin-top: 0.6rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .empty-state {
+            color: #8b97a8;
+            text-align: center;
+            padding: 2.5rem 0;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            border: 1px dashed #dce2ec;
+            font-size: 0.95rem;
+        }
+
+        .status-new {
+            background: #e6f0ff;
+            color: #1a4f8b;
+        }
+
+        .status-processing {
+            background: #fff4e0;
+            color: #a86f1a;
+        }
+
+        .status-done {
+            background: #e6f7ed;
+            color: #0f6e4a;
+        }
+
+        .status-cancelled {
+            background: #fde8e8;
+            color: #a14f4f;
+        }
+
+        .status-active {
+            background: #e6f7ed;
+            color: #0f6e4a;
+        }
+
+        .status-closed {
+            background: #f0f0f0;
+            color: #5b5b5b;
+        }
+
+        .status-accepted {
+            background: #e6f7ed;
+            color: #0f6e4a;
+        }
+
+        .status-rejected {
+            background: #fde8e8;
+            color: #a14f4f;
+        }
+
+        .status-pending {
+            background: #fff4e0;
+            color: #a86f1a;
+        }
+
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-denied {
+            background: #fde8e8;
+            color: #991b1b;
+        }
+
+        .badge {
+            background: #a14f4f;
+            color: white;
+            border-radius: 30px;
+            padding: 0.05rem 0.5rem;
+            font-size: 0.6rem;
+            margin-left: 4px;
+        }
+
+        .badge.gold {
+            background: #b8962e;
+        }
+
+        .modal {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
             max-width: 700px;
-            margin: 40px auto;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
         }
 
-        h1 {
-            color: #2563eb;
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 14, 0.4);
+            backdrop-filter: blur(3px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 1rem;
         }
 
-        li {
-            margin: 8px 0;
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #a0aaba;
+            background: none;
+            border: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-submit:disabled:hover {
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.06);
+        }
+
+        .search-box button {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-box button:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-2px);
+        }
+
+        .user-detail-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .sort-select {
+            padding: 0.4rem 1rem;
+            border: 1px solid #d0d7e2;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(26, 26, 30, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1000;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .history-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .history-filter select,
+        .history-filter input {
+            padding: 0.4rem 1rem;
+            border: 1px solid #d0d7e2;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .auth-box {
+                padding: 1.5rem;
+            }
+
+            .modal {
+                padding: 1.2rem;
+            }
+
+            .sections-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .check-user-box {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>!!!!!!Мои задачи</h1>
-    <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae, aspernatur, cum dignissimos laboriosam
-        accusamus quaerat magni nam repudiandae nulla at dolorum voluptatem officia vel soluta hic earum ab omnis
-        quisquam.</h1>
-    <ul>
-        <li>✅ Сделать чай </li>
-        <li>✅ Сходить в магазин</li>
-        <li>✅ Помыть посуду</li>
-    </ul>
-    <section>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Numquam totam dolorum, labore dolores dignissimos
-        nihil necessitatibus soluta iste temporibus. Laboriosam amet exercitationem perspiciatis tempora doloremque
-        harum non maiores veritatis voluptates.</section>
+
+    <!-- СТРАНИЦА АВТОРИЗАЦИИ -->
+    <div id="authPage" class="auth-page">
+        <div class="auth-box">
+            <div class="logo">ad.<span>сервисы</span></div>
+            <div class="subtitle">Войдите или создайте аккаунт</div>
+
+            <div class="auth-tabs">
+                <button class="active" data-tab="login">Вход</button>
+                <button data-tab="register">Регистрация</button>
+            </div>
+
+            <div id="formLogin" class="auth-form active">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="ivan@mail.ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required>
+                    </div>
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Запомнить меня на этом устройстве</label>
+                    </div>
+                    <div id="loginError" class="auth-error"></div>
+                    <button type="submit" class="btn-auth">Войти</button>
+                </form>
+            </div>
+
+            <div id="formRegister" class="auth-form">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label>ФИО</label>
+                        <input type="text" id="regFio" placeholder="Иванов Иван Иванович" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="ivan@mail.ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль (мин. 6 символов)</label>
+                        <input type="password" id="regPassword" placeholder="••••••••" minlength="6" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="regAgreement" required>
+                        <label for="regAgreement">Я принимаю <a href="#" id="showAgreement"
+                                style="color:#b8962e;">пользовательское соглашение</a></label>
+                    </div>
+                    <div id="registerError" class="auth-error"></div>
+                    <button type="submit" class="btn-auth">Создать аккаунт</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПРОВЕРКА "ЭТО ВЫ?" -->
+    <div id="checkUserOverlay" class="check-user-overlay">
+        <div class="check-user-box">
+            <div class="avatar-big" id="checkAvatar">A</div>
+            <h2 id="checkUserName">Имя</h2>
+            <div class="user-email" id="checkUserEmail">email@mail.ru</div>
+            <p style="color:#8b97a8; margin-bottom:1.5rem;">Это вы?</p>
+            <div class="btn-group">
+                <button class="btn-yes" id="checkYes">✅ Да, это я</button>
+                <button class="btn-no" id="checkNo">❌ Нет, это не я</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
+    <div id="mainPage" class="main-page">
+        <div class="container">
+            <div class="main-header">
+                <div class="logo">ad.<span>сервисы</span></div>
+                <div class="user-info">
+                    <span class="user-name" id="headerUserName">Имя</span>
+                    <span class="user-role" id="headerUserRole">Пользователь</span>
+                    <div class="avatar" id="headerAvatar">A</div>
+                    <button class="btn-logout" id="logoutBtn">Выйти</button>
+                </div>
+            </div>
+
+            <div id="sectionsGrid" class="sections-grid">
+                <div class="section-card" data-section="food">
+                    <div class="section-image" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">🍕</div>
+                    <div class="section-info">
+                        <h3>🍕 Еда</h3>
+                        <p>Закажи еду с доставкой в комнату</p>
+                    </div>
+                </div>
+
+                <div class="section-card" data-section="work">
+                    <div class="section-image" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe);">💼</div>
+                    <div class="section-info">
+                        <h3>💼 Работа</h3>
+                        <p>Вакансии и отклики на работу</p>
+                    </div>
+                </div>
+
+                <div class="section-card" data-section="cleaning">
+                    <div class="section-image" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);">🧹</div>
+                    <div class="section-info">
+                        <h3>🧹 Уборка</h3>
+                        <p>Закажи уборку комнаты</p>
+                    </div>
+                </div>
+
+                <div class="section-card" data-section="massage">
+                    <div class="section-image" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);">💆</div>
+                    <div class="section-info">
+                        <h3>💆 Массаж</h3>
+                        <p>Запишись на массаж в комнату</p>
+                    </div>
+                </div>
+
+                <div class="section-card" data-section="legal">
+                    <div class="section-image" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);">⚖️</div>
+                    <div class="section-info">
+                        <h3>⚖️ Юридическая консультация</h3>
+                        <p>Получи консультацию юриста</p>
+                    </div>
+                </div>
+
+                <div class="section-card" data-section="court">
+                    <div class="section-image" style="background:linear-gradient(135deg,#fde68a,#fcd34d);">🏛️</div>
+                    <div class="section-info">
+                        <h3>🏛️ Суд</h3>
+                        <p>Подай исковое заявление</p>
+                    </div>
+                </div>
+
+                <div class="section-card" data-section="history">
+                    <div class="section-image" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe);">📋</div>
+                    <div class="section-info">
+                        <h3>📋 История заказов</h3>
+                        <p>Все твои заказы и их статусы</p>
+                    </div>
+                </div>
+
+                <div class="section-card" data-section="admin" id="adminSection" style="display:none;">
+                    <div class="section-image" style="background:linear-gradient(135deg,#fef3c7,#fde68a);">👑</div>
+                    <div class="section-info">
+                        <h3>👑 Админ-панель</h3>
+                        <p>Управление заявками и пользователями</p>
+                        <span class="section-badge">Только для админов</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПАНЕЛИ СЕРВИСОВ -->
+    <div id="panelsContainer" class="panels-container">
+        <div class="container">
+            <!-- FOOD -->
+            <div id="panel-food" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>🍕 Еда</h2>
+                    <button class="btn" id="btnFoodOrder">➕ Заказать</button>
+                </div>
+                <div id="foodContainer" class="cards-grid">
+                    <div class="empty-state">Нет заказов</div>
+                </div>
+            </div>
+
+            <!-- WORK -->
+            <div id="panel-work" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>💼 Работа</h2>
+                    <button class="btn" id="btnWorkVacancy">➕ Создать вакансию</button>
+                </div>
+                <h3 style="font-weight:300; border-left:4px solid #8e44ad; padding-left:1rem; margin:1rem 0;">Вакансии
+                </h3>
+                <div id="workVacancies" class="cards-grid">
+                    <div class="empty-state">Нет вакансий</div>
+                </div>
+                <h3 style="font-weight:300; border-left:4px solid #8e44ad; padding-left:1rem; margin:1rem 0;">Мои
+                    отклики</h3>
+                <div id="workApplications" class="cards-grid">
+                    <div class="empty-state">Нет откликов</div>
+                </div>
+            </div>
+
+            <!-- CLEANING -->
+            <div id="panel-cleaning" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>🧹 Уборка</h2>
+                    <button class="btn" id="btnCleaningOrder">➕ Заказать</button>
+                </div>
+                <div id="cleaningContainer" class="cards-grid">
+                    <div class="empty-state">Нет заявок</div>
+                </div>
+            </div>
+
+            <!-- MASSAGE -->
+            <div id="panel-massage" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>💆 Массаж</h2>
+                    <button class="btn" id="btnMassageOrder">➕ Записаться</button>
+                </div>
+                <div id="massageContainer" class="cards-grid">
+                    <div class="empty-state">Нет записей на массаж</div>
+                </div>
+            </div>
+
+            <!-- LEGAL CONSULTATION -->
+            <div id="panel-legal" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>⚖️ Юридическая консультация</h2>
+                    <button class="btn" id="btnLegalOrder">➕ Записаться</button>
+                </div>
+                <div id="legalContainer" class="cards-grid">
+                    <div class="empty-state">Нет записей на консультацию</div>
+                </div>
+            </div>
+
+            <!-- COURT -->
+            <div id="panel-court" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>🏛️ Суд</h2>
+                    <button class="btn" id="btnCourtOrder">➕ Подать иск</button>
+                </div>
+                <div id="courtContainer" class="cards-grid">
+                    <div class="empty-state">Нет исковых заявлений</div>
+                </div>
+            </div>
+
+            <!-- HISTORY -->
+            <div id="panel-history" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>📋 История заказов</h2>
+                </div>
+                <div class="history-filter">
+                    <select id="historyTypeFilter">
+                        <option value="all">Все типы</option>
+                        <option value="food">🍕 Еда</option>
+                        <option value="cleaning">🧹 Уборка</option>
+                        <option value="work">💼 Работа</option>
+                        <option value="massage">💆 Массаж</option>
+                        <option value="legal">⚖️ Консультация</option>
+                        <option value="court">🏛️ Суд</option>
+                    </select>
+                    <select id="historyStatusFilter">
+                        <option value="all">Все статусы</option>
+                        <option value="new">Новый</option>
+                        <option value="processing">В работе</option>
+                        <option value="done">Выполнено</option>
+                        <option value="cancelled">Отменён</option>
+                        <option value="rejected">Отклонён</option>
+                        <option value="approved">Одобрено</option>
+                        <option value="denied">Отказано</option>
+                    </select>
+                    <input type="text" id="historySearch" placeholder="Поиск по ID...">
+                    <button class="btn-sm" id="historySearchBtn">🔍 Найти</button>
+                </div>
+                <div id="historyContainer" class="cards-grid">
+                    <div class="empty-state">Нет заказов</div>
+                </div>
+            </div>
+
+            <!-- ADMIN -->
+            <div id="panel-admin" class="service-panel">
+                <div class="panel-header">
+                    <button class="btn-back" data-back>← Назад</button>
+                    <h2>👑 Админ-панель</h2>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:1rem;">
+                    <button class="btn-sm gold" id="adminTabApplications">📋 Все заказы</button>
+                    <button class="btn-sm purple" id="adminTabUsers">👥 Пользователи</button>
+                    <button class="btn-sm green" id="adminTabHistory">📋 История всех заказов</button>
+                </div>
+                <div id="adminContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
+
+    <!-- FOOD -->
+    <div id="modalFood" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeFood">&times;</button>
+            <h2>🍕 Заказ еды</h2>
+            <form id="formFood">
+                <div class="form-group"><label>Что заказать</label><input type="text" id="foodDish"
+                        placeholder="Пицца, суши..." required></div>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <div class="form-group" style="flex:1;"><label>Комната</label><input type="text" id="foodRoom"
+                            required></div>
+                    <div class="form-group" style="flex:1;"><label>Кол-во</label><input type="number" id="foodQty"
+                            value="1" min="1"></div>
+                </div>
+                <button type="submit" class="btn-submit">✅ Заказать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- VACANCY -->
+    <div id="modalVacancy" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeVacancy">&times;</button>
+            <h2>💼 Создание вакансии</h2>
+            <form id="formVacancy">
+                <div class="form-group"><label>Название</label><input type="text" id="vacancyTitle" required></div>
+                <div class="form-group"><label>Компания</label><input type="text" id="vacancyCompany" required></div>
+                <div class="form-group"><label>Количество мест</label><input type="number" id="vacancyPlaces" value="1"
+                        min="1" required></div>
+                <div class="form-group"><label>Описание</label><textarea id="vacancyDesc" required></textarea></div>
+                <div class="form-group"><label>Требования</label><textarea id="vacancyRequirements" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">📤 Отправить на модерацию</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- APPLICATION -->
+    <div id="modalApplication" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeApplication">&times;</button>
+            <h2>📋 Отклик</h2>
+            <form id="formApplication">
+                <div class="form-group"><label>Вакансия</label><input type="text" id="appVacancy" readonly></div>
+                <div class="form-group"><label>О себе</label><textarea id="appInfo" required></textarea></div>
+                <div class="form-group">
+                    <label>Дополнительно</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="Командировки"> Командировки</label>
+                        <label><input type="checkbox" value="Переработки"> Переработки</label>
+                        <label><input type="checkbox" value="Водительские права"> Права</label>
+                        <label><input type="checkbox" value="Свой автомобиль"> Автомобиль</label>
+                        <label><input type="checkbox" value="Удалённая работа"> Удалёнка</label>
+                        <label><input type="checkbox" value="Сменный график"> Сменный график</label>
+                        <label><input type="checkbox" value="Английский язык"> Английский</label>
+                        <label><input type="checkbox" value="Опыт от 1 года"> Опыт >1 года</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">📤 Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CLEANING -->
+    <div id="modalCleaning" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeCleaning">&times;</button>
+            <h2>🧹 Заявка на уборку</h2>
+            <form id="formCleaning">
+                <div class="form-group"><label>Комната</label><input type="text" id="cleanRoom" required></div>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="cleanDate"
+                            required></div>
+                    <div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="cleanTime"
+                            required></div>
+                </div>
+                <button type="submit" class="btn-submit">📤 Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MASSAGE -->
+    <div id="modalMassage" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeMassage">&times;</button>
+            <h2>💆 Запись на массаж</h2>
+            <form id="formMassage">
+                <div class="form-group"><label>Номер комнаты</label><input type="text" id="massageRoom"
+                        placeholder="304" required></div>
+                <div class="form-group">
+                    <label>Тип массажа</label>
+                    <select id="massageType" required>
+                        <option value="">Выберите тип...</option>
+                        <option value="Классический">Классический</option>
+                        <option value="Спортивный">Спортивный</option>
+                        <option value="Расслабляющий">Расслабляющий</option>
+                        <option value="Точечный">Точечный</option>
+                        <option value="Тайский">Тайский</option>
+                        <option value="Шведский">Шведский</option>
+                        <option value="Антицеллюлитный">Антицеллюлитный</option>
+                        <option value="Лимфодренажный">Лимфодренажный</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="massageTime"
+                            required></div>
+                    <div class="form-group" style="flex:1;">
+                        <label>Длительность</label>
+                        <select id="massageDuration" required>
+                            <option value="30">30 мин</option>
+                            <option value="45">45 мин</option>
+                            <option value="60" selected>60 мин</option>
+                            <option value="90">90 мин</option>
+                            <option value="120">120 мин</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label>Пожелания</label><textarea id="massageNote"></textarea></div>
+                <div
+                    style="background:#fef3c7;padding:0.8rem;border-radius:12px;margin-bottom:1rem;font-size:0.85rem;color:#92400e;">
+                    ⚡ <strong>Срочная запись</strong> — доплата 500 ₽
+                </div>
+                <div style="margin:1rem 0;">
+                    <label style="font-weight:600;font-size:0.95rem;">📋 Правила массажа</label>
+                    <div class="agreement-scroll"
+                        style="max-height:200px;overflow-y:auto;padding:0.5rem 1rem;background:#fafbfc;border-radius:14px;border:1px solid #e2e8f0;font-size:0.8rem;line-height:1.6;color:#2d3748;margin-bottom:1rem;">
+                        <p><strong>1.</strong> Клиент обязуется вести себя уважительно.</p>
+                        <p><strong>2.</strong> Запрещены скандалы и оскорбления.</p>
+                        <p><strong>3.</strong> При агрессии сеанс прекращается без возврата денег.</p>
+                        <p><strong>4.</strong> Запрещено мешать массажисту работать.</p>
+                        <p><strong>5.</strong> Нельзя требовать лишнего от массажиста.</p>
+                        <p><strong>6.</strong> О всех заболеваниях сообщить до сеанса.</p>
+                        <p><strong>7.</strong> За утаивание информации отвечает клиент.</p>
+                        <p><strong>8.</strong> Отказ при противопоказаниях возможен.</p>
+                        <p><strong>9.</strong> Опоздание >15 мин — неявка, деньги не возвращаются.</p>
+                        <p><strong>10.</strong> Запрещено использовать телефон во время сеанса.</p>
+                    </div>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="massageAgreement" required>
+                    <label for="massageAgreement">Я согласен с правилами</label>
+                </div>
+                <button type="submit" class="btn-submit" id="massageSubmitBtn" disabled>✅ Записаться</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LEGAL CONSULTATION -->
+    <div id="modalLegal" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeLegal">&times;</button>
+            <h2>⚖️ Запись на юридическую консультацию</h2>
+            <form id="formLegal">
+                <div class="form-group"><label>Ваше ФИО</label><input type="text" id="legalFio" required></div>
+                <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                    <div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="legalDate"
+                            required></div>
+                    <div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="legalTime"
+                            required></div>
+                </div>
+                <div class="form-group"><label>Тема консультации</label><textarea id="legalTopic"
+                        placeholder="Опишите вопрос..." required></textarea></div>
+                <button type="submit" class="btn-submit">📤 Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- COURT -->
+    <div id="modalCourt" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeCourt">&times;</button>
+            <h2>🏛️ Подача искового заявления</h2>
+            <form id="formCourt">
+                <div class="form-group"><label>Ваше ФИО</label><input type="text" id="courtFio" required></div>
+                <div class="form-group"><label>ФИО ответчика</label><input type="text" id="courtDefendant" required>
+                </div>
+                <div class="form-group"><label>Ваш адрес</label><input type="text" id="courtAddress"
+                        placeholder="г. Москва, ул. Примерная, д.1, кв.1" required></div>
+                <div class="form-group"><label>Адрес ответчика</label><input type="text" id="courtDefendantAddress"
+                        placeholder="г. Москва, ул. Примерная, д.2, кв.2" required></div>
+                <div class="form-group"><label>Причина подачи иска</label><textarea id="courtReason"
+                        required></textarea></div>
+                <button type="submit" class="btn-submit">📤 Подать иск</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- COURT RESPONSE (Admin) -->
+    <div id="modalCourtResponse" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeCourtResponse">&times;</button>
+            <h2 id="courtResponseTitle">🏛️ Рассмотрение иска</h2>
+            <form id="formCourtResponse">
+                <div class="form-group">
+                    <label>Решение</label>
+                    <select id="courtDecision" required>
+                        <option value="">Выберите решение...</option>
+                        <option value="approved">✅ Одобрить иск</option>
+                        <option value="denied">❌ Отклонить иск</option>
+                    </select>
+                </div>
+                <div id="courtApproveFields" style="display:none;">
+                    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                        <div class="form-group" style="flex:1;"><label>Дата суда</label><input type="date"
+                                id="courtDate"></div>
+                        <div class="form-group" style="flex:1;"><label>Время суда</label><input type="time"
+                                id="courtTime"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Комментарий</label>
+                    <textarea id="courtComment"
+                        placeholder="Причина отказа или дополнительная информация..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">📤 Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- REJECT -->
+    <div id="modalReject" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeReject">&times;</button>
+            <h2>❌ Причина отказа</h2>
+            <form id="formReject">
+                <div class="form-group"><label>Причина</label><textarea id="rejectReason" required></textarea></div>
+                <button type="submit" class="btn-submit">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- APPROVE -->
+    <div id="modalApprove" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeApprove">&times;</button>
+            <h2>✅ Одобрение</h2>
+            <form id="formApprove">
+                <div class="form-group"><label>Комментарий</label><textarea id="approveComment"></textarea></div>
+                <button type="submit" class="btn-submit">Одобрить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- BAN -->
+    <div id="modalBan" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeBan">&times;</button>
+            <h2>🚫 Блокировка</h2>
+            <form id="formBan">
+                <div class="form-group"><label>Причина</label><textarea id="banReason" required></textarea></div>
+                <div class="form-group">
+                    <label>Длительность</label>
+                    <select id="banDuration">
+                        <option value="1h">1 час</option>
+                        <option value="24h">24 часа</option>
+                        <option value="7d">7 дней</option>
+                        <option value="30d">30 дней</option>
+                        <option value="forever">Навсегда</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">Заблокировать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- STATUS CHANGE -->
+    <div id="modalStatusChange" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeStatusChange">&times;</button>
+            <h2>📌 Изменить статус заказа</h2>
+            <form id="formStatusChange">
+                <div class="form-group">
+                    <label>Новый статус</label>
+                    <select id="newStatus">
+                        <option value="new">Новый</option>
+                        <option value="processing">В работе</option>
+                        <option value="done">Выполнено</option>
+                        <option value="cancelled">Отменён</option>
+                        <option value="rejected">Отклонён</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Комментарий</label>
+                    <textarea id="statusComment"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">✅ Применить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- AGREEMENT -->
+    <div id="modalAgreement" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="closeAgreement">&times;</button>
+            <h2>📄 Пользовательское соглашение</h2>
+            <div style="max-height:400px;overflow-y:auto;font-size:0.9rem;line-height:1.6;color:#2d3748;">
+                <h3>1. Общие положения</h3>
+                <p>Настоящее соглашение регулирует отношения между AD.Сервисы и Пользователем.</p>
+                <h3>2. Права и обязанности</h3>
+                <p>Пользователь обязуется предоставлять достоверные данные.</p>
+                <h3>3. Ответственность</h3>
+                <p>AD.Сервисы не несёт ответственности за действия пользователей.</p>
+                <h3>4. Разрешение споров</h3>
+                <p>Все споры решаются через поддержку AD.Сервисы.</p>
+                <h3>5. Блокировка</h3>
+                <p>Администрация оставляет за собой право блокировать пользователей.</p>
+                <p style="margin-top:1rem;color:#b8962e;">© 2026 AD.Сервисы</p>
+            </div>
+            <button class="btn-submit" id="agreementCloseBtn" style="margin-top:1rem;">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            // ===== ДАННЫЕ =====
+            let users = JSON.parse(localStorage.getItem('ad_users')) || [];
+            let currentUser = null;
+            let foodOrders = JSON.parse(localStorage.getItem('ad_food')) || [];
+            let vacancies = JSON.parse(localStorage.getItem('ad_vacancies')) || [];
+            let pendingVacancies = JSON.parse(localStorage.getItem('ad_pending')) || [];
+            let applications = JSON.parse(localStorage.getItem('ad_applications')) || [];
+            let cleaningOrders = JSON.parse(localStorage.getItem('ad_cleaning')) || [];
+            let massageOrders = JSON.parse(localStorage.getItem('ad_massage')) || [];
+            let legalOrders = JSON.parse(localStorage.getItem('ad_legal')) || [];
+            let courtOrders = JSON.parse(localStorage.getItem('ad_court')) || [];
+            let notifications = JSON.parse(localStorage.getItem('ad_notifications')) || [];
+            let adminCurrentTab = 'applications';
+            let rejectTarget = null;
+            let approveTarget = null;
+            let banTarget = null;
+            let statusChangeTarget = null;
+            let courtResponseTarget = null;
+
+            function saveAll() {
+                localStorage.setItem('ad_users', JSON.stringify(users));
+                localStorage.setItem('ad_food', JSON.stringify(foodOrders));
+                localStorage.setItem('ad_vacancies', JSON.stringify(vacancies));
+                localStorage.setItem('ad_pending', JSON.stringify(pendingVacancies));
+                localStorage.setItem('ad_applications', JSON.stringify(applications));
+                localStorage.setItem('ad_cleaning', JSON.stringify(cleaningOrders));
+                localStorage.setItem('ad_massage', JSON.stringify(massageOrders));
+                localStorage.setItem('ad_legal', JSON.stringify(legalOrders));
+                localStorage.setItem('ad_court', JSON.stringify(courtOrders));
+                localStorage.setItem('ad_notifications', JSON.stringify(notifications));
+            }
+
+            function generateId() {
+                let id, exists;
+                do {
+                    id = String(Math.floor(10000 + Math.random() * 90000));
+                    exists = users.some(u => u.id === id);
+                } while (exists);
+                return id;
+            }
+
+            function generateServiceId(prefix) {
+                return prefix + '-' + String(Math.floor(1000 + Math.random() * 9000));
+            }
+
+            function statusText(s) {
+                const map = {
+                    'new': 'Новый',
+                    'cooking': 'Готовится',
+                    'delivering': 'В пути',
+                    'done': 'Выполнено',
+                    'active': 'Активна',
+                    'closed': 'Закрыта',
+                    'accepted': 'Принят',
+                    'rejected': 'Отклонён',
+                    'processing': 'В работе',
+                    'pending': 'На модерации',
+                    'cancelled': 'Отменён',
+                    'approved': 'Одобрено',
+                    'denied': 'Отказано'
+                };
+                return map[s] || s;
+            }
+
+            function getStatusClass(s) {
+                const map = {
+                    'new': 'new',
+                    'cooking': 'processing',
+                    'delivering': 'processing',
+                    'done': 'done',
+                    'active': 'active',
+                    'closed': 'closed',
+                    'accepted': 'accepted',
+                    'rejected': 'rejected',
+                    'processing': 'processing',
+                    'pending': 'pending',
+                    'cancelled': 'cancelled',
+                    'approved': 'approved',
+                    'denied': 'denied'
+                };
+                return map[s] || 'new';
+            }
+
+            function getCurrentTime() {
+                return new Date().toLocaleString('ru-RU', { hour12: false });
+            }
+
+            function showToast(msg) {
+                const el = document.getElementById('toast');
+                el.innerHTML = msg;
+                el.classList.add('show');
+                clearTimeout(window.toastTimer);
+                window.toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+            }
+
+            function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+
+            function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+            function isUserBanned(user) {
+                if (!user || !user.banned) return false;
+                if (user.banExpiry && user.banExpiry !== 'forever') {
+                    const expiry = new Date(user.banExpiry);
+                    if (expiry > new Date()) return true;
+                    user.banned = false;
+                    user.banReason = '';
+                    user.banExpiry = null;
+                    saveAll();
+                    return false;
+                }
+                return user.banExpiry === 'forever' || user.banned === true;
+            }
+
+            function getBanInfo(user) {
+                if (!user || !user.banned) return null;
+                if (user.banExpiry === 'forever') return { reason: user.banReason, expiry: 'навсегда' };
+                if (user.banExpiry) {
+                    const expiry = new Date(user.banExpiry);
+                    if (expiry > new Date()) return { reason: user.banReason, expiry: expiry.toLocaleString('ru-RU') };
+                    user.banned = false;
+                    user.banReason = '';
+                    user.banExpiry = null;
+                    saveAll();
+                    return null;
+                }
+                return null;
+            }
+
+            function addNotification(userId, title, message, comment = '', reason = '') {
+                notifications.unshift({
+                    id: generateServiceId('NT'),
+                    userId: userId,
+                    title: title,
+                    message: message,
+                    comment: comment,
+                    reason: reason,
+                    time: getCurrentTime(),
+                    read: false
+                });
+                saveAll();
+            }
+
+            function getUserInfo(userId) {
+                return users.find(u => u.id === userId);
+            }
+
+            // ===== ВКЛАДКИ АВТОРИЗАЦИИ =====
+            document.querySelectorAll('[data-tab]').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                    document.getElementById('form' + this.dataset.tab.charAt(0).toUpperCase() + this.dataset.tab
+                        .slice(1)).classList.add('active');
+                });
+            });
+
+            // ===== ВХОД =====
+            document.getElementById('loginForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value.trim();
+                const remember = document.getElementById('rememberMe').checked;
+                const errorEl = document.getElementById('loginError');
+
+                const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+
+                if (!user) {
+                    errorEl.textContent = '❌ Неверный email или пароль';
+                    errorEl.classList.add('show');
+                    return;
+                }
+
+                if (isUserBanned(user)) {
+                    const info = getBanInfo(user);
+                    errorEl.textContent = `🚫 Аккаунт забанен. Причина: ${info?.reason || '—'}`;
+                    errorEl.classList.add('show');
+                    return;
+                }
+
+                errorEl.classList.remove('show');
+                currentUser = user;
+
+                if (remember) {
+                    localStorage.setItem('ad_remember_user', JSON.stringify({
+                        id: user.id,
+                        fio: user.fio,
+                        email: user.email
+                    }));
+                } else {
+                    localStorage.removeItem('ad_remember_user');
+                }
+
+                sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
+                showMainPage();
+            });
+
+            // ===== РЕГИСТРАЦИЯ =====
+            document.getElementById('registerForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const fio = document.getElementById('regFio').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const password = document.getElementById('regPassword').value.trim();
+                const agreement = document.getElementById('regAgreement').checked;
+                const errorEl = document.getElementById('registerError');
+
+                if (!agreement) {
+                    errorEl.textContent = '❌ Примите соглашение';
+                    errorEl.classList.add('show');
+                    return;
+                }
+                if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+                    errorEl.textContent = '❌ Email уже зарегистрирован';
+                    errorEl.classList.add('show');
+                    return;
+                }
+                if (password.length < 6) {
+                    errorEl.textContent = '❌ Пароль минимум 6 символов';
+                    errorEl.classList.add('show');
+                    return;
+                }
+
+                const newUser = {
+                    id: generateId(),
+                    fio: fio,
+                    email: email,
+                    password: password,
+                    role: 'user',
+                    banned: false,
+                    banReason: '',
+                    banExpiry: null
+                };
+                users.push(newUser);
+                saveAll();
+                errorEl.classList.remove('show');
+                showToast('✅ Аккаунт создан! Войдите.');
+
+                document.querySelector('[data-tab="login"]').click();
+                document.getElementById('loginEmail').value = email;
+                document.getElementById('loginPassword').value = '';
+                document.getElementById('regFio').value = '';
+                document.getElementById('regEmail').value = '';
+                document.getElementById('regPassword').value = '';
+                document.getElementById('regAgreement').checked = false;
+            });
+
+            // ===== ПРОВЕРКА "ЭТО ВЫ?" =====
+            function checkRememberedUser() {
+                const remembered = localStorage.getItem('ad_remember_user');
+                if (!remembered) return false;
+
+                try {
+                    const data = JSON.parse(remembered);
+                    const user = users.find(u => u.id === data.id);
+                    if (user && !isUserBanned(user)) {
+                        document.getElementById('checkUserName').textContent = user.fio;
+                        document.getElementById('checkUserEmail').textContent = user.email;
+                        document.getElementById('checkAvatar').textContent = user.fio.charAt(0).toUpperCase();
+                        document.getElementById('checkUserOverlay').classList.add('active');
+
+                        document.getElementById('checkYes').onclick = function () {
+                            document.getElementById('checkUserOverlay').classList.remove('active');
+                            currentUser = user;
+                            sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
+                            showMainPage();
+                        };
+                        document.getElementById('checkNo').onclick = function () {
+                            document.getElementById('checkUserOverlay').classList.remove('active');
+                            localStorage.removeItem('ad_remember_user');
+                            showAuth();
+                        };
+                        return true;
+                    }
+                } catch (e) { }
+                return false;
+            }
+
+            // ===== ПОКАЗ СТРАНИЦ =====
+            function showAuth() {
+                document.getElementById('authPage').style.display = 'flex';
+                document.getElementById('mainPage').classList.remove('active');
+                document.getElementById('panelsContainer').classList.remove('active');
+                document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+            }
+
+            function showMainPage() {
+                document.getElementById('authPage').style.display = 'none';
+                document.getElementById('mainPage').classList.add('active');
+                document.getElementById('panelsContainer').classList.remove('active');
+                document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+
+                document.getElementById('headerUserName').textContent = currentUser.fio;
+                document.getElementById('headerUserRole').textContent = currentUser.role === 'admin' ? '👑 Администратор' :
+                    'Пользователь';
+                document.getElementById('headerAvatar').textContent = currentUser.fio.charAt(0).toUpperCase();
+
+                const adminSection = document.getElementById('adminSection');
+                if (currentUser.role === 'admin') {
+                    adminSection.style.display = 'block';
+                } else {
+                    adminSection.style.display = 'none';
+                }
+
+                renderAll();
+            }
+
+            function showPanel(panelId) {
+                document.getElementById('mainPage').classList.remove('active');
+                document.getElementById('panelsContainer').classList.add('active');
+                document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+                document.getElementById('panel-' + panelId).classList.add('active');
+
+                if (panelId === 'admin') renderAdmin();
+                if (panelId === 'history') renderHistory();
+            }
+
+            function goBack() {
+                document.getElementById('mainPage').classList.add('active');
+                document.getElementById('panelsContainer').classList.remove('active');
+                document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+                renderAll();
+            }
+
+            // ===== КЛИК ПО РАЗДЕЛАМ =====
+            document.querySelectorAll('.section-card[data-section]').forEach(card => {
+                card.addEventListener('click', function () {
+                    const section = this.dataset.section;
+                    if (section === 'admin' && currentUser.role !== 'admin') {
+                        showToast('⛔ Доступ только для администратора');
+                        return;
+                    }
+                    showPanel(section);
+                });
+            });
+
+            document.querySelectorAll('[data-back]').forEach(btn => {
+                btn.addEventListener('click', goBack);
+            });
+
+            // ===== ВЫХОД =====
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                sessionStorage.removeItem('ad_session');
+                localStorage.removeItem('ad_remember_user');
+                currentUser = null;
+                showAuth();
+                document.getElementById('mainPage').classList.remove('active');
+                document.getElementById('panelsContainer').classList.remove('active');
+            });
+
+            // ===== СОГЛАШЕНИЕ =====
+            document.getElementById('showAgreement').addEventListener('click', function (e) {
+                e.preventDefault();
+                openModal('modalAgreement');
+            });
+            document.getElementById('closeAgreement').addEventListener('click', () => closeModal('modalAgreement'));
+            document.getElementById('agreementCloseBtn').addEventListener('click', () => closeModal('modalAgreement'));
+
+            // ===== ФОРМЫ =====
+
+            // FOOD
+            document.getElementById('btnFoodOrder').addEventListener('click', () => openModal('modalFood'));
+            document.getElementById('closeFood').addEventListener('click', () => closeModal('modalFood'));
+            document.getElementById('formFood').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const dish = document.getElementById('foodDish').value.trim();
+                const room = document.getElementById('foodRoom').value.trim();
+                const qty = parseInt(document.getElementById('foodQty').value) || 1;
+                if (!dish || !room) return alert('Заполните все поля');
+                foodOrders.push({
+                    id: generateServiceId('FД'),
+                    userId: currentUser.id,
+                    userFio: currentUser.fio,
+                    dish: dish,
+                    room: room,
+                    qty: qty,
+                    status: 'new',
+                    adminComment: '',
+                    rejectReason: '',
+                    time: getCurrentTime(),
+                    type: 'food'
+                });
+                saveAll();
+                showToast('🍕 Заказ создан!');
+                renderAll();
+                this.reset();
+                closeModal('modalFood');
+            });
+
+            // VACANCY
+            document.getElementById('btnWorkVacancy').addEventListener('click', () => openModal('modalVacancy'));
+            document.getElementById('closeVacancy').addEventListener('click', () => closeModal('modalVacancy'));
+            document.getElementById('formVacancy').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const title = document.getElementById('vacancyTitle').value.trim();
+                const company = document.getElementById('vacancyCompany').value.trim();
+                const places = parseInt(document.getElementById('vacancyPlaces').value) || 1;
+                const desc = document.getElementById('vacancyDesc').value.trim();
+                const req = document.getElementById('vacancyRequirements').value.trim();
+                if (!title || !company || !desc || !req) return alert('Заполните все поля');
+                pendingVacancies.push({
+                    id: generateServiceId('VA'),
+                    userId: currentUser.id,
+                    userFio: currentUser.fio,
+                    title: title,
+                    company: company,
+                    places: places,
+                    desc: desc,
+                    requirements: req,
+                    status: 'pending',
+                    time: getCurrentTime()
+                });
+                saveAll();
+                showToast('💼 Вакансия отправлена на модерацию');
+                renderAll();
+                this.reset();
+                closeModal('modalVacancy');
+            });
+
+            // APPLICATION
+            document.getElementById('closeApplication').addEventListener('click', () => closeModal('modalApplication'));
+            document.getElementById('formApplication').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const vacancy = document.getElementById('appVacancy').value;
+                const info = document.getElementById('appInfo').value.trim();
+                const checks = Array.from(document.querySelectorAll('#formApplication .checkbox-group input:checked'))
+                    .map(cb => cb.value);
+                if (!info) return alert('Заполните информацию о себе');
+                applications.push({
+                    id: generateServiceId('AP'),
+                    userId: currentUser.id,
+                    userFio: currentUser.fio,
+                    vacancy: vacancy,
+                    fio: currentUser.fio,
+                    info: info,
+                    checks: checks,
+                    status: 'new',
+                    adminComment: '',
+                    rejectReason: '',
+                    time: getCurrentTime(),
+                    type: 'work'
+                });
+                saveAll();
+                showToast('📋 Отклик отправлен');
+                renderAll();
+                this.reset();
+                document.getElementById('appVacancy').value = '';
+                closeModal('modalApplication');
+            });
+
+            // CLEANING
+            document.getElementById('btnCleaningOrder').addEventListener('click', () => openModal('modalCleaning'));
+            document.getElementById('closeCleaning').addEventListener('click', () => closeModal('modalCleaning'));
+            document.getElementById('formCleaning').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const room = document.getElementById('cleanRoom').value.trim();
+                const date = document.getElementById('cleanDate').value;
+                const time = document.getElementById('cleanTime').value;
+                if (!room || !date || !time) return alert('Заполните все поля');
+                cleaningOrders.push({
+                    id: generateServiceId('CL'),
+                    userId: currentUser.id,
+                    userFio: currentUser.fio,
+                    room: room,
+                    date: date,
+                    time: time,
+                    status: 'new',
+                    adminComment: '',
+                    rejectReason: '',
+                    time: getCurrentTime(),
+                    type: 'cleaning'
+                });
+                saveAll();
+                showToast('🧹 Заявка создана');
+                renderAll();
+                this.reset();
+                closeModal('modalCleaning');
+            });
+
+            // MASSAGE
+            document.getElementById('btnMassageOrder').addEventListener('click', () => openModal('modalMassage'));
+            document.getElementById('closeMassage').addEventListener('click', () => closeModal('modalMassage'));
+            document.getElementById('massageAgreement').addEventListener('change', function () {
+                document.getElementById('massageSubmitBtn').disabled = !this.checked;
+            });
+            document.getElementById('formMassage').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const room = document.getElementById('massageRoom').value.trim();
+                const type = document.getElementById('massageType').value;
+                const time = document.getElementById('massageTime').value;
+                const duration = parseInt(document.getElementById('massageDuration').value);
+                const note = document.getElementById('massageNote').value.trim();
+                const agreed = document.getElementById('massageAgreement').checked;
+                if (!room || !type || !time || !duration || !agreed) return alert('Заполните все поля');
+                massageOrders.push({
+                    id: generateServiceId('MS'),
+                    userId: currentUser.id,
+                    userFio: currentUser.fio,
+                    room: room,
+                    type: type,
+                    time: time,
+                    duration: duration,
+                    note: note,
+                    status: 'new',
+                    adminComment: '',
+                    rejectReason: '',
+                    time: getCurrentTime(),
+                    type: 'massage'
+                });
+                saveAll();
+                showToast('💆 Запись создана!');
+                renderAll();
+                this.reset();
+                document.getElementById('massageAgreement').checked = false;
+                document.getElementById('massageSubmitBtn').disabled = true;
+                closeModal('modalMassage');
+            });
+
+            // LEGAL
+            document.getElementById('btnLegalOrder').addEventListener('click', () => openModal('modalLegal'));
+            document.getElementById('closeLegal').addEventListener('click', () => closeModal('modalLegal'));
+            document.getElementById('formLegal').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const fio = document.getElementById('legalFio').value.trim();
+                const date = document.getElementById('legalDate').value;
+                const time = document.getElementById('legalTime').value;
+                const topic = document.getElementById('legalTopic').value.trim();
+                if (!fio || !date || !time || !topic) return alert('Заполните все поля');
+                legalOrders.push({
+                    id: generateServiceId('LG'),
+                    userId: currentUser.id,
+                    userFio: currentUser.fio,
+                    fio: fio,
+                    date: date,
+                    time: time,
+                    topic: topic,
+                    status: 'new',
+                    adminComment: '',
+                    rejectReason: '',
+                    time: getCurrentTime(),
+                    type: 'legal'
+                });
+                saveAll();
+                showToast('⚖️ Запись на консультацию создана!');
+                renderAll();
+                this.reset();
+                closeModal('modalLegal');
+            });
+
+            // COURT
+            document.getElementById('btnCourtOrder').addEventListener('click', () => openModal('modalCourt'));
+            document.getElementById('closeCourt').addEventListener('click', () => closeModal('modalCourt'));
+            document.getElementById('formCourt').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const fio = document.getElementById('courtFio').value.trim();
+                const defendant = document.getElementById('courtDefendant').value.trim();
+                const address = document.getElementById('courtAddress').value.trim();
+                const defendantAddress = document.getElementById('courtDefendantAddress').value.trim();
+                const reason = document.getElementById('courtReason').value.trim();
+                if (!fio || !defendant || !address || !defendantAddress || !reason) return alert('Заполните все поля');
+                courtOrders.push({
+                    id: generateServiceId('CT'),
+                    userId: currentUser.id,
+                    userFio: currentUser.fio,
+                    fio: fio,
+                    defendant: defendant,
+                    address: address,
+                    defendantAddress: defendantAddress,
+                    reason: reason,
+                    status: 'new',
+                    adminComment: '',
+                    rejectReason: '',
+                    courtDate: '',
+                    courtTime: '',
+                    time: getCurrentTime(),
+                    type: 'court'
+                });
+                saveAll();
+                showToast('🏛️ Иск подан! Ожидайте решения.');
+                renderAll();
+                this.reset();
+                closeModal('modalCourt');
+            });
+
+            // COURT RESPONSE (Admin)
+            document.getElementById('closeCourtResponse').addEventListener('click', () => closeModal('modalCourtResponse'));
+            document.getElementById('courtDecision').addEventListener('change', function () {
+                document.getElementById('courtApproveFields').style.display = this.value === 'approved' ? 'block' : 'none';
+            });
+            document.getElementById('formCourtResponse').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const decision = document.getElementById('courtDecision').value;
+                const comment = document.getElementById('courtComment').value.trim();
+                const courtDate = document.getElementById('courtDate').value;
+                const courtTime = document.getElementById('courtTime').value;
+
+                if (!decision) return alert('Выберите решение');
+
+                if (courtResponseTarget) {
+                    const target = courtResponseTarget;
+                    if (decision === 'approved') {
+                        target.status = 'approved';
+                        target.courtDate = courtDate;
+                        target.courtTime = courtTime;
+                        target.adminComment = comment || 'Иск одобрен';
+                        addNotification(target.userId, '✅ Иск одобрен',
+                            `Ваш иск ${target.id} одобрен. Суд назначен на ${courtDate} в ${courtTime}`,
+                            comment);
+                        showToast('✅ Иск одобрен, уведомление отправлено');
+                    } else {
+                        target.status = 'denied';
+                        target.rejectReason = comment || 'Причина не указана';
+                        addNotification(target.userId, '❌ Иск отклонён',
+                            `Ваш иск ${target.id} отклонён`, comment, comment);
+                        showToast('❌ Иск отклонён, уведомление отправлено');
+                    }
+                    saveAll();
+                }
+                this.reset();
+                document.getElementById('courtApproveFields').style.display = 'none';
+                closeModal('modalCourtResponse');
+                courtResponseTarget = null;
+                renderAll();
+            });
+
+            // REJECT
+            document.getElementById('closeReject').addEventListener('click', () => closeModal('modalReject'));
+            document.getElementById('formReject').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const reason = document.getElementById('rejectReason').value.trim();
+                if (!reason) return alert('Укажите причину отказа');
+                if (rejectTarget) {
+                    rejectTarget.status = 'rejected';
+                    rejectTarget.rejectReason = reason;
+                    addNotification(rejectTarget.userId, '❌ Заявка отклонена',
+                        `Ваша заявка ${rejectTarget.id} отклонена`, '', reason);
+                    if (rejectTarget.isPendingVacancy) {
+                        const vac = pendingVacancies.find(v => v.id === rejectTarget.id);
+                        if (vac) pendingVacancies = pendingVacancies.filter(v => v.id !== vac.id);
+                    }
+                    saveAll();
+                    showToast('❌ Заявка отклонена');
+                }
+                this.reset();
+                closeModal('modalReject');
+                rejectTarget = null;
+                renderAll();
+            });
+
+            // APPROVE
+            document.getElementById('closeApprove').addEventListener('click', () => closeModal('modalApprove'));
+            document.getElementById('formApprove').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const comment = document.getElementById('approveComment').value.trim();
+                if (approveTarget) {
+                    approveTarget.status = 'processing';
+                    approveTarget.adminComment = comment || 'Одобрено администратором';
+                    addNotification(approveTarget.userId, '✅ Заявка одобрена',
+                        `Ваша заявка ${approveTarget.id} одобрена`, comment);
+                    saveAll();
+                    showToast('✅ Заявка одобрена');
+                }
+                this.reset();
+                closeModal('modalApprove');
+                approveTarget = null;
+                renderAll();
+            });
+
+            // BAN
+            document.getElementById('closeBan').addEventListener('click', () => closeModal('modalBan'));
+            document.getElementById('formBan').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const reason = document.getElementById('banReason').value.trim();
+                const duration = document.getElementById('banDuration').value;
+                if (!reason) return alert('Укажите причину блокировки');
+                if (banTarget) {
+                    banTarget.banned = true;
+                    banTarget.banReason = reason;
+                    banTarget.banExpiry = duration === 'forever' ? 'forever' : new Date(Date.now() +
+                        parseDuration(duration)).toISOString();
+                    saveAll();
+                    addNotification(banTarget.id, '🚫 Аккаунт заблокирован', `Причина: ${reason} (${duration})`);
+                    showToast('🚫 Пользователь заблокирован');
+                }
+                this.reset();
+                closeModal('modalBan');
+                banTarget = null;
+                renderAll();
+            });
+
+            // STATUS CHANGE
+            document.getElementById('closeStatusChange').addEventListener('click', () => closeModal('modalStatusChange'));
+            document.getElementById('formStatusChange').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const newStatus = document.getElementById('newStatus').value;
+                const comment = document.getElementById('statusComment').value.trim();
+                if (statusChangeTarget) {
+                    const oldStatus = statusChangeTarget.status;
+                    statusChangeTarget.status = newStatus;
+                    if (comment) statusChangeTarget.adminComment = comment;
+                    addNotification(statusChangeTarget.userId, '📌 Статус изменён',
+                        `Заказ ${statusChangeTarget.id}: ${statusText(oldStatus)} → ${statusText(newStatus)}`,
+                        comment);
+                    saveAll();
+                    showToast(`✅ Статус изменён на "${statusText(newStatus)}"`);
+                }
+                this.reset();
+                closeModal('modalStatusChange');
+                statusChangeTarget = null;
+                renderAll();
+            });
+
+            function parseDuration(d) {
+                const map = { '1h': 3600000, '24h': 86400000, '7d': 604800000, '30d': 2592000000 };
+                return map[d] || 604800000;
+            }
+
+            // ===== РЕНДЕРИНГ =====
+            function renderAll() {
+                renderFood();
+                renderVacancies();
+                renderApplications();
+                renderCleaning();
+                renderMassage();
+                renderLegal();
+                renderCourt();
+                updateBadges();
+                if (currentUser && currentUser.role === 'admin') {
+                    renderAdmin();
+                }
+            }
+
+            function updateBadges() {
+                const userNotifs = notifications.filter(n => n.userId === currentUser.id || n.userId === 'all');
+                saveAll();
+            }
+
+            function renderFood() {
+                const c = document.getElementById('foodContainer');
+                const userFood = foodOrders.filter(o => o.userId === currentUser.id);
+                if (!userFood.length) { c.innerHTML = `<div class="empty-state">🍕 Нет заказов</div>`; return; }
+                c.innerHTML = userFood.map((o) => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${o.id}</span>
+                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>
+                        <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                        <div class="card-detail"><strong>Порций:</strong> ${o.qty}</div>
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            function renderVacancies() {
+                const c = document.getElementById('workVacancies');
+                const activeVacancies = vacancies.filter(v => v.status === 'active');
+                if (!activeVacancies.length) { c.innerHTML = `<div class="empty-state">💼 Нет активных вакансий</div>`; return; }
+                c.innerHTML = activeVacancies.map((v) => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${v.id}</span>
+                            <span class="card-status status-${getStatusClass(v.status)}">${statusText(v.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>${v.title}</strong></div>
+                        <div class="card-detail"><strong>Компания:</strong> ${v.company}</div>
+                        <div class="card-detail"><strong>Мест:</strong> ${v.places}</div>
+                        <div class="card-detail"><strong>Описание:</strong> ${v.desc}</div>
+                        <div class="card-detail"><strong>Требования:</strong> ${v.requirements}</div>
+                        <div class="card-actions">
+                            <button class="btn-sm gold" data-vac-apply="${v.id}">📋 Откликнуться</button>
+                            ${v.userId === currentUser.id ? `<button class="btn-sm danger" data-vac-close="${v.id}">Закрыть</button>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('[data-vac-apply]').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const vid = this.dataset.vacApply;
+                        const v = vacancies.find(v => v.id === vid);
+                        if (v) {
+                            document.getElementById('appVacancy').value = v.title + ' (' + v.id + ')';
+                            openModal('modalApplication');
+                        }
+                    });
+                });
+                document.querySelectorAll('[data-vac-close]').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const vid = this.dataset.vacClose;
+                        const v = vacancies.find(v => v.id === vid);
+                        if (v) {
+                            v.status = 'closed';
+                            saveAll();
+                            renderAll();
+                        }
+                    });
+                });
+            }
+
+            function renderApplications() {
+                const c = document.getElementById('workApplications');
+                const userApps = applications.filter(a => a.userId === currentUser.id);
+                if (!userApps.length) { c.innerHTML = `<div class="empty-state">Нет откликов</div>`; return; }
+                c.innerHTML = userApps.map((a) => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${a.id}</span>
+                            <span class="card-status status-${getStatusClass(a.status)}">${statusText(a.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>Вакансия:</strong> ${a.vacancy}</div>
+                        <div class="card-detail"><strong>О себе:</strong> ${a.info}</div>
+                        <div class="card-detail"><strong>Галочки:</strong> ${a.checks.length ? a.checks.join(', ') : '—'}</div>
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${a.time}</div>
+                        ${a.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${a.adminComment}</div>` : ''}
+                        ${a.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${a.rejectReason}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            function renderCleaning() {
+                const c = document.getElementById('cleaningContainer');
+                const userCleaning = cleaningOrders.filter(o => o.userId === currentUser.id);
+                if (!userCleaning.length) { c.innerHTML = `<div class="empty-state">🧹 Нет заявок</div>`; return; }
+                c.innerHTML = userCleaning.map((o) => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${o.id}</span>
+                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                        <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
+                        <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            function renderMassage() {
+                const c = document.getElementById('massageContainer');
+                const userMassage = massageOrders.filter(o => o.userId === currentUser.id);
+                if (!userMassage.length) { c.innerHTML = `<div class="empty-state">💆 Нет записей</div>`; return; }
+                c.innerHTML = userMassage.map((o) => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${o.id}</span>
+                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                        <div class="card-detail"><strong>Тип:</strong> ${o.type}</div>
+                        <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                        <div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>
+                        ${o.note ? `<div class="card-detail"><strong>Пожелания:</strong> ${o.note}</div>` : ''}
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            function renderLegal() {
+                const c = document.getElementById('legalContainer');
+                const userLegal = legalOrders.filter(o => o.userId === currentUser.id);
+                if (!userLegal.length) { c.innerHTML = `<div class="empty-state">⚖️ Нет записей</div>`; return; }
+                c.innerHTML = userLegal.map((o) => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${o.id}</span>
+                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>ФИО:</strong> ${o.fio}</div>
+                        <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
+                        <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                        <div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            function renderCourt() {
+                const c = document.getElementById('courtContainer');
+                const userCourt = courtOrders.filter(o => o.userId === currentUser.id);
+                if (!userCourt.length) { c.innerHTML = `<div class="empty-state">🏛️ Нет исков</div>`; return; }
+                c.innerHTML = userCourt.map((o) => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${o.id}</span>
+                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>Истец:</strong> ${o.fio}</div>
+                        <div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>
+                        <div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>
+                        <div class="card-detail"><strong>Адрес истца:</strong> ${o.address}</div>
+                        <div class="card-detail"><strong>Адрес ответчика:</strong> ${o.defendantAddress}</div>
+                        ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            // ===== ИСТОРИЯ =====
+            function renderHistory() {
+                const container = document.getElementById('historyContainer');
+                let allOrders = [];
+
+                foodOrders.forEach(o => { allOrders.push({ ...o, type: 'food', typeLabel: '🍕 Еда' }); });
+                cleaningOrders.forEach(o => { allOrders.push({ ...o, type: 'cleaning', typeLabel: '🧹 Уборка' }); });
+                applications.forEach(o => { allOrders.push({ ...o, type: 'work', typeLabel: '💼 Работа' }); });
+                massageOrders.forEach(o => { allOrders.push({ ...o, type: 'massage', typeLabel: '💆 Массаж' }); });
+                legalOrders.forEach(o => { allOrders.push({ ...o, type: 'legal', typeLabel: '⚖️ Консультация' }); });
+                courtOrders.forEach(o => { allOrders.push({ ...o, type: 'court', typeLabel: '🏛️ Суд' }); });
+
+                if (currentUser.role !== 'admin') {
+                    allOrders = allOrders.filter(o => o.userId === currentUser.id);
+                }
+
+                const typeFilter = document.getElementById('historyTypeFilter').value;
+                const statusFilter = document.getElementById('historyStatusFilter').value;
+                const search = document.getElementById('historySearch').value.trim().toLowerCase();
+
+                if (typeFilter !== 'all') { allOrders = allOrders.filter(o => o.type === typeFilter); }
+                if (statusFilter !== 'all') { allOrders = allOrders.filter(o => o.status === statusFilter); }
+                if (search) { allOrders = allOrders.filter(o => o.id.toLowerCase().includes(search)); }
+
+                allOrders.sort((a, b) => (a.time || '').localeCompare(b.time || '') * -1);
+
+                if (!allOrders.length) {
+                    container.innerHTML = `<div class="empty-state">📋 Нет заказов по фильтрам</div>`;
+                    return;
+                }
+
+                container.innerHTML = allOrders.map(o => `
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-id">${o.id}</span>
+                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        </div>
+                        <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
+                        ${currentUser.role === 'admin' ? `<div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (${o.userId})</div>` : ''}
+                        ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
+                        ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
+                        ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
+                        ${o.date ? `<div class="card-detail"><strong>Дата:</strong> ${o.date} ${o.time || ''}</div>` : ''}
+                        ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
+                        ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
+                        ${o.topic ? `<div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>` : ''}
+                        ${o.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>` : ''}
+                        ${o.reason ? `<div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>` : ''}
+                        ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('historyTypeFilter').addEventListener('change', renderHistory);
+            document.getElementById('historyStatusFilter').addEventListener('change', renderHistory);
+            document.getElementById('historySearchBtn').addEventListener('click', renderHistory);
+            document.getElementById('historySearch').addEventListener('keyup', function (e) {
+                if (e.key === 'Enter') renderHistory();
+            });
+
+            // ============================================================
+            // АДМИНКА
+            // ============================================================
+            document.getElementById('adminTabApplications').addEventListener('click', function () {
+                adminCurrentTab = 'applications';
+                renderAdmin();
+            });
+            document.getElementById('adminTabUsers').addEventListener('click', function () {
+                adminCurrentTab = 'users';
+                renderAdmin();
+            });
+            document.getElementById('adminTabHistory').addEventListener('click', function () {
+                adminCurrentTab = 'history';
+                renderAdmin();
+            });
+
+            function renderAdmin() {
+                if (currentUser.role !== 'admin') return;
+                const container = document.getElementById('adminContent');
+                if (adminCurrentTab === 'applications') renderAdminApplications(container);
+                else if (adminCurrentTab === 'users') renderAdminUsers(container);
+                else if (adminCurrentTab === 'history') renderAdminHistory(container);
+            }
+
+            function renderAdminApplications(container) {
+                let items = [];
+
+                foodOrders.forEach(o => {
+                    items.push({
+                        id: o.id,
+                        type: '🍕 Еда',
+                        userId: o.userId,
+                        userFio: o.userFio || 'Неизвестный',
+                        status: o.status,
+                        details: `${o.dish} (ком. ${o.room})`,
+                        data: o,
+                        time: o.time || getCurrentTime()
+                    });
+                });
+
+                cleaningOrders.forEach(o => {
+                    items.push({
+                        id: o.id,
+                        type: '🧹 Уборка',
+                        userId: o.userId,
+                        userFio: o.userFio || 'Неизвестный',
+                        status: o.status,
+                        details: `${o.room} (${o.date} ${o.time})`,
+                        data: o,
+                        time: o.time || getCurrentTime()
+                    });
+                });
+
+                massageOrders.forEach(o => {
+                    items.push({
+                        id: o.id,
+                        type: '💆 Массаж',
+                        userId: o.userId,
+                        userFio: o.userFio || 'Неизвестный',
+                        status: o.status,
+                        details: `${o.type}, ком. ${o.room}, ${o.duration} мин`,
+                        data: o,
+                        time: o.time || getCurrentTime()
+                    });
+                });
+
+                legalOrders.forEach(o => {
+                    items.push({
+                        id: o.id,
+                        type: '⚖️ Консультация',
+                        userId: o.userId,
+                        userFio: o.userFio || 'Неизвестный',
+                        status: o.status,
+                        details: `${o.fio}, ${o.date} ${o.time}`,
+                        data: o,
+                        time: o.time || getCurrentTime()
+                    });
+                });
+
+                courtOrders.forEach(o => {
+                    items.push({
+                        id: o.id,
+                        type: '🏛️ Суд',
+                        userId: o.userId,
+                        userFio: o.userFio || 'Неизвестный',
+                        status: o.status,
+                        details: `${o.fio} → ${o.defendant}`,
+                        data: o,
+                        time: o.time || getCurrentTime(),
+                        isCourt: true
+                    });
+                });
+
+                applications.forEach(o => {
+                    items.push({
+                        id: o.id,
+                        type: '💼 Отклик',
+                        userId: o.userId,
+                        userFio: o.userFio || 'Неизвестный',
+                        status: o.status,
+                        details: `${o.vacancy}`,
+                        data: o,
+                        time: o.time || getCurrentTime()
+                    });
+                });
+
+                pendingVacancies.forEach(o => {
+                    items.push({
+                        id: o.id,
+                        type: '💼 Вакансия (на модерации)',
+                        userId: o.userId,
+                        userFio: o.userFio || 'Неизвестный',
+                        status: 'pending',
+                        details: `${o.title} (${o.company})`,
+                        data: o,
+                        isPendingVacancy: true,
+                        time: o.time || getCurrentTime()
+                    });
+                });
+
+                if (!items.length) {
+                    container.innerHTML = `<div class="empty-state">Нет заявок</div>`;
+                    return;
+                }
+
+                let sortOrder = 'newest';
+                container.innerHTML = `
+                    <div style="display:flex;gap:10px;margin-bottom:1rem;align-items:center;flex-wrap:wrap;">
+                        <span style="font-size:0.9rem;color:#4b5563;">Сортировать:</span>
+                        <select class="sort-select" id="sortOrders">
+                            <option value="newest">Сначала новые</option>
+                            <option value="oldest">Сначала старые</option>
+                            <option value="status">По статусу</option>
+                            <option value="type">По типу</option>
+                            <option value="user">По пользователю</option>
+                        </select>
+                    </div>
+                    <div id="adminOrdersGrid" class="cards-grid"></div>
+                `;
+
+                function renderSortedOrders(order) {
+                    const grid = document.getElementById('adminOrdersGrid');
+                    let sorted = [...items];
+                    if (order === 'newest') sorted.sort((a, b) => (a.time || '').localeCompare(b.time || '') * -1);
+                    else if (order === 'oldest') sorted.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+                    else if (order === 'status') sorted.sort((a, b) => a.status.localeCompare(b.status));
+                    else if (order === 'type') sorted.sort((a, b) => a.type.localeCompare(b.type));
+                    else if (order === 'user') sorted.sort((a, b) => (a.userFio || '').localeCompare(b.userFio || ''));
+
+                    grid.innerHTML = sorted.map((item) => `
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${item.id}</span>
+                                <span class="card-status status-${getStatusClass(item.status)}">${statusText(item.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>Тип:</strong> ${item.type}</div>
+                            <div class="card-detail"><strong>Пользователь:</strong> ${item.userFio} (ID: ${item.userId})</div>
+                            <div class="card-detail"><strong>Детали:</strong> ${item.details}</div>
+                            ${item.data.note ? `<div class="card-detail"><strong>Пожелания:</strong> ${item.data.note}</div>` : ''}
+                            ${item.data.topic ? `<div class="card-detail"><strong>Тема:</strong> ${item.data.topic}</div>` : ''}
+                            ${item.data.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${item.data.defendant}</div>` : ''}
+                            ${item.data.reason ? `<div class="card-detail"><strong>Причина:</strong> ${item.data.reason.substring(0, 100)}${item.data.reason.length > 100 ? '...' : ''}</div>` : ''}
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${item.time}</div>
+                            ${item.data.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${item.data.adminComment}</div>` : ''}
+                            ${item.data.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${item.data.rejectReason}</div>` : ''}
+                            <div class="card-actions">
+                                ${item.isCourt && (item.status === 'new' || item.status === 'pending') ? `
+                                    <button class="btn-sm blue" data-court-response="${item.id}">⚖️ Рассмотреть иск</button>
+                                ` : ''}
+                                ${item.isPendingVacancy ? `
+                                    <button class="btn-sm green" data-admin-approve-vacancy="${item.id}">✅ Одобрить</button>
+                                    <button class="btn-sm danger" data-admin-reject="${item.id}">❌ Отказать</button>
+                                ` : `
+                                    ${!item.isCourt ? `
+                                        <button class="btn-sm gold" data-admin-status="${item.id}">📌 Статус</button>
+                                        ${item.status !== 'done' && item.status !== 'cancelled' && item.status !== 'rejected' && item.status !== 'approved' && item.status !== 'denied' ? `
+                                            <button class="btn-sm green" data-admin-approve="${item.id}">✅ В работу</button>
+                                        ` : ''}
+                                        ${item.status === 'new' ? `
+                                            <button class="btn-sm danger" data-admin-reject="${item.id}">❌ Отказать</button>
+                                        ` : ''}
+                                    ` : ''}
+                                `}
+                            </div>
+                        </div>
+                    `).join('');
+
+                    // Court response
+                    grid.querySelectorAll('[data-court-response]').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            const id = this.dataset.courtResponse;
+                            const item = items.find(i => i.id === id);
+                            if (item) {
+                                courtResponseTarget = item.data;
+                                document.getElementById('courtResponseTitle').textContent =
+                                    `🏛️ Рассмотрение иска ${item.id}`;
+                                openModal('modalCourtResponse');
+                            }
+                        });
+                    });
+
+                    grid.querySelectorAll('[data-admin-status]').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            const id = this.dataset.adminStatus;
+                            const item = items.find(i => i.id === id);
+                            if (item) {
+                                statusChangeTarget = item.data;
+                                openModal('modalStatusChange');
+                            }
+                        });
+                    });
+
+                    grid.querySelectorAll('[data-admin-approve]').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            const id = this.dataset.adminApprove;
+                            const item = items.find(i => i.id === id);
+                            if (item) {
+                                approveTarget = item.data;
+                                openModal('modalApprove');
+                            }
+                        });
+                    });
+
+                    grid.querySelectorAll('[data-admin-approve-vacancy]').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            const id = this.dataset.adminApproveVacancy;
+                            const item = items.find(i => i.id === id);
+                            if (item && item.isPendingVacancy) {
+                                const vac = pendingVacancies.find(v => v.id === item.id);
+                                if (vac) {
+                                    vac.status = 'active';
+                                    vacancies.push(vac);
+                                    pendingVacancies = pendingVacancies.filter(v => v.id !== vac.id);
+                                    addNotification(vac.userId, '✅ Вакансия одобрена',
+                                        `Ваша вакансия "${vac.title}" опубликована`);
+                                    saveAll();
+                                    showToast('✅ Вакансия одобрена');
+                                    renderAdmin();
+                                }
+                            }
+                        });
+                    });
+
+                    grid.querySelectorAll('[data-admin-reject]').forEach(btn => {
+                        btn.addEventListener('click', function () {
+                            const id = this.dataset.adminReject;
+                            const item = items.find(i => i.id === id);
+                            if (item) {
+                                rejectTarget = item.data;
+                                if (item.isPendingVacancy) rejectTarget.isPendingVacancy = true;
+                                openModal('modalReject');
+                            }
+                        });
+                    });
+                }
+
+                document.getElementById('sortOrders').addEventListener('change', function () {
+                    renderSortedOrders(this.value);
+                });
+
+                renderSortedOrders('newest');
+            }
+
+            function renderAdminUsers(container) {
+                container.innerHTML = `
+                    <div class="search-box">
+                        <input type="text" id="adminUserSearch" placeholder="Поиск по ID или ФИО...">
+                        <button id="adminUserSearchBtn">Найти</button>
+                    </div>
+                    <div id="adminSearchResult"></div>
+                    <div class="cards-grid" id="adminUsersGrid">
+                        ${users.map(u => `
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-id">${u.id}</span>
+                                    <span style="font-size:0.7rem;color:${u.role === 'admin' ? '#b8962e' : '#8b97a8'};">${u.role || 'user'}</span>
+                                </div>
+                                <div class="card-detail"><strong>${u.fio}</strong></div>
+                                <div class="card-detail">${u.email}</div>
+                                ${isUserBanned(u) ? `<div class="card-detail" style="color:#a14f4f;">🚫 Забанен</div>` : ''}
+                                <div class="card-actions">
+                                    <button class="btn-sm gold" data-admin-user="${u.id}">👤 Управлять</button>
+                                    ${u.id !== '00000' ? `<button class="btn-sm danger" data-admin-ban="${u.id}">🚫 Бан</button>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                document.querySelectorAll('[data-admin-user]').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const userId = this.dataset.adminUser;
+                        const user = users.find(u => u.id === userId);
+                        if (user) openUserManagement(user);
+                    });
+                });
+
+                document.querySelectorAll('[data-admin-ban]').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const userId = this.dataset.adminBan;
+                        const user = users.find(u => u.id === userId);
+                        if (user) {
+                            banTarget = user;
+                            openModal('modalBan');
+                        }
+                    });
+                });
+
+                document.getElementById('adminUserSearchBtn').addEventListener('click', function () {
+                    const query = document.getElementById('adminUserSearch').value.trim();
+                    if (!query) { document.getElementById('adminSearchResult').innerHTML = ''; return; }
+                    const user = users.find(u => u.id === query);
+                    const resultDiv = document.getElementById('adminSearchResult');
+                    if (user) {
+                        const banInfo = getBanInfo(user);
+                        const foodCount = foodOrders.filter(o => o.userId === user.id).length;
+                        const cleanCount = cleaningOrders.filter(o => o.userId === user.id).length;
+                        const massageCount = massageOrders.filter(o => o.userId === user.id).length;
+                        const legalCount = legalOrders.filter(o => o.userId === user.id).length;
+                        const courtCount = courtOrders.filter(o => o.userId === user.id).length;
+                        const appCount = applications.filter(a => a.userId === user.id).length;
+                        resultDiv.innerHTML = `
+                            <div class="user-detail-card">
+                                <h3 style="color:#b8962e;">🔍 Результат поиска</h3>
+                                <div><strong>ID:</strong> ${user.id}</div>
+                                <div><strong>ФИО:</strong> ${user.fio}</div>
+                                <div><strong>Email:</strong> ${user.email}</div>
+                                <div><strong>Роль:</strong> ${user.role || 'Пользователь'}</div>
+                                <div><strong>Статус:</strong> ${isUserBanned(user) ? '🚫 Забанен' : '✅ Активен'}</div>
+                                ${banInfo ? `<div><strong>Причина бана:</strong> ${banInfo.reason}</div><div><strong>До:</strong> ${banInfo.expiry}</div>` : ''}
+                                <div><strong>Заказов еды:</strong> ${foodCount}</div>
+                                <div><strong>Заявок на уборку:</strong> ${cleanCount}</div>
+                                <div><strong>Записей на массаж:</strong> ${massageCount}</div>
+                                <div><strong>Консультаций:</strong> ${legalCount}</div>
+                                <div><strong>Исков:</strong> ${courtCount}</div>
+                                <div><strong>Откликов:</strong> ${appCount}</div>
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML =
+                            `<div class="user-detail-card" style="color:#a14f4f;">❌ Пользователь не найден</div>`;
+                    }
+                });
+            }
+
+            function openUserManagement(user) {
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay active';
+                modal.style.display = 'flex';
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.background = 'rgba(10,10,14,0.4)';
+                modal.style.backdropFilter = 'blur(3px)';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '999';
+                modal.style.padding = '1rem';
+
+                const banInfo = getBanInfo(user);
+                modal.innerHTML = `
+                    <div class="modal" style="max-width:650px;width:100%;max-height:90vh;overflow-y:auto;border-radius:30px;padding:2rem 2.5rem;">
+                        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()" style="float:right;font-size:2rem;cursor:pointer;color:#a0aaba;background:none;border:none;">&times;</button>
+                        <h2>👤 Управление: ${user.fio}</h2>
+                        <div style="margin-bottom:1rem;">
+                            <div><strong>ID:</strong> ${user.id}</div>
+                            <div><strong>Email:</strong> ${user.email}</div>
+                            <div><strong>Роль:</strong> ${user.role || 'Пользователь'}</div>
+                            ${banInfo ? `<div style="color:#a14f4f;"><strong>🚫 Забанен:</strong> ${banInfo.reason} (${banInfo.expiry})</div>` : ''}
+                            <div style="margin-top:0.5rem;border-top:1px solid #eef2f7;padding-top:0.5rem;">
+                                <strong>Статистика:</strong>
+                                <div>🍕 Еда: ${foodOrders.filter(o => o.userId === user.id).length}</div>
+                                <div>🧹 Уборка: ${cleaningOrders.filter(o => o.userId === user.id).length}</div>
+                                <div>💆 Массаж: ${massageOrders.filter(o => o.userId === user.id).length}</div>
+                                <div>⚖️ Консультации: ${legalOrders.filter(o => o.userId === user.id).length}</div>
+                                <div>🏛️ Иски: ${courtOrders.filter(o => o.userId === user.id).length}</div>
+                                <div>💼 Отклики: ${applications.filter(a => a.userId === user.id).length}</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;">
+                            ${user.role !== 'admin' ? `<button class="btn-sm gold" data-role-promote="${user.id}">⬆️ Агент поддержки</button>` : ''}
+                            ${user.role === 'support' ? `<button class="btn-sm danger" data-role-demote="${user.id}">⬇️ Снять роль</button>` : ''}
+                            ${user.role === 'admin' ? `<span style="font-size:0.8rem;color:#b8962e;">👑 Администратор</span>` : ''}
+                            ${banInfo ? `<button class="btn-sm green" data-unban="${user.id}">🔓 Разжаловать</button>` : ''}
+                        </div>
+                        <button class="btn-submit" onclick="this.closest('.modal-overlay').remove()">Закрыть</button>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+
+                modal.querySelector('[data-role-promote]')?.addEventListener('click', function () {
+                    const uid = this.dataset.rolePromote;
+                    const u = users.find(u => u.id === uid);
+                    if (u) {
+                        u.role = 'support';
+                        saveAll();
+                        showToast('✅ Роль назначена');
+                        modal.remove();
+                        renderAdmin();
+                    }
+                });
+
+                modal.querySelector('[data-role-demote]')?.addEventListener('click', function () {
+                    const uid = this.dataset.roleDemote;
+                    const u = users.find(u => u.id === uid);
+                    if (u) {
+                        u.role = 'user';
+                        saveAll();
+                        showToast('✅ Роль снята');
+                        modal.remove();
+                        renderAdmin();
+                    }
+                });
+
+                modal.querySelector('[data-unban]')?.addEventListener('click', function () {
+                    const uid = this.dataset.unban;
+                    const u = users.find(u => u.id === uid);
+                    if (u) {
+                        u.banned = false;
+                        u.banReason = '';
+                        u.banExpiry = null;
+                        saveAll();
+                        addNotification(u.id, '🔓 Аккаунт разблокирован', 'Ваш аккаунт разблокирован');
+                        showToast('🔓 Пользователь разблокирован');
+                        modal.remove();
+                        renderAdmin();
+                    }
+                });
+            }
+
+            function renderAdminHistory(container) {
+                let allOrders = [];
+
+                foodOrders.forEach(o => { allOrders.push({ ...o, type: 'food', typeLabel: '🍕 Еда' }); });
+                cleaningOrders.forEach(o => { allOrders.push({ ...o, type: 'cleaning', typeLabel: '🧹 Уборка' }); });
+                applications.forEach(o => { allOrders.push({ ...o, type: 'work', typeLabel: '💼 Работа' }); });
+                massageOrders.forEach(o => { allOrders.push({ ...o, type: 'massage', typeLabel: '💆 Массаж' }); });
+                legalOrders.forEach(o => { allOrders.push({ ...o, type: 'legal', typeLabel: '⚖️ Консультация' }); });
+                courtOrders.forEach(o => { allOrders.push({ ...o, type: 'court', typeLabel: '🏛️ Суд' }); });
+
+                allOrders.sort((a, b) => (a.time || '').localeCompare(b.time || '') * -1);
+
+                if (!allOrders.length) {
+                    container.innerHTML = `<div class="empty-state">📋 История пуста</div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div style="margin-bottom:1rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                        <span style="font-size:0.9rem;color:#4b5563;">Всего: <strong>${allOrders.length}</strong></span>
+                        <span style="font-size:0.9rem;color:#4b5563;">|</span>
+                        <span style="font-size:0.9rem;color:#4b5563;">🍕 Еда: ${foodOrders.length}</span>
+                        <span style="font-size:0.9rem;color:#4b5563;">🧹 Уборка: ${cleaningOrders.length}</span>
+                        <span style="font-size:0.9rem;color:#4b5563;">💆 Массаж: ${massageOrders.length}</span>
+                        <span style="font-size:0.9rem;color:#4b5563;">⚖️ Консультации: ${legalOrders.length}</span>
+                        <span style="font-size:0.9rem;color:#4b5563;">🏛️ Иски: ${courtOrders.length}</span>
+                        <span style="font-size:0.9rem;color:#4b5563;">💼 Отклики: ${applications.length}</span>
+                    </div>
+                    <div class="cards-grid">
+                        ${allOrders.map(o => `
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-id">${o.id}</span>
+                                    <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                                </div>
+                                <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
+                                <div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (ID: ${o.userId})</div>
+                                ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
+                                ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
+                                ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
+                                ${o.date ? `<div class="card-detail"><strong>Дата:</strong> ${o.date} ${o.time || ''}</div>` : ''}
+                                ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
+                                ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
+                                ${o.topic ? `<div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>` : ''}
+                                ${o.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>` : ''}
+                                ${o.reason ? `<div class="card-detail"><strong>Причина:</strong> ${o.reason.substring(0, 100)}${o.reason.length > 100 ? '...' : ''}</div>` : ''}
+                                ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                                ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                                ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            // ===== ЗАПУСК =====
+            document.addEventListener('DOMContentLoaded', function () {
+                const adminExists = users.some(u => u.id === '00000');
+                if (!adminExists) {
+                    users.push({
+                        id: '00000',
+                        fio: 'Администратор',
+                        email: 'admin@ad.systems',
+                        password: '31441537a',
+                        role: 'admin',
+                        banned: false,
+                        banReason: '',
+                        banExpiry: null
+                    });
+                    saveAll();
+                }
+
+                const session = sessionStorage.getItem('ad_session');
+                if (session) {
+                    try {
+                        const parsed = JSON.parse(session);
+                        const user = users.find(u => u.id === parsed.id);
+                        if (user && !isUserBanned(user)) {
+                            currentUser = user;
+                            showMainPage();
+                            return;
+                        }
+                    } catch (e) { }
+                }
+
+                if (!checkRememberedUser()) {
+                    showAuth();
+                }
+            });
+
+        })();
+    </script>
 </body>
 
 </html>
