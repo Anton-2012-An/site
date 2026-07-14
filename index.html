@@ -5,135 +5,844 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AD — Сервисы</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f5f7fb,#e8ecf4,#dce2ec);color:#1a1a1e;min-height:100vh}
-        .container{max-width:1400px;margin:0 auto;padding:1.5rem}
-        .auth-page{display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#1a1a1e,#2d2d35);padding:1.5rem;position:relative;overflow:hidden}
-        .auth-page::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(184,150,46,0.05),transparent 70%);animation:rotateBg 20s linear infinite}
-        @keyframes rotateBg{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-        .auth-box{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:40px;padding:3rem;max-width:500px;width:100%;box-shadow:0 40px 80px rgba(0,0,0,0.3);position:relative;z-index:1}
-        .auth-box .logo{font-size:2.8rem;font-weight:300;text-align:center;margin-bottom:0.5rem}
-        .auth-box .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}
-        .auth-box .subtitle{text-align:center;color:#8b97a8;font-size:.9rem;margin-bottom:2rem}
-        .auth-tabs{display:flex;gap:0;margin-bottom:2rem;border-radius:60px;overflow:hidden;border:1px solid #e2e8f0}
-        .auth-tabs button{flex:1;padding:.7rem;border:none;background:rgba(255,255,255,0.8);cursor:pointer;font-size:.95rem;font-weight:500;transition:all .3s ease;color:#8b97a8}
-        .auth-tabs button.active{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.2)}
-        .auth-tabs button:hover:not(.active){background:#f0f2f5}
-        .auth-form{display:none}
-        .auth-form.active{display:block;animation:fadeIn .3s ease}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        .form-group{margin-bottom:1rem}
-        .form-group label{display:block;font-size:.85rem;font-weight:500;color:#4b5563;margin-bottom:4px}
-        .form-group input,.form-group textarea,.form-group select{width:100%;padding:.6rem 1rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.9rem;background:rgba(255,255,255,0.8);transition:all .3s ease;font-family:inherit}
-        .form-group textarea{min-height:80px;resize:vertical}
-        .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}
-        .checkbox-group{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
-        .checkbox-group label{display:flex;align-items:center;gap:5px;font-size:.85rem;font-weight:400;color:#2d3748;cursor:pointer}
-        .checkbox-group input[type=checkbox]{width:16px;height:16px;accent-color:#b8962e;cursor:pointer}
-        .btn-auth{width:100%;padding:.8rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);margin-top:.5rem;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-        .btn-auth:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px) scale(1.02);box-shadow:0 8px 30px rgba(184,150,46,0.3)}
-        .auth-error{color:#a14f4f;font-size:.9rem;text-align:center;margin-top:.5rem;display:none}
-        .auth-error.show{display:block}
-        .remember-me{display:flex;align-items:center;gap:8px;margin-top:.5rem}
-        .remember-me input[type=checkbox]{width:18px;height:18px;accent-color:#b8962e;cursor:pointer}
-        .remember-me label{font-size:.9rem;color:#4b5563;cursor:pointer}
-        .check-user-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.6);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:9999}
-        .check-user-overlay.active{display:flex}
-        .check-user-box{background:#fff;border-radius:30px;padding:2.5rem 3rem;max-width:450px;width:100%;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.3);animation:fadeIn .3s ease}
-        .check-user-box .avatar-big{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:600;margin:0 auto 1rem;box-shadow:0 8px 30px rgba(184,150,46,0.3)}
-        .check-user-box h2{font-weight:300;color:#1a1a1e;margin-bottom:.3rem}
-        .check-user-box .user-email{color:#8b97a8;font-size:.9rem;margin-bottom:1.5rem}
-        .check-user-box .btn-group{display:flex;gap:1rem;justify-content:center}
-        .check-user-box .btn-group button{padding:.6rem 2rem;border:none;border-radius:60px;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s ease}
-        .check-user-box .btn-yes{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.3)}
-        .check-user-box .btn-yes:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(184,150,46,0.4)}
-        .check-user-box .btn-no{background:#e2e8f0;color:#4b5563}
-        .check-user-box .btn-no:hover{background:#a14f4f;color:#fff}
-        .main-page{display:none}
-        .main-page.active{display:block}
-        .main-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding:1rem 0;border-bottom:2px solid #d4af37;margin-bottom:2rem}
-        .main-header .logo{font-size:2rem;font-weight:300}
-        .main-header .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}
-        .main-header .user-info{display:flex;align-items:center;gap:1rem}
-        .main-header .user-info .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.2rem;box-shadow:0 4px 15px rgba(184,150,46,0.3)}
-        .main-header .user-name{font-weight:500}
-        .main-header .user-role{font-size:.7rem;color:#8b97a8;background:#f0f2f5;padding:.1rem .6rem;border-radius:30px}
-        .btn-logout{padding:.4rem 1.2rem;border:1px solid #e5b3b3;border-radius:60px;background:none;color:#a14f4f;cursor:pointer;transition:.2s;font-size:.8rem}
-        .btn-logout:hover{background:#a14f4f;color:#fff}
-        .sections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;padding:1rem 0}
-        .section-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.08);cursor:pointer;transition:all .4s cubic-bezier(.34,1.56,.64,1);border:2px solid transparent}
-        .section-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(184,150,46,0.15);border-color:#d4af37}
-        .section-card .section-image{width:100%;height:200px;display:flex;align-items:center;justify-content:center;font-size:80px}
-        .section-card .section-info{padding:1.5rem}
-        .section-card .section-info h3{font-size:1.3rem;font-weight:500;margin-bottom:.3rem}
-        .section-card .section-info p{color:#8b97a8;font-size:.9rem}
-        .section-card .section-badge{display:inline-block;font-size:.7rem;padding:.1rem .6rem;border-radius:30px;background:#b8962e;color:#fff;margin-top:.5rem}
-        .panels-container{display:none}
-        .panels-container.active{display:block}
-        .service-panel{display:none}
-        .service-panel.active{display:block}
-        .panel-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0}
-        .panel-header h2{font-size:1.6rem;font-weight:300;border-left:4px solid #d4af37;padding-left:1rem}
-        .btn-back{padding:.4rem 1.2rem;border:1px solid #d0d7e2;border-radius:60px;background:none;cursor:pointer;transition:all .3s ease;font-size:.9rem;color:#4b5563}
-        .btn-back:hover{border-color:#b8962e;color:#b8962e}
-        .btn{padding:.5rem 1.8rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.9rem;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-        .btn:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px) scale(1.02);box-shadow:0 8px 30px rgba(184,150,46,0.3)}
-        .btn-sm{padding:.25rem 1rem;font-size:.75rem;border-radius:40px;border:1px solid #d0d7e2;background:rgba(255,255,255,0.8);cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);color:#4b5563}
-        .btn-sm:hover{border-color:#b8962e;color:#b8962e;transform:translateY(-2px)}
-        .btn-sm.gold{border-color:#d4af37;color:#b8962e}
-        .btn-sm.gold:hover{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff}
-        .btn-sm.danger{border-color:#e5b3b3;color:#a14f4f}
-        .btn-sm.danger:hover{background:#a14f4f;color:#fff}
-        .btn-sm.green{border-color:#27ae60;color:#27ae60}
-        .btn-sm.green:hover{background:#27ae60;color:#fff}
-        .btn-sm.purple{border-color:#8e44ad;color:#8e44ad}
-        .btn-sm.purple:hover{background:#8e44ad;color:#fff}
-        .btn-sm.blue{border-color:#3b82f6;color:#3b82f6}
-        .btn-sm.blue:hover{background:#3b82f6;color:#fff}
-        .card{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-radius:20px;padding:1.3rem 1.5rem;box-shadow:0 4px 20px rgba(0,0,0,0.06);border:1px solid rgba(255,255,255,0.5);transition:all .3s ease}
-        .card:hover{border-color:#d4af37;box-shadow:0 12px 40px rgba(184,150,46,0.12)}
-        .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;flex-wrap:wrap;gap:4px}
-        .card-id{font-size:.75rem;color:#8b97a8;font-weight:500}
-        .card-status{font-size:.7rem;padding:.1rem .6rem;border-radius:30px;font-weight:500}
-        .card-detail{font-size:.9rem;margin:2px 0}
-        .card-actions{margin-top:.6rem;display:flex;flex-wrap:wrap;gap:6px}
-        .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem}
-        .empty-state{color:#8b97a8;text-align:center;padding:2.5rem 0;background:rgba(255,255,255,0.5);border-radius:30px;border:1px dashed #dce2ec;font-size:.95rem}
-        .status-new{background:#e6f0ff;color:#1a4f8b}
-        .status-processing{background:#fff4e0;color:#a86f1a}
-        .status-done{background:#e6f7ed;color:#0f6e4a}
-        .status-cancelled{background:#fde8e8;color:#a14f4f}
-        .status-active{background:#e6f7ed;color:#0f6e4a}
-        .status-closed{background:#f0f0f0;color:#5b5b5b}
-        .status-accepted{background:#e6f7ed;color:#0f6e4a}
-        .status-rejected{background:#fde8e8;color:#a14f4f}
-        .status-pending{background:#fff4e0;color:#a86f1a}
-        .status-approved{background:#d1fae5;color:#065f46}
-        .status-denied{background:#fde8e8;color:#991b1b}
-        .badge{background:#a14f4f;color:#fff;border-radius:30px;padding:.05rem .5rem;font-size:.6rem;margin-left:4px}
-        .badge.gold{background:#b8962e}
-        .modal{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-radius:30px;padding:2rem 2.5rem;box-shadow:0 40px 80px rgba(0,0,0,0.2);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;animation:fadeIn .3s ease}
-        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.4);backdrop-filter:blur(3px);display:none;justify-content:center;align-items:center;z-index:999;padding:1rem}
-        .modal-overlay.active{display:flex}
-        .modal-close{float:right;font-size:2rem;cursor:pointer;color:#a0aaba;background:none;border:none}
-        .btn-submit{width:100%;padding:.7rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .3s ease;margin-top:.5rem}
-        .btn-submit:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px);box-shadow:0 8px 30px rgba(184,150,46,0.3)}
-        .btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
-        .btn-submit:disabled:hover{background:linear-gradient(135deg,#1a1a1e,#2d2d35);transform:none;box-shadow:none}
-        .search-box{display:flex;gap:8px;margin-bottom:1rem}
-        .search-box input{flex:1;padding:.6rem 1rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.9rem;background:rgba(255,255,255,0.8);transition:all .3s ease}
-        .search-box input:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}
-        .search-box button{padding:.6rem 1.5rem;border:none;border-radius:14px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;cursor:pointer;transition:all .3s ease}
-        .search-box button:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-2px)}
-        .user-detail-card{background:rgba(255,255,255,0.9);border-radius:16px;padding:1rem;border:1px solid rgba(212,175,55,0.2);margin-bottom:.5rem}
-        .sort-select{padding:.4rem 1rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.9rem;background:#fff;cursor:pointer}
-        .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(26,26,30,0.95);backdrop-filter:blur(20px);color:#fff;padding:.7rem 2rem;border-radius:60px;font-size:.95rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:1000;border:1px solid rgba(212,175,55,0.3)}
-        .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-        .history-filter{display:flex;gap:10px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
-        .history-filter select,.history-filter input{padding:.4rem 1rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.9rem;background:#fff}
-        @media(max-width:768px){.auth-box{padding:1.5rem}.modal{padding:1.2rem}.sections-grid{grid-template-columns:1fr 1fr}.check-user-box{padding:1.5rem}}
-        @media(max-width:480px){.sections-grid{grid-template-columns:1fr}}
-        .agreement-scroll{max-height:200px;overflow-y:auto;padding:.5rem 1rem;background:#fafbfc;border-radius:14px;border:1px solid #e2e8f0;font-size:.8rem;line-height:1.6;color:#2d3748;margin-bottom:1rem}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fb 0%, #e8ecf4 50%, #dce2ec 100%);
+            color: #1a1a1e;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        .auth-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1e 0%, #2d2d35 100%);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(184, 150, 46, 0.05) 0%, transparent 70%);
+            animation: rotateBg 20s linear infinite;
+        }
+        @keyframes rotateBg {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .auth-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        .auth-box .logo {
+            font-size: 2.8rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .auth-box .logo span {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 400;
+        }
+        .auth-box .subtitle {
+            text-align: center;
+            color: #8b97a8;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .auth-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-radius: 60px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .auth-tabs button {
+            flex: 1;
+            padding: 0.7rem;
+            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: #8b97a8;
+        }
+        .auth-tabs button.active {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            box-shadow: 0 4px 15px rgba(184, 150, 46, 0.2);
+        }
+        .auth-tabs button:hover:not(.active) {
+            background: #f0f2f5;
+        }
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 4px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.06);
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 4px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #2d3748;
+            cursor: pointer;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #b8962e;
+            cursor: pointer;
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-auth:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+        .auth-error {
+            color: #a14f4f;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .auth-error.show {
+            display: block;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #b8962e;
+            cursor: pointer;
+        }
+        .remember-me label {
+            font-size: 0.9rem;
+            color: #4b5563;
+            cursor: pointer;
+        }
+
+        .check-user-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 14, 0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .check-user-overlay.active {
+            display: flex;
+        }
+        .check-user-box {
+            background: white;
+            border-radius: 30px;
+            padding: 2.5rem 3rem;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        .check-user-box .avatar-big {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+        .check-user-box h2 {
+            font-weight: 300;
+            color: #1a1a1e;
+            margin-bottom: 0.3rem;
+        }
+        .check-user-box .user-email {
+            color: #8b97a8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .check-user-box .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .check-user-box .btn-group button {
+            padding: 0.6rem 2rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .check-user-box .btn-yes {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            box-shadow: 0 4px 15px rgba(184, 150, 46, 0.3);
+        }
+        .check-user-box .btn-yes:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(184, 150, 46, 0.4);
+        }
+        .check-user-box .btn-no {
+            background: #e2e8f0;
+            color: #4b5563;
+        }
+        .check-user-box .btn-no:hover {
+            background: #a14f4f;
+            color: white;
+        }
+
+        .main-page {
+            display: none;
+        }
+        .main-page.active {
+            display: block;
+        }
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 2px solid #d4af37;
+            margin-bottom: 2rem;
+        }
+        .main-header .logo {
+            font-size: 2rem;
+            font-weight: 300;
+        }
+        .main-header .logo span {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 400;
+        }
+        .main-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .main-header .user-info .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(184, 150, 46, 0.3);
+        }
+        .main-header .user-name {
+            font-weight: 500;
+        }
+        .main-header .user-role {
+            font-size: 0.7rem;
+            color: #8b97a8;
+            background: #f0f2f5;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+        }
+        .btn-logout {
+            padding: 0.4rem 1.2rem;
+            border: 1px solid #e5b3b3;
+            border-radius: 60px;
+            background: none;
+            color: #a14f4f;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .btn-logout:hover {
+            background: #a14f4f;
+            color: white;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+        .section-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+        }
+        .section-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(184, 150, 46, 0.15);
+            border-color: #d4af37;
+        }
+        .section-card .section-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+        }
+        .section-card .section-info {
+            padding: 1.5rem;
+        }
+        .section-card .section-info h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+        .section-card .section-info p {
+            color: #8b97a8;
+            font-size: 0.9rem;
+        }
+        .section-card .section-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            background: #b8962e;
+            color: white;
+            margin-top: 0.5rem;
+        }
+
+        .panels-container {
+            display: none;
+        }
+        .panels-container.active {
+            display: block;
+        }
+        .service-panel {
+            display: none;
+        }
+        .service-panel.active {
+            display: block;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .panel-header h2 {
+            font-size: 1.6rem;
+            font-weight: 300;
+            border-left: 4px solid #d4af37;
+            padding-left: 1rem;
+        }
+        .btn-back {
+            padding: 0.4rem 1.2rem;
+            border: 1px solid #d0d7e2;
+            border-radius: 60px;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        .btn-back:hover {
+            border-color: #b8962e;
+            color: #b8962e;
+        }
+
+        .btn {
+            padding: 0.5rem 1.8rem;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+
+        .btn-sm {
+            padding: 0.25rem 1rem;
+            font-size: 0.75rem;
+            border-radius: 40px;
+            border: 1px solid #d0d7e2;
+            background: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: #4b5563;
+        }
+        .btn-sm:hover {
+            border-color: #b8962e;
+            color: #b8962e;
+            transform: translateY(-2px);
+        }
+        .btn-sm.gold {
+            border-color: #d4af37;
+            color: #b8962e;
+        }
+        .btn-sm.gold:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            color: white;
+        }
+        .btn-sm.danger {
+            border-color: #e5b3b3;
+            color: #a14f4f;
+        }
+        .btn-sm.danger:hover {
+            background: #a14f4f;
+            color: white;
+        }
+        .btn-sm.green {
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+        .btn-sm.green:hover {
+            background: #27ae60;
+            color: white;
+        }
+        .btn-sm.purple {
+            border-color: #8e44ad;
+            color: #8e44ad;
+        }
+        .btn-sm.purple:hover {
+            background: #8e44ad;
+            color: white;
+        }
+        .btn-sm.blue {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        .btn-sm.blue:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.3rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #d4af37;
+            box-shadow: 0 12px 40px rgba(184, 150, 46, 0.12);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .card-id {
+            font-size: 0.75rem;
+            color: #8b97a8;
+            font-weight: 500;
+        }
+        .card-status {
+            font-size: 0.7rem;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+        .card-detail {
+            font-size: 0.9rem;
+            margin: 2px 0;
+        }
+        .card-actions {
+            margin-top: 0.6rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.2rem;
+        }
+        .empty-state {
+            color: #8b97a8;
+            text-align: center;
+            padding: 2.5rem 0;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            border: 1px dashed #dce2ec;
+            font-size: 0.95rem;
+        }
+
+        .status-new {
+            background: #e6f0ff;
+            color: #1a4f8b;
+        }
+        .status-processing {
+            background: #fff4e0;
+            color: #a86f1a;
+        }
+        .status-done {
+            background: #e6f7ed;
+            color: #0f6e4a;
+        }
+        .status-cancelled {
+            background: #fde8e8;
+            color: #a14f4f;
+        }
+        .status-active {
+            background: #e6f7ed;
+            color: #0f6e4a;
+        }
+        .status-closed {
+            background: #f0f0f0;
+            color: #5b5b5b;
+        }
+        .status-accepted {
+            background: #e6f7ed;
+            color: #0f6e4a;
+        }
+        .status-rejected {
+            background: #fde8e8;
+            color: #a14f4f;
+        }
+        .status-pending {
+            background: #fff4e0;
+            color: #a86f1a;
+        }
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-denied {
+            background: #fde8e8;
+            color: #991b1b;
+        }
+
+        .badge {
+            background: #a14f4f;
+            color: white;
+            border-radius: 30px;
+            padding: 0.05rem 0.5rem;
+            font-size: 0.6rem;
+            margin-left: 4px;
+        }
+        .badge.gold {
+            background: #b8962e;
+        }
+
+        .modal {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 14, 0.4);
+            backdrop-filter: blur(3px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #a0aaba;
+            background: none;
+            border: none;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(184, 150, 46, 0.3);
+        }
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        .btn-submit:disabled:hover {
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.06);
+        }
+        .search-box button {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1a1a1e, #2d2d35);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .search-box button:hover {
+            background: linear-gradient(135deg, #b8962e, #d4af37);
+            transform: translateY(-2px);
+        }
+
+        .user-detail-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .sort-select {
+            padding: 0.4rem 1rem;
+            border: 1px solid #d0d7e2;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(26, 26, 30, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1000;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .history-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .history-filter select,
+        .history-filter input {
+            padding: 0.4rem 1rem;
+            border: 1px solid #d0d7e2;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .auth-box {
+                padding: 1.5rem;
+            }
+            .modal {
+                padding: 1.2rem;
+            }
+            .sections-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .check-user-box {
+                padding: 1.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .agreement-scroll {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 0.5rem 1rem;
+            background: #fafbfc;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -373,7 +1082,7 @@
                         users.push({
                             id: '00000',
                             fio: 'Администратор',
-                            email: 'admin@ad.systems',
+                            email: 's9531357@gmail.com',
                             password: '31441537a',
                             role: 'admin',
                             banned: false,
@@ -415,7 +1124,7 @@
 
                 } catch (e) {
                     console.error('Ошибка загрузки:', e);
-                    showToast('❌ Ошибка загрузки данных. Проверьте интернет.');
+                    showToast('❌ Ошибка загрузки данных. Проверьте интернет. для исправления данной ошибки, попробуйте перезапустить WI-FI роутер, либо проверить наличее интернет-трафика моильного интернета, а затем возвращайтесь. хорошего пути 😊');
                     showAuth();
                 }
             }
@@ -627,7 +1336,7 @@
                     return;
                 }
                 if (password.length < 6) {
-                    errorEl.textContent = '❌ Пароль минимум 6 символов';
+                    errorEl.textContent = '❌ Пароль минимум 6 символов, и желательно с хотябы одним символом, для хорошей зациты аккаунта.';
                     errorEl.classList.add('show');
                     return;
                 }
@@ -900,7 +1609,8 @@
                 closeModal('modalCleaning');
             });
 
-            // MASSAGE            document.getElementById('btnMassageOrder').addEventListener('click', () => openModal('modalMassage'));
+            // MASSAGE
+            document.getElementById('btnMassageOrder').addEventListener('click', () => openModal('modalMassage'));
             document.getElementById('closeMassage').addEventListener('click', () => closeModal('modalMassage'));
             document.getElementById('massageAgreement').addEventListener('change', function() {
                 document.getElementById('massageSubmitBtn').disabled = !this.checked;
@@ -980,7 +1690,7 @@
                 const defendantAddress = document.getElementById('courtDefendantAddress').value.trim();
                 const reason = document.getElementById('courtReason').value.trim();
                 if (!fio || !defendant || !address || !defendantAddress || !reason) return alert(
-                'Заполните все поля');
+                    'Заполните все поля');
                 orders.court.push({
                     id: generateServiceId('CT'),
                     userId: currentUser.id,
@@ -1007,7 +1717,7 @@
 
             // COURT RESPONSE (Admin)
             document.getElementById('closeCourtResponse').addEventListener('click', () => closeModal(
-            'modalCourtResponse'));
+                'modalCourtResponse'));
             document.getElementById('courtDecision').addEventListener('change', function() {
                 document.getElementById('courtApproveFields').style.display = this.value === 'approved' ? 'block' :
                     'none';
@@ -1161,45 +1871,47 @@
 
             function renderFood() {
                 const c = document.getElementById('foodContainer');
+                if (!orders || !orders.food) return;
                 const userFood = orders.food.filter(o => o.userId === currentUser.id);
                 if (!userFood.length) { c.innerHTML = `<div class="empty-state">🍕 Нет заказов</div>`; return; }
                 c.innerHTML = userFood.map((o) => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${o.id}</span>
-                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${o.id}</span>
+                                <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>
+                            <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                            <div class="card-detail"><strong>Порций:</strong> ${o.qty}</div>
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                            ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                            ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
                         </div>
-                        <div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>
-                        <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
-                        <div class="card-detail"><strong>Порций:</strong> ${o.qty}</div>
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
-                    </div>
-                `).join('');
+                    `).join('');
             }
 
             function renderVacancies() {
                 const c = document.getElementById('workVacancies');
+                if (!orders || !orders.vacancies) return;
                 const activeVacancies = orders.vacancies.filter(v => v.status === 'active');
                 if (!activeVacancies.length) { c.innerHTML = `<div class="empty-state">💼 Нет активных вакансий</div>`; return; }
                 c.innerHTML = activeVacancies.map((v) => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${v.id}</span>
-                            <span class="card-status status-${getStatusClass(v.status)}">${statusText(v.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${v.id}</span>
+                                <span class="card-status status-${getStatusClass(v.status)}">${statusText(v.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>${v.title}</strong></div>
+                            <div class="card-detail"><strong>Компания:</strong> ${v.company}</div>
+                            <div class="card-detail"><strong>Мест:</strong> ${v.places}</div>
+                            <div class="card-detail"><strong>Описание:</strong> ${v.desc}</div>
+                            <div class="card-detail"><strong>Требования:</strong> ${v.requirements}</div>
+                            <div class="card-actions">
+                                <button class="btn-sm gold" data-vac-apply="${v.id}">📋 Откликнуться</button>
+                                ${v.userId === currentUser.id ? `<button class="btn-sm danger" data-vac-close="${v.id}">Закрыть</button>` : ''}
+                            </div>
                         </div>
-                        <div class="card-detail"><strong>${v.title}</strong></div>
-                        <div class="card-detail"><strong>Компания:</strong> ${v.company}</div>
-                        <div class="card-detail"><strong>Мест:</strong> ${v.places}</div>
-                        <div class="card-detail"><strong>Описание:</strong> ${v.desc}</div>
-                        <div class="card-detail"><strong>Требования:</strong> ${v.requirements}</div>
-                        <div class="card-actions">
-                            <button class="btn-sm gold" data-vac-apply="${v.id}">📋 Откликнуться</button>
-                            ${v.userId === currentUser.id ? `<button class="btn-sm danger" data-vac-close="${v.id}">Закрыть</button>` : ''}
-                        </div>
-                    </div>
-                `).join('');
+                    `).join('');
 
                 document.querySelectorAll('[data-vac-apply]').forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -1226,108 +1938,113 @@
 
             function renderApplications() {
                 const c = document.getElementById('workApplications');
+                if (!orders || !orders.applications) return;
                 const userApps = orders.applications.filter(a => a.userId === currentUser.id);
                 if (!userApps.length) { c.innerHTML = `<div class="empty-state">Нет откликов</div>`; return; }
                 c.innerHTML = userApps.map((a) => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${a.id}</span>
-                            <span class="card-status status-${getStatusClass(a.status)}">${statusText(a.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${a.id}</span>
+                                <span class="card-status status-${getStatusClass(a.status)}">${statusText(a.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>Вакансия:</strong> ${a.vacancy}</div>
+                            <div class="card-detail"><strong>О себе:</strong> ${a.info}</div>
+                            <div class="card-detail"><strong>Галочки:</strong> ${a.checks.length ? a.checks.join(', ') : '—'}</div>
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${a.time}</div>
+                            ${a.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${a.adminComment}</div>` : ''}
+                            ${a.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${a.rejectReason}</div>` : ''}
                         </div>
-                        <div class="card-detail"><strong>Вакансия:</strong> ${a.vacancy}</div>
-                        <div class="card-detail"><strong>О себе:</strong> ${a.info}</div>
-                        <div class="card-detail"><strong>Галочки:</strong> ${a.checks.length ? a.checks.join(', ') : '—'}</div>
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${a.time}</div>
-                        ${a.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${a.adminComment}</div>` : ''}
-                        ${a.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${a.rejectReason}</div>` : ''}
-                    </div>
-                `).join('');
+                    `).join('');
             }
 
             function renderCleaning() {
                 const c = document.getElementById('cleaningContainer');
+                if (!orders || !orders.cleaning) return;
                 const userCleaning = orders.cleaning.filter(o => o.userId === currentUser.id);
                 if (!userCleaning.length) { c.innerHTML = `<div class="empty-state">🧹 Нет заявок</div>`; return; }
                 c.innerHTML = userCleaning.map((o) => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${o.id}</span>
-                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${o.id}</span>
+                                <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                            <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
+                            <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                            ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                            ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
                         </div>
-                        <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
-                        <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
-                        <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
-                    </div>
-                `).join('');
+                    `).join('');
             }
 
             function renderMassage() {
                 const c = document.getElementById('massageContainer');
+                if (!orders || !orders.massage) return;
                 const userMassage = orders.massage.filter(o => o.userId === currentUser.id);
                 if (!userMassage.length) { c.innerHTML = `<div class="empty-state">💆 Нет записей</div>`; return; }
                 c.innerHTML = userMassage.map((o) => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${o.id}</span>
-                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${o.id}</span>
+                                <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                            <div class="card-detail"><strong>Тип:</strong> ${o.type}</div>
+                            <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                            <div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>
+                            ${o.note ? `<div class="card-detail"><strong>Пожелания:</strong> ${o.note}</div>` : ''}
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                            ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                            ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
                         </div>
-                        <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
-                        <div class="card-detail"><strong>Тип:</strong> ${o.type}</div>
-                        <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
-                        <div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>
-                        ${o.note ? `<div class="card-detail"><strong>Пожелания:</strong> ${o.note}</div>` : ''}
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
-                    </div>
-                `).join('');
+                    `).join('');
             }
 
             function renderLegal() {
                 const c = document.getElementById('legalContainer');
+                if (!orders || !orders.legal) return;
                 const userLegal = orders.legal.filter(o => o.userId === currentUser.id);
                 if (!userLegal.length) { c.innerHTML = `<div class="empty-state">⚖️ Нет записей</div>`; return; }
                 c.innerHTML = userLegal.map((o) => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${o.id}</span>
-                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${o.id}</span>
+                                <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>ФИО:</strong> ${o.fio}</div>
+                            <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
+                            <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                            <div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                            ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                            ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
                         </div>
-                        <div class="card-detail"><strong>ФИО:</strong> ${o.fio}</div>
-                        <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
-                        <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
-                        <div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
-                    </div>
-                `).join('');
+                    `).join('');
             }
 
             function renderCourt() {
                 const c = document.getElementById('courtContainer');
+                if (!orders || !orders.court) return;
                 const userCourt = orders.court.filter(o => o.userId === currentUser.id);
                 if (!userCourt.length) { c.innerHTML = `<div class="empty-state">🏛️ Нет исков</div>`; return; }
                 c.innerHTML = userCourt.map((o) => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${o.id}</span>
-                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${o.id}</span>
+                                <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>Истец:</strong> ${o.fio}</div>
+                            <div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>
+                            <div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>
+                            <div class="card-detail"><strong>Адрес истца:</strong> ${o.address}</div>
+                            <div class="card-detail"><strong>Адрес ответчика:</strong> ${o.defendantAddress}</div>
+                            ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                            ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                            ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
                         </div>
-                        <div class="card-detail"><strong>Истец:</strong> ${o.fio}</div>
-                        <div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>
-                        <div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>
-                        <div class="card-detail"><strong>Адрес истца:</strong> ${o.address}</div>
-                        <div class="card-detail"><strong>Адрес ответчика:</strong> ${o.defendantAddress}</div>
-                        ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
-                    </div>
-                `).join('');
+                    `).join('');
             }
 
             // ============================================================
@@ -1337,12 +2054,17 @@
                 const container = document.getElementById('historyContainer');
                 let allOrders = [];
 
-                orders.food.forEach(o => { allOrders.push({ ...o, type: 'food', typeLabel: '🍕 Еда' }); });
-                orders.cleaning.forEach(o => { allOrders.push({ ...o, type: 'cleaning', typeLabel: '🧹 Уборка' }); });
-                orders.applications.forEach(o => { allOrders.push({ ...o, type: 'work', typeLabel: '💼 Работа' }); });
-                orders.massage.forEach(o => { allOrders.push({ ...o, type: 'massage', typeLabel: '💆 Массаж' }); });
-                orders.legal.forEach(o => { allOrders.push({ ...o, type: 'legal', typeLabel: '⚖️ Консультация' }); });
-                orders.court.forEach(o => { allOrders.push({ ...o, type: 'court', typeLabel: '🏛️ Суд' }); });
+                if (orders.food) orders.food.forEach(o => { allOrders.push({ ...o, type: 'food', typeLabel: '🍕 Еда' }); });
+                if (orders.cleaning) orders.cleaning.forEach(o => { allOrders.push({ ...o, type: 'cleaning',
+                        typeLabel: '🧹 Уборка' }); });
+                if (orders.applications) orders.applications.forEach(o => { allOrders.push({ ...o, type: 'work',
+                        typeLabel: '💼 Работа' }); });
+                if (orders.massage) orders.massage.forEach(o => { allOrders.push({ ...o, type: 'massage',
+                        typeLabel: '💆 Массаж' }); });
+                if (orders.legal) orders.legal.forEach(o => { allOrders.push({ ...o, type: 'legal',
+                        typeLabel: '⚖️ Консультация' }); });
+                if (orders.court) orders.court.forEach(o => { allOrders.push({ ...o, type: 'court',
+                        typeLabel: '🏛️ Суд' }); });
 
                 if (currentUser.role !== 'admin') {
                     allOrders = allOrders.filter(o => o.userId === currentUser.id);
@@ -1364,28 +2086,28 @@
                 }
 
                 container.innerHTML = allOrders.map(o => `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-id">${o.id}</span>
-                            <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-id">${o.id}</span>
+                                <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                            </div>
+                            <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
+                            ${currentUser.role === 'admin' ? `<div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (${o.userId})</div>` : ''}
+                            ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
+                            ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
+                            ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
+                            ${o.date ? `<div class="card-detail"><strong>Дата:</strong> ${o.date} ${o.time || ''}</div>` : ''}
+                            ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
+                            ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
+                            ${o.topic ? `<div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>` : ''}
+                            ${o.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>` : ''}
+                            ${o.reason ? `<div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>` : ''}
+                            ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                            ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                            ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
                         </div>
-                        <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
-                        ${currentUser.role === 'admin' ? `<div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (${o.userId})</div>` : ''}
-                        ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
-                        ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
-                        ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
-                        ${o.date ? `<div class="card-detail"><strong>Дата:</strong> ${o.date} ${o.time || ''}</div>` : ''}
-                        ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
-                        ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
-                        ${o.topic ? `<div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>` : ''}
-                        ${o.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>` : ''}
-                        ${o.reason ? `<div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>` : ''}
-                        ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
-                    </div>
-                `).join('');
+                    `).join('');
             }
 
             document.getElementById('historyTypeFilter').addEventListener('change', renderHistory);
@@ -1422,98 +2144,112 @@
             function renderAdminApplications(container) {
                 let items = [];
 
-                orders.food.forEach(o => {
-                    items.push({
-                        id: o.id,
-                        type: '🍕 Еда',
-                        userId: o.userId,
-                        userFio: o.userFio || 'Неизвестный',
-                        status: o.status,
-                        details: `${o.dish} (ком. ${o.room})`,
-                        data: o,
-                        time: o.time || getCurrentTime()
+                if (orders.food) {
+                    orders.food.forEach(o => {
+                        items.push({
+                            id: o.id,
+                            type: '🍕 Еда',
+                            userId: o.userId,
+                            userFio: o.userFio || 'Неизвестный',
+                            status: o.status,
+                            details: `${o.dish} (ком. ${o.room})`,
+                            data: o,
+                            time: o.time || getCurrentTime()
+                        });
                     });
-                });
+                }
 
-                orders.cleaning.forEach(o => {
-                    items.push({
-                        id: o.id,
-                        type: '🧹 Уборка',
-                        userId: o.userId,
-                        userFio: o.userFio || 'Неизвестный',
-                        status: o.status,
-                        details: `${o.room} (${o.date} ${o.time})`,
-                        data: o,
-                        time: o.time || getCurrentTime()
+                if (orders.cleaning) {
+                    orders.cleaning.forEach(o => {
+                        items.push({
+                            id: o.id,
+                            type: '🧹 Уборка',
+                            userId: o.userId,
+                            userFio: o.userFio || 'Неизвестный',
+                            status: o.status,
+                            details: `${o.room} (${o.date} ${o.time})`,
+                            data: o,
+                            time: o.time || getCurrentTime()
+                        });
                     });
-                });
+                }
 
-                orders.massage.forEach(o => {
-                    items.push({
-                        id: o.id,
-                        type: '💆 Массаж',
-                        userId: o.userId,
-                        userFio: o.userFio || 'Неизвестный',
-                        status: o.status,
-                        details: `${o.type}, ком. ${o.room}, ${o.duration} мин`,
-                        data: o,
-                        time: o.time || getCurrentTime()
+                if (orders.massage) {
+                    orders.massage.forEach(o => {
+                        items.push({
+                            id: o.id,
+                            type: '💆 Массаж',
+                            userId: o.userId,
+                            userFio: o.userFio || 'Неизвестный',
+                            status: o.status,
+                            details: `${o.type}, ком. ${o.room}, ${o.duration} мин`,
+                            data: o,
+                            time: o.time || getCurrentTime()
+                        });
                     });
-                });
+                }
 
-                orders.legal.forEach(o => {
-                    items.push({
-                        id: o.id,
-                        type: '⚖️ Консультация',
-                        userId: o.userId,
-                        userFio: o.userFio || 'Неизвестный',
-                        status: o.status,
-                        details: `${o.fio}, ${o.date} ${o.time}`,
-                        data: o,
-                        time: o.time || getCurrentTime()
+                if (orders.legal) {
+                    orders.legal.forEach(o => {
+                        items.push({
+                            id: o.id,
+                            type: '⚖️ Консультация',
+                            userId: o.userId,
+                            userFio: o.userFio || 'Неизвестный',
+                            status: o.status,
+                            details: `${o.fio}, ${o.date} ${o.time}`,
+                            data: o,
+                            time: o.time || getCurrentTime()
+                        });
                     });
-                });
+                }
 
-                orders.court.forEach(o => {
-                    items.push({
-                        id: o.id,
-                        type: '🏛️ Суд',
-                        userId: o.userId,
-                        userFio: o.userFio || 'Неизвестный',
-                        status: o.status,
-                        details: `${o.fio} → ${o.defendant}`,
-                        data: o,
-                        time: o.time || getCurrentTime(),
-                        isCourt: true
+                if (orders.court) {
+                    orders.court.forEach(o => {
+                        items.push({
+                            id: o.id,
+                            type: '🏛️ Суд',
+                            userId: o.userId,
+                            userFio: o.userFio || 'Неизвестный',
+                            status: o.status,
+                            details: `${o.fio} → ${o.defendant}`,
+                            data: o,
+                            time: o.time || getCurrentTime(),
+                            isCourt: true
+                        });
                     });
-                });
+                }
 
-                orders.applications.forEach(o => {
-                    items.push({
-                        id: o.id,
-                        type: '💼 Отклик',
-                        userId: o.userId,
-                        userFio: o.userFio || 'Неизвестный',
-                        status: o.status,
-                        details: `${o.vacancy}`,
-                        data: o,
-                        time: o.time || getCurrentTime()
+                if (orders.applications) {
+                    orders.applications.forEach(o => {
+                        items.push({
+                            id: o.id,
+                            type: '💼 Отклик',
+                            userId: o.userId,
+                            userFio: o.userFio || 'Неизвестный',
+                            status: o.status,
+                            details: `${o.vacancy}`,
+                            data: o,
+                            time: o.time || getCurrentTime()
+                        });
                     });
-                });
+                }
 
-                orders.pendingVacancies.forEach(o => {
-                    items.push({
-                        id: o.id,
-                        type: '💼 Вакансия (на модерации)',
-                        userId: o.userId,
-                        userFio: o.userFio || 'Неизвестный',
-                        status: 'pending',
-                        details: `${o.title} (${o.company})`,
-                        data: o,
-                        isPendingVacancy: true,
-                        time: o.time || getCurrentTime()
+                if (orders.pendingVacancies) {
+                    orders.pendingVacancies.forEach(o => {
+                        items.push({
+                            id: o.id,
+                            type: '💼 Вакансия (на модерации)',
+                            userId: o.userId,
+                            userFio: o.userFio || 'Неизвестный',
+                            status: 'pending',
+                            details: `${o.title} (${o.company})`,
+                            data: o,
+                            isPendingVacancy: true,
+                            time: o.time || getCurrentTime()
+                        });
                     });
-                });
+                }
 
                 if (!items.length) {
                     container.innerHTML = `<div class="empty-state">Нет заявок</div>`;
@@ -1522,18 +2258,18 @@
 
                 let sortOrder = 'newest';
                 container.innerHTML = `
-                    <div style="display:flex;gap:10px;margin-bottom:1rem;align-items:center;flex-wrap:wrap;">
-                        <span style="font-size:0.9rem;color:#4b5563;">Сортировать:</span>
-                        <select class="sort-select" id="sortOrders">
-                            <option value="newest">Сначала новые</option>
-                            <option value="oldest">Сначала старые</option>
-                            <option value="status">По статусу</option>
-                            <option value="type">По типу</option>
-                            <option value="user">По пользователю</option>
-                        </select>
-                    </div>
-                    <div id="adminOrdersGrid" class="cards-grid"></div>
-                `;
+                        <div style="display:flex;gap:10px;margin-bottom:1rem;align-items:center;flex-wrap:wrap;">
+                            <span style="font-size:0.9rem;color:#4b5563;">Сортировать:</span>
+                            <select class="sort-select" id="sortOrders">
+                                <option value="newest">Сначала новые</option>
+                                <option value="oldest">Сначала старые</option>
+                                <option value="status">По статусу</option>
+                                <option value="type">По типу</option>
+                                <option value="user">По пользователю</option>
+                            </select>
+                        </div>
+                        <div id="adminOrdersGrid" class="cards-grid"></div>
+                    `;
 
                 function renderSortedOrders(order) {
                     const grid = document.getElementById('adminOrdersGrid');
@@ -1545,42 +2281,42 @@
                     else if (order === 'user') sorted.sort((a, b) => (a.userFio || '').localeCompare(b.userFio || ''));
 
                     grid.innerHTML = sorted.map((item) => `
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-id">${item.id}</span>
-                                <span class="card-status status-${getStatusClass(item.status)}">${statusText(item.status)}</span>
-                            </div>
-                            <div class="card-detail"><strong>Тип:</strong> ${item.type}</div>
-                            <div class="card-detail"><strong>Пользователь:</strong> ${item.userFio} (ID: ${item.userId})</div>
-                            <div class="card-detail"><strong>Детали:</strong> ${item.details}</div>
-                            ${item.data.note ? `<div class="card-detail"><strong>Пожелания:</strong> ${item.data.note}</div>` : ''}
-                            ${item.data.topic ? `<div class="card-detail"><strong>Тема:</strong> ${item.data.topic}</div>` : ''}
-                            ${item.data.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${item.data.defendant}</div>` : ''}
-                            ${item.data.reason ? `<div class="card-detail"><strong>Причина:</strong> ${item.data.reason.substring(0, 100)}${item.data.reason.length > 100 ? '...' : ''}</div>` : ''}
-                            <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${item.time}</div>
-                            ${item.data.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${item.data.adminComment}</div>` : ''}
-                            ${item.data.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${item.data.rejectReason}</div>` : ''}
-                            <div class="card-actions">
-                                ${item.isCourt && (item.status === 'new' || item.status === 'pending') ? `
-                                    <button class="btn-sm blue" data-court-response="${item.id}">⚖️ Рассмотреть иск</button>
-                                ` : ''}
-                                ${item.isPendingVacancy ? `
-                                    <button class="btn-sm green" data-admin-approve-vacancy="${item.id}">✅ Одобрить</button>
-                                    <button class="btn-sm danger" data-admin-reject="${item.id}">❌ Отказать</button>
-                                ` : `
-                                    ${!item.isCourt ? `
-                                        <button class="btn-sm gold" data-admin-status="${item.id}">📌 Статус</button>
-                                        ${item.status !== 'done' && item.status !== 'cancelled' && item.status !== 'rejected' && item.status !== 'approved' && item.status !== 'denied' ? `
-                                            <button class="btn-sm green" data-admin-approve="${item.id}">✅ В работу</button>
+                            <div class="card">
+                                <div class="card-header">
+                                    <span class="card-id">${item.id}</span>
+                                    <span class="card-status status-${getStatusClass(item.status)}">${statusText(item.status)}</span>
+                                </div>
+                                <div class="card-detail"><strong>Тип:</strong> ${item.type}</div>
+                                <div class="card-detail"><strong>Пользователь:</strong> ${item.userFio} (ID: ${item.userId})</div>
+                                <div class="card-detail"><strong>Детали:</strong> ${item.details}</div>
+                                ${item.data.note ? `<div class="card-detail"><strong>Пожелания:</strong> ${item.data.note}</div>` : ''}
+                                ${item.data.topic ? `<div class="card-detail"><strong>Тема:</strong> ${item.data.topic}</div>` : ''}
+                                ${item.data.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${item.data.defendant}</div>` : ''}
+                                ${item.data.reason ? `<div class="card-detail"><strong>Причина:</strong> ${item.data.reason.substring(0, 100)}${item.data.reason.length > 100 ? '...' : ''}</div>` : ''}
+                                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${item.time}</div>
+                                ${item.data.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${item.data.adminComment}</div>` : ''}
+                                ${item.data.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${item.data.rejectReason}</div>` : ''}
+                                <div class="card-actions">
+                                    ${item.isCourt && (item.status === 'new' || item.status === 'pending') ? `
+                                            <button class="btn-sm blue" data-court-response="${item.id}">⚖️ Рассмотреть иск</button>
                                         ` : ''}
-                                        ${item.status === 'new' ? `
+                                    ${item.isPendingVacancy ? `
+                                            <button class="btn-sm green" data-admin-approve-vacancy="${item.id}">✅ Одобрить</button>
                                             <button class="btn-sm danger" data-admin-reject="${item.id}">❌ Отказать</button>
-                                        ` : ''}
-                                    ` : ''}
-                                `}
+                                        ` : `
+                                            ${!item.isCourt ? `
+                                                <button class="btn-sm gold" data-admin-status="${item.id}">📌 Статус</button>
+                                                ${item.status !== 'done' && item.status !== 'cancelled' && item.status !== 'rejected' && item.status !== 'approved' && item.status !== 'denied' ? `
+                                                    <button class="btn-sm green" data-admin-approve="${item.id}">✅ В работу</button>
+                                                ` : ''}
+                                                ${item.status === 'new' ? `
+                                                    <button class="btn-sm danger" data-admin-reject="${item.id}">❌ Отказать</button>
+                                                ` : ''}
+                                            ` : ''}
+                                        `}
+                                </div>
                             </div>
-                        </div>
-                    `).join('');
+                        `).join('');
 
                     // Court response
                     grid.querySelectorAll('[data-court-response]').forEach(btn => {
@@ -1624,7 +2360,7 @@
                                     vac.status = 'active';
                                     orders.vacancies.push(vac);
                                     orders.pendingVacancies = orders.pendingVacancies.filter(v => v.id !==
-                                    vac.id);
+                                        vac.id);
                                     addNotification(vac.userId, '✅ Вакансия одобрена',
                                         `Ваша вакансия "${vac.title}" опубликована`);
                                     saveAllData();
@@ -1657,29 +2393,29 @@
 
             function renderAdminUsers(container) {
                 container.innerHTML = `
-                    <div class="search-box">
-                        <input type="text" id="adminUserSearch" placeholder="Поиск по ID или ФИО...">
-                        <button id="adminUserSearchBtn">Найти</button>
-                    </div>
-                    <div id="adminSearchResult"></div>
-                    <div class="cards-grid" id="adminUsersGrid">
-                        ${users.map(u => `
-                            <div class="card">
-                                <div class="card-header">
-                                    <span class="card-id">${u.id}</span>
-                                    <span style="font-size:0.7rem;color:${u.role === 'admin' ? '#b8962e' : '#8b97a8'};">${u.role || 'user'}</span>
+                        <div class="search-box">
+                            <input type="text" id="adminUserSearch" placeholder="Поиск по ID или ФИО...">
+                            <button id="adminUserSearchBtn">Найти</button>
+                        </div>
+                        <div id="adminSearchResult"></div>
+                        <div class="cards-grid" id="adminUsersGrid">
+                            ${users.map(u => `
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span class="card-id">${u.id}</span>
+                                        <span style="font-size:0.7rem;color:${u.role === 'admin' ? '#b8962e' : '#8b97a8'};">${u.role || 'user'}</span>
+                                    </div>
+                                    <div class="card-detail"><strong>${u.fio}</strong></div>
+                                    <div class="card-detail">${u.email}</div>
+                                    ${isUserBanned(u) ? `<div class="card-detail" style="color:#a14f4f;">🚫 Забанен</div>` : ''}
+                                    <div class="card-actions">
+                                        <button class="btn-sm gold" data-admin-user="${u.id}">👤 Управлять</button>
+                                        ${u.id !== '00000' ? `<button class="btn-sm danger" data-admin-ban="${u.id}">🚫 Бан</button>` : ''}
+                                    </div>
                                 </div>
-                                <div class="card-detail"><strong>${u.fio}</strong></div>
-                                <div class="card-detail">${u.email}</div>
-                                ${isUserBanned(u) ? `<div class="card-detail" style="color:#a14f4f;">🚫 Забанен</div>` : ''}
-                                <div class="card-actions">
-                                    <button class="btn-sm gold" data-admin-user="${u.id}">👤 Управлять</button>
-                                    ${u.id !== '00000' ? `<button class="btn-sm danger" data-admin-ban="${u.id}">🚫 Бан</button>` : ''}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+                            `).join('')}
+                        </div>
+                    `;
 
                 document.querySelectorAll('[data-admin-user]').forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -1705,29 +2441,32 @@
                     const resultDiv = document.getElementById('adminSearchResult');
                     if (user) {
                         const banInfo = getBanInfo(user);
-                        const foodCount = orders.food.filter(o => o.userId === user.id).length;
-                        const cleanCount = orders.cleaning.filter(o => o.userId === user.id).length;
-                        const massageCount = orders.massage.filter(o => o.userId === user.id).length;
-                        const legalCount = orders.legal.filter(o => o.userId === user.id).length;
-                        const courtCount = orders.court.filter(o => o.userId === user.id).length;
-                        const appCount = orders.applications.filter(a => a.userId === user.id).length;
+                        const foodCount = orders.food ? orders.food.filter(o => o.userId === user.id).length : 0;
+                        const cleanCount = orders.cleaning ? orders.cleaning.filter(o => o.userId === user.id)
+                            .length : 0;
+                        const massageCount = orders.massage ? orders.massage.filter(o => o.userId === user.id)
+                            .length : 0;
+                        const legalCount = orders.legal ? orders.legal.filter(o => o.userId === user.id).length : 0;
+                        const courtCount = orders.court ? orders.court.filter(o => o.userId === user.id).length : 0;
+                        const appCount = orders.applications ? orders.applications.filter(a => a.userId === user.id)
+                            .length : 0;
                         resultDiv.innerHTML = `
-                            <div class="user-detail-card">
-                                <h3 style="color:#b8962e;">🔍 Результат поиска</h3>
-                                <div><strong>ID:</strong> ${user.id}</div>
-                                <div><strong>ФИО:</strong> ${user.fio}</div>
-                                <div><strong>Email:</strong> ${user.email}</div>
-                                <div><strong>Роль:</strong> ${user.role || 'Пользователь'}</div>
-                                <div><strong>Статус:</strong> ${isUserBanned(user) ? '🚫 Забанен' : '✅ Активен'}</div>
-                                ${banInfo ? `<div><strong>Причина бана:</strong> ${banInfo.reason}</div><div><strong>До:</strong> ${banInfo.expiry}</div>` : ''}
-                                <div><strong>Заказов еды:</strong> ${foodCount}</div>
-                                <div><strong>Заявок на уборку:</strong> ${cleanCount}</div>
-                                <div><strong>Записей на массаж:</strong> ${massageCount}</div>
-                                <div><strong>Консультаций:</strong> ${legalCount}</div>
-                                <div><strong>Исков:</strong> ${courtCount}</div>
-                                <div><strong>Откликов:</strong> ${appCount}</div>
-                            </div>
-                        `;
+                                <div class="user-detail-card">
+                                    <h3 style="color:#b8962e;">🔍 Результат поиска</h3>
+                                    <div><strong>ID:</strong> ${user.id}</div>
+                                    <div><strong>ФИО:</strong> ${user.fio}</div>
+                                    <div><strong>Email:</strong> ${user.email}</div>
+                                    <div><strong>Роль:</strong> ${user.role || 'Пользователь'}</div>
+                                    <div><strong>Статус:</strong> ${isUserBanned(user) ? '🚫 Забанен' : '✅ Активен'}</div>
+                                    ${banInfo ? `<div><strong>Причина бана:</strong> ${banInfo.reason}</div><div><strong>До:</strong> ${banInfo.expiry}</div>` : ''}
+                                    <div><strong>Заказов еды:</strong> ${foodCount}</div>
+                                    <div><strong>Заявок на уборку:</strong> ${cleanCount}</div>
+                                    <div><strong>Записей на массаж:</strong> ${massageCount}</div>
+                                    <div><strong>Консультаций:</strong> ${legalCount}</div>
+                                    <div><strong>Исков:</strong> ${courtCount}</div>
+                                    <div><strong>Откликов:</strong> ${appCount}</div>
+                                </div>
+                            `;
                     } else {
                         resultDiv.innerHTML =
                             `<div class="user-detail-card" style="color:#a14f4f;">❌ Пользователь не найден</div>`;
@@ -1753,33 +2492,33 @@
 
                 const banInfo = getBanInfo(user);
                 modal.innerHTML = `
-                    <div class="modal" style="max-width:650px;width:100%;max-height:90vh;overflow-y:auto;border-radius:30px;padding:2rem 2.5rem;">
-                        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()" style="float:right;font-size:2rem;cursor:pointer;color:#a0aaba;background:none;border:none;">&times;</button>
-                        <h2>👤 Управление: ${user.fio}</h2>
-                        <div style="margin-bottom:1rem;">
-                            <div><strong>ID:</strong> ${user.id}</div>
-                            <div><strong>Email:</strong> ${user.email}</div>
-                            <div><strong>Роль:</strong> ${user.role || 'Пользователь'}</div>
-                            ${banInfo ? `<div style="color:#a14f4f;"><strong>🚫 Забанен:</strong> ${banInfo.reason} (${banInfo.expiry})</div>` : ''}
-                            <div style="margin-top:0.5rem;border-top:1px solid #eef2f7;padding-top:0.5rem;">
-                                <strong>Статистика:</strong>
-                                <div>🍕 Еда: ${orders.food.filter(o => o.userId === user.id).length}</div>
-                                <div>🧹 Уборка: ${orders.cleaning.filter(o => o.userId === user.id).length}</div>
-                                <div>💆 Массаж: ${orders.massage.filter(o => o.userId === user.id).length}</div>
-                                <div>⚖️ Консультации: ${orders.legal.filter(o => o.userId === user.id).length}</div>
-                                <div>🏛️ Иски: ${orders.court.filter(o => o.userId === user.id).length}</div>
-                                <div>💼 Отклики: ${orders.applications.filter(a => a.userId === user.id).length}</div>
+                        <div class="modal" style="max-width:650px;width:100%;max-height:90vh;overflow-y:auto;border-radius:30px;padding:2rem 2.5rem;">
+                            <button class="modal-close" onclick="this.closest('.modal-overlay').remove()" style="float:right;font-size:2rem;cursor:pointer;color:#a0aaba;background:none;border:none;">&times;</button>
+                            <h2>👤 Управление: ${user.fio}</h2>
+                            <div style="margin-bottom:1rem;">
+                                <div><strong>ID:</strong> ${user.id}</div>
+                                <div><strong>Email:</strong> ${user.email}</div>
+                                <div><strong>Роль:</strong> ${user.role || 'Пользователь'}</div>
+                                ${banInfo ? `<div style="color:#a14f4f;"><strong>🚫 Забанен:</strong> ${banInfo.reason} (${banInfo.expiry})</div>` : ''}
+                                <div style="margin-top:0.5rem;border-top:1px solid #eef2f7;padding-top:0.5rem;">
+                                    <strong>Статистика:</strong>
+                                    <div>🍕 Еда: ${orders.food ? orders.food.filter(o => o.userId === user.id).length : 0}</div>
+                                    <div>🧹 Уборка: ${orders.cleaning ? orders.cleaning.filter(o => o.userId === user.id).length : 0}</div>
+                                    <div>💆 Массаж: ${orders.massage ? orders.massage.filter(o => o.userId === user.id).length : 0}</div>
+                                    <div>⚖️ Консультации: ${orders.legal ? orders.legal.filter(o => o.userId === user.id).length : 0}</div>
+                                    <div>🏛️ Иски: ${orders.court ? orders.court.filter(o => o.userId === user.id).length : 0}</div>
+                                    <div>💼 Отклики: ${orders.applications ? orders.applications.filter(a => a.userId === user.id).length : 0}</div>
+                                </div>
                             </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;">
+                                ${user.role !== 'admin' ? `<button class="btn-sm gold" data-role-promote="${user.id}">⬆️ Агент поддержки</button>` : ''}
+                                ${user.role === 'support' ? `<button class="btn-sm danger" data-role-demote="${user.id}">⬇️ Снять роль</button>` : ''}
+                                ${user.role === 'admin' ? `<span style="font-size:0.8rem;color:#b8962e;">👑 Администратор</span>` : ''}
+                                ${banInfo ? `<button class="btn-sm green" data-unban="${user.id}">🔓 Разжаловать</button>` : ''}
+                            </div>
+                            <button class="btn-submit" onclick="this.closest('.modal-overlay').remove()">Закрыть</button>
                         </div>
-                        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;">
-                            ${user.role !== 'admin' ? `<button class="btn-sm gold" data-role-promote="${user.id}">⬆️ Агент поддержки</button>` : ''}
-                            ${user.role === 'support' ? `<button class="btn-sm danger" data-role-demote="${user.id}">⬇️ Снять роль</button>` : ''}
-                            ${user.role === 'admin' ? `<span style="font-size:0.8rem;color:#b8962e;">👑 Администратор</span>` : ''}
-                            ${banInfo ? `<button class="btn-sm green" data-unban="${user.id}">🔓 Разжаловать</button>` : ''}
-                        </div>
-                        <button class="btn-submit" onclick="this.closest('.modal-overlay').remove()">Закрыть</button>
-                    </div>
-                `;
+                    `;
 
                 document.body.appendChild(modal);
 
@@ -1820,12 +2559,17 @@
             function renderAdminHistory(container) {
                 let allOrders = [];
 
-                orders.food.forEach(o => { allOrders.push({ ...o, type: 'food', typeLabel: '🍕 Еда' }); });
-                orders.cleaning.forEach(o => { allOrders.push({ ...o, type: 'cleaning', typeLabel: '🧹 Уборка' }); });
-                orders.applications.forEach(o => { allOrders.push({ ...o, type: 'work', typeLabel: '💼 Работа' }); });
-                orders.massage.forEach(o => { allOrders.push({ ...o, type: 'massage', typeLabel: '💆 Массаж' }); });
-                orders.legal.forEach(o => { allOrders.push({ ...o, type: 'legal', typeLabel: '⚖️ Консультация' }); });
-                orders.court.forEach(o => { allOrders.push({ ...o, type: 'court', typeLabel: '🏛️ Суд' }); });
+                if (orders.food) orders.food.forEach(o => { allOrders.push({ ...o, type: 'food', typeLabel: '🍕 Еда' }); });
+                if (orders.cleaning) orders.cleaning.forEach(o => { allOrders.push({ ...o, type: 'cleaning',
+                        typeLabel: '🧹 Уборка' }); });
+                if (orders.applications) orders.applications.forEach(o => { allOrders.push({ ...o, type: 'work',
+                        typeLabel: '💼 Работа' }); });
+                if (orders.massage) orders.massage.forEach(o => { allOrders.push({ ...o, type: 'massage',
+                        typeLabel: '💆 Массаж' }); });
+                if (orders.legal) orders.legal.forEach(o => { allOrders.push({ ...o, type: 'legal',
+                        typeLabel: '⚖️ Консультация' }); });
+                if (orders.court) orders.court.forEach(o => { allOrders.push({ ...o, type: 'court',
+                        typeLabel: '🏛️ Суд' }); });
 
                 allOrders.sort((a, b) => (a.time || '').localeCompare(b.time || '') * -1);
 
@@ -1835,42 +2579,42 @@
                 }
 
                 container.innerHTML = `
-                    <div style="margin-bottom:1rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-                        <span style="font-size:0.9rem;color:#4b5563;">Всего: <strong>${allOrders.length}</strong></span>
-                        <span style="font-size:0.9rem;color:#4b5563;">|</span>
-                        <span style="font-size:0.9rem;color:#4b5563;">🍕 Еда: ${orders.food.length}</span>
-                        <span style="font-size:0.9rem;color:#4b5563;">🧹 Уборка: ${orders.cleaning.length}</span>
-                        <span style="font-size:0.9rem;color:#4b5563;">💆 Массаж: ${orders.massage.length}</span>
-                        <span style="font-size:0.9rem;color:#4b5563;">⚖️ Консультации: ${orders.legal.length}</span>
-                        <span style="font-size:0.9rem;color:#4b5563;">🏛️ Иски: ${orders.court.length}</span>
-                        <span style="font-size:0.9rem;color:#4b5563;">💼 Отклики: ${orders.applications.length}</span>
-                    </div>
-                    <div class="cards-grid">
-                        ${allOrders.map(o => `
-                            <div class="card">
-                                <div class="card-header">
-                                    <span class="card-id">${o.id}</span>
-                                    <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                        <div style="margin-bottom:1rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                            <span style="font-size:0.9rem;color:#4b5563;">Всего: <strong>${allOrders.length}</strong></span>
+                            <span style="font-size:0.9rem;color:#4b5563;">|</span>
+                            <span style="font-size:0.9rem;color:#4b5563;">🍕 Еда: ${orders.food ? orders.food.length : 0}</span>
+                            <span style="font-size:0.9rem;color:#4b5563;">🧹 Уборка: ${orders.cleaning ? orders.cleaning.length : 0}</span>
+                            <span style="font-size:0.9rem;color:#4b5563;">💆 Массаж: ${orders.massage ? orders.massage.length : 0}</span>
+                            <span style="font-size:0.9rem;color:#4b5563;">⚖️ Консультации: ${orders.legal ? orders.legal.length : 0}</span>
+                            <span style="font-size:0.9rem;color:#4b5563;">🏛️ Иски: ${orders.court ? orders.court.length : 0}</span>
+                            <span style="font-size:0.9rem;color:#4b5563;">💼 Отклики: ${orders.applications ? orders.applications.length : 0}</span>
+                        </div>
+                        <div class="cards-grid">
+                            ${allOrders.map(o => `
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span class="card-id">${o.id}</span>
+                                        <span class="card-status status-${getStatusClass(o.status)}">${statusText(o.status)}</span>
+                                    </div>
+                                    <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
+                                    <div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (ID: ${o.userId})</div>
+                                    ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
+                                    ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
+                                    ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
+                                    ${o.date ? `<div class="card-detail"><strong>Дата:</strong> ${o.date} ${o.time || ''}</div>` : ''}
+                                    ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
+                                    ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
+                                    ${o.topic ? `<div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>` : ''}
+                                    ${o.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>` : ''}
+                                    ${o.reason ? `<div class="card-detail"><strong>Причина:</strong> ${o.reason.substring(0, 100)}${o.reason.length > 100 ? '...' : ''}</div>` : ''}
+                                    ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                                    ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
+                                    ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
                                 </div>
-                                <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
-                                <div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (ID: ${o.userId})</div>
-                                ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
-                                ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
-                                ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
-                                ${o.date ? `<div class="card-detail"><strong>Дата:</strong> ${o.date} ${o.time || ''}</div>` : ''}
-                                ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
-                                ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
-                                ${o.topic ? `<div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>` : ''}
-                                ${o.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>` : ''}
-                                ${o.reason ? `<div class="card-detail"><strong>Причина:</strong> ${o.reason.substring(0, 100)}${o.reason.length > 100 ? '...' : ''}</div>` : ''}
-                                ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
-                                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                                ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                                ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
+                            `).join('')}
+                        </div>
+                    `;
             }
 
             // ============================================================
