@@ -436,8 +436,43 @@
         document.getElementById('headerAvatar').textContent = currentUser.fio.charAt(0).toUpperCase();
         generateSections();
         renderAll();
+        initButtons(); // <-- ВАЖНО: привязываем кнопки после загрузки
     }
 
+    // ===== ИНИЦИАЛИЗАЦИЯ КНОПОК (РАБОТАЕТ) =====
+    function initButtons() {
+        const btnFood = document.getElementById('btnFoodOrder');
+        const btnWork = document.getElementById('btnWorkVacancy');
+        const btnCleaning = document.getElementById('btnCleaningOrder');
+        const btnMassage = document.getElementById('btnMassageOrder');
+        const btnLegal = document.getElementById('btnLegalOrder');
+        const btnCourt = document.getElementById('btnCourtOrder');
+        const btnSupport = document.getElementById('btnSupportNew');
+
+        if (btnFood) btnFood.onclick = () => openModal('modalFood');
+        if (btnWork) btnWork.onclick = () => openModal('modalVacancy');
+        if (btnCleaning) btnCleaning.onclick = () => openModal('modalCleaning');
+        if (btnMassage) btnMassage.onclick = () => openModal('modalMassage');
+        if (btnLegal) btnLegal.onclick = () => openModal('modalLegal');
+        if (btnCourt) btnCourt.onclick = () => openModal('modalCourt');
+        if (btnSupport) btnSupport.onclick = () => openModal('modalSupportNew');
+
+        // Закрытие модалок (это уже есть, но на всякий случай)
+        document.querySelectorAll('.modal-close').forEach(btn => {
+            btn.onclick = function() {
+                const overlay = this.closest('.modal-overlay');
+                if (overlay) overlay.style.display = 'none';
+            };
+        });
+        // Закрытие по клику на фон
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) this.style.display = 'none';
+            });
+        });
+    }
+
+    // ===== ПАНЕЛИ =====
     function showPanel(panelId) {
         document.getElementById('mainPage').classList.remove('active');
         document.getElementById('panelsContainer').classList.add('active');
@@ -452,6 +487,8 @@
         if (panelId === 'wallet') renderWallet();
         if (panelId === 'bank') renderBank();
         if (panelId === 'roomvisit') renderRoomVisit();
+        // Для остальных панелей рендер вызывается через renderAll()
+        renderAll();
     }
 
     function goBack() {
@@ -575,7 +612,7 @@
         });
     }
 
-    // Обработчики модалок посещений
+    // Обработчики модалок посещений (уже есть в коде, оставляем)
     document.getElementById('btnRoomVisitRequest').addEventListener('click', function() { openModal('modalRoomVisitRequest'); });
     document.getElementById('closeRoomVisitRequest').addEventListener('click', function() { closeModal('modalRoomVisitRequest'); });
     document.getElementById('closeRoomVisitEdit').addEventListener('click', function() { closeModal('modalRoomVisitEdit'); });
@@ -627,7 +664,7 @@
     });
 
     // ================================================================
-    // АДМИН-ПАНЕЛЬ (ПОЛНОСТЬЮ РАБОТАЮЩАЯ)
+    // АДМИН-ПАНЕЛЬ (полноценная)
     // ================================================================
     document.querySelectorAll('[id^="adminTab"]').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -658,7 +695,6 @@
     }
 
     function bindAdminEvents(container) {
-        // Заказы
         container.querySelectorAll('.admin-approve-btn').forEach(btn => {
             btn.removeEventListener('click', handleApprove);
             btn.addEventListener('click', handleApprove);
@@ -667,7 +703,6 @@
             btn.removeEventListener('click', handleReject);
             btn.addEventListener('click', handleReject);
         });
-        // Посещения
         container.querySelectorAll('[data-roomvisit-edit]').forEach(btn => {
             btn.removeEventListener('click', handleRoomEdit);
             btn.addEventListener('click', handleRoomEdit);
@@ -693,7 +728,6 @@
             scanBtn.removeEventListener('click', handleRoomScanGeneric);
             scanBtn.addEventListener('click', handleRoomScanGeneric);
         }
-        // Пользователи
         container.querySelectorAll('[data-user]').forEach(btn => {
             btn.removeEventListener('click', handleUserManage);
             btn.addEventListener('click', handleUserManage);
@@ -706,7 +740,6 @@
             btn.removeEventListener('click', handleUserUnban);
             btn.addEventListener('click', handleUserUnban);
         });
-        // Поддержка
         container.querySelectorAll('[data-support-reply]').forEach(btn => {
             btn.removeEventListener('click', handleSupportReply);
             btn.addEventListener('click', handleSupportReply);
@@ -717,7 +750,6 @@
         });
     }
 
-    // ---- Обработчики ----
     function handleApprove(e) {
         const btn = e.currentTarget;
         const orderId = btn.dataset.orderId;
@@ -885,7 +917,7 @@
         }
     }
 
-    // ===== РЕНДЕР АДМИН-ВКЛАДОК =====
+    // ---- Рендер админ-вкладок ----
     function renderAdminApplications(container) {
         let allOrders = [];
         orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
@@ -1243,32 +1275,415 @@
     document.getElementById('historySearch').addEventListener('keyup', function(e) { if (e.key === 'Enter') renderHistory(); });
 
     // ================================================================
-    // ЗАГЛУШКИ ДЛЯ ОСТАЛЬНЫХ РЕНДЕРОВ
+    // РЕНДЕР РАЗДЕЛОВ (ЕДА, РАБОТА, УБОРКА, МАССАЖ, ЮРИСТ, СУД)
     // ================================================================
-    function renderFood() {}
-    function renderVacancies() {}
-    function renderApplications() {}
-    function renderCleaning() {}
-    function renderMassage() {}
-    function renderLegal() {}
-    function renderCourt() {}
-    function renderSupport() {}
-    function renderProfile() {}
-    function renderWallet() {}
-    function renderBank() {}
-    function renderMessenger() {}
-
-    function renderAll() {
-        if (document.getElementById('foodContainer')) renderFood();
-        if (document.getElementById('workVacancies')) renderVacancies();
-        if (document.getElementById('workApplications')) renderApplications();
-        if (document.getElementById('cleaningContainer')) renderCleaning();
-        if (document.getElementById('massageContainer')) renderMassage();
-        if (document.getElementById('legalContainer')) renderLegal();
-        if (document.getElementById('courtContainer')) renderCourt();
-        if (document.getElementById('roomVisitContainer')) renderRoomVisit();
-        if (currentUser.role === 'admin') renderAdmin();
+    function renderFood() {
+        const container = document.getElementById('foodContainer');
+        const items = orders.food.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет заказов</div>';
+            return;
+        }
+        container.innerHTML = items.map(o => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${o.id}</span>
+                    <span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span>
+                </div>
+                <div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>
+                <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                <div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>
+                <div class="card-detail"><strong>Цена:</strong> ${o.price !== undefined && o.price !== null ? o.price + ' ₽' : '—'}</div>
+                ${o.promoDiscount ? `<div class="card-detail"><strong>Скидка:</strong> ${o.promoDiscount}%</div>` : ''}
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+            </div>
+        `).join('');
     }
+
+    function renderVacancies() {
+        const container = document.getElementById('workVacancies');
+        const items = orders.vacancies || [];
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет вакансий</div>';
+            return;
+        }
+        container.innerHTML = items.map(v => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${v.id}</span>
+                    <span class="card-status status-${statusClass(v.status)}">${statusText(v.status)}</span>
+                </div>
+                <div class="card-detail"><strong>${v.title}</strong></div>
+                <div class="card-detail">Компания: ${v.company}</div>
+                <div class="card-detail">Мест: ${v.places}</div>
+                <div class="card-detail">${v.desc}</div>
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${v.time}</div>
+                ${currentUser.role === 'admin' ? `<button class="btn-sm gold" onclick="openApplicationModal('${v.id}')">Откликнуться (админ)</button>` : ''}
+            </div>
+        `).join('');
+    }
+
+    function renderApplications() {
+        const container = document.getElementById('workApplications');
+        const items = orders.applications.filter(a => a.userId === currentUser.id || currentUser.role === 'admin');
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет откликов</div>';
+            return;
+        }
+        container.innerHTML = items.map(a => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${a.id}</span>
+                    <span class="card-status status-${statusClass(a.status)}">${statusText(a.status)}</span>
+                </div>
+                <div class="card-detail"><strong>Вакансия:</strong> ${a.vacancyId}</div>
+                <div class="card-detail">${a.info}</div>
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${a.time}</div>
+            </div>
+        `).join('');
+    }
+
+    function renderCleaning() {
+        const container = document.getElementById('cleaningContainer');
+        const items = orders.cleaning.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет заявок</div>';
+            return;
+        }
+        container.innerHTML = items.map(o => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${o.id}</span>
+                    <span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span>
+                </div>
+                <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
+                <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                <div class="card-detail"><strong>Цена:</strong> ${o.price !== undefined && o.price !== null ? o.price + ' ₽' : '—'}</div>
+                ${o.promoDiscount ? `<div class="card-detail"><strong>Скидка:</strong> ${o.promoDiscount}%</div>` : ''}
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
+            </div>
+        `).join('');
+    }
+
+    function renderMassage() {
+        const container = document.getElementById('massageContainer');
+        const items = orders.massage.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет записей</div>';
+            return;
+        }
+        container.innerHTML = items.map(o => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${o.id}</span>
+                    <span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span>
+                </div>
+                <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
+                <div class="card-detail"><strong>Тип:</strong> ${o.type}</div>
+                <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                <div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>
+                <div class="card-detail"><strong>Пожелания:</strong> ${o.note || '—'}</div>
+                <div class="card-detail"><strong>Цена:</strong> ${o.price !== undefined && o.price !== null ? o.price + ' ₽' : '—'}</div>
+                ${o.promoDiscount ? `<div class="card-detail"><strong>Скидка:</strong> ${o.promoDiscount}%</div>` : ''}
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
+            </div>
+        `).join('');
+    }
+
+    function renderLegal() {
+        const container = document.getElementById('legalContainer');
+        const items = orders.legal.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет записей</div>';
+            return;
+        }
+        container.innerHTML = items.map(o => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${o.id}</span>
+                    <span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span>
+                </div>
+                <div class="card-detail"><strong>ФИО:</strong> ${o.fio}</div>
+                <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
+                <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
+                <div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
+            </div>
+        `).join('');
+    }
+
+    function renderCourt() {
+        const container = document.getElementById('courtContainer');
+        const items = orders.court.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет исков</div>';
+            return;
+        }
+        container.innerHTML = items.map(o => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${o.id}</span>
+                    <span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span>
+                </div>
+                <div class="card-detail"><strong>Истец:</strong> ${o.fio}</div>
+                <div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>
+                <div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>
+                ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
+            </div>
+        `).join('');
+    }
+
+    // ===== ОБЩИЙ РЕНДЕР (вызывается при обновлении) =====
+    function renderAll() {
+        renderFood();
+        renderVacancies();
+        renderApplications();
+        renderCleaning();
+        renderMassage();
+        renderLegal();
+        renderCourt();
+        // Профиль, кошелёк и др. рендерятся отдельно по вызову
+    }
+
+    // ================================================================
+    // ЗАГЛУШКИ ДЛЯ НЕРЕАЛИЗОВАННЫХ РАЗДЕЛОВ (профиль, кошелёк и т.д.)
+    // ================================================================
+    function renderProfile() {
+        document.getElementById('profileContainer').innerHTML = `
+            <div class="user-detail-card">
+                <div><strong>ФИО:</strong> ${currentUser.fio}</div>
+                <div><strong>Email:</strong> ${currentUser.email}</div>
+                <div><strong>Роль:</strong> ${currentUser.role}</div>
+                <div><strong>Статус:</strong> ${currentUser.status}</div>
+                <div><strong>ID:</strong> ${currentUser.id}</div>
+            </div>
+        `;
+    }
+    function renderWallet() {
+        const w = getWallet(currentUser.id);
+        document.getElementById('walletContainer').innerHTML = `
+            <div class="wallet-balance">${w.balance} ₽</div>
+            <div>Карта: ${w.cardNumber}</div>
+            ${w.blocked ? `<div style="color:#a14f4f;">🔒 Карта заблокирована: ${w.blockReason}</div>` : ''}
+        `;
+    }
+    function renderBank() {
+        document.getElementById('bankContainer').innerHTML = `
+            <div class="empty-state">💳 Банковские услуги — в разработке</div>
+        `;
+    }
+    function renderMessenger() {
+        document.getElementById('messengerChats').innerHTML = '<div class="empty-state">💬 Мессенджер — в разработке</div>';
+    }
+    function renderSupport() {
+        const items = supportTickets.filter(t => t.userId === currentUser.id || currentUser.role === 'admin');
+        if (!items.length) {
+            document.getElementById('supportContainer').innerHTML = '<div class="empty-state">Нет обращений</div>';
+            return;
+        }
+        document.getElementById('supportContainer').innerHTML = items.map(t => `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${t.id}</span>
+                    <span class="card-status status-${t.status === 'resolved' ? 'done' : 'new'}">${t.status === 'resolved' ? '✅' : '🆕'}</span>
+                </div>
+                <div class="card-detail"><strong>Проблема:</strong> ${t.problem}</div>
+                <div class="card-detail"><strong>Срочность:</strong> ${t.urgency}</div>
+                <div class="card-detail" style="font-size:0.7rem;">${t.time}</div>
+                ${t.adminReply ? `<div class="card-detail" style="color:#b8962e;"><strong>Ответ:</strong> ${t.adminReply}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    // ================================================================
+    // ОБРАБОТЧИКИ ФОРМ (ЗАКАЗЫ)
+    // ================================================================
+    document.getElementById('formFood').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const dish = document.getElementById('foodDish').value.trim();
+        const room = document.getElementById('foodRoom').value.trim();
+        const qty = parseInt(document.getElementById('foodQty').value) || 1;
+        const promo = document.getElementById('foodPromo').value.trim();
+        let discount = null;
+        if (promo) discount = applyPromo(promo, currentUser.id, 'food');
+        const order = {
+            id: genSid('FOOD'),
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            dish, room, qty,
+            status: 'pending',
+            time: now(),
+            price: null,
+            promoDiscount: discount || null
+        };
+        orders.food.push(order);
+        await saveAll();
+        renderAll();
+        showToast('✅ Заказ еды отправлен! Ожидайте подтверждения.');
+        closeModal('modalFood');
+        this.reset();
+    });
+
+    document.getElementById('formCleaning').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const room = document.getElementById('cleanRoom').value.trim();
+        const date = document.getElementById('cleanDate').value;
+        const time = document.getElementById('cleanTime').value;
+        const promo = document.getElementById('cleanPromo').value.trim();
+        let discount = null;
+        if (promo) discount = applyPromo(promo, currentUser.id, 'cleaning');
+        const order = {
+            id: genSid('CLN'),
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            room, date, time,
+            status: 'pending',
+            timeCreated: now(),
+            price: null,
+            promoDiscount: discount || null
+        };
+        orders.cleaning.push(order);
+        await saveAll();
+        renderAll();
+        showToast('✅ Заявка на уборку отправлена!');
+        closeModal('modalCleaning');
+        this.reset();
+    });
+
+    document.getElementById('formMassage').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const room = document.getElementById('massageRoom').value.trim();
+        const type = document.getElementById('massageType').value;
+        const time = document.getElementById('massageTime').value;
+        const duration = parseInt(document.getElementById('massageDuration').value);
+        const note = document.getElementById('massageNote').value.trim();
+        const promo = document.getElementById('massagePromo').value.trim();
+        const agree = document.getElementById('massageAgreement').checked;
+        if (!agree) { showToast('❌ Примите соглашение'); return; }
+        let discount = null;
+        if (promo) discount = applyPromo(promo, currentUser.id, 'massage');
+        const order = {
+            id: genSid('MSG'),
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            room, type, time, duration, note,
+            status: 'pending',
+            timeCreated: now(),
+            price: null,
+            promoDiscount: discount || null
+        };
+        orders.massage.push(order);
+        await saveAll();
+        renderAll();
+        showToast('✅ Запись на массаж отправлена!');
+        closeModal('modalMassage');
+        this.reset();
+        document.getElementById('massageAgreement').checked = false;
+    });
+
+    document.getElementById('formLegal').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const fio = document.getElementById('legalFio').value.trim();
+        const date = document.getElementById('legalDate').value;
+        const time = document.getElementById('legalTime').value;
+        const topic = document.getElementById('legalTopic').value.trim();
+        const order = {
+            id: genSid('LEG'),
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            fio, date, time, topic,
+            status: 'pending',
+            timeCreated: now(),
+            price: null
+        };
+        orders.legal.push(order);
+        await saveAll();
+        renderAll();
+        showToast('✅ Заявка на консультацию юриста отправлена!');
+        closeModal('modalLegal');
+        this.reset();
+    });
+
+    document.getElementById('formCourt').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const fio = document.getElementById('courtFio').value.trim();
+        const defendant = document.getElementById('courtDefendant').value.trim();
+        const address = document.getElementById('courtAddress').value.trim();
+        const defendantAddress = document.getElementById('courtDefendantAddress').value.trim();
+        const reason = document.getElementById('courtReason').value.trim();
+        const order = {
+            id: genSid('CRT'),
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            fio, defendant, address, defendantAddress, reason,
+            status: 'pending',
+            timeCreated: now(),
+            price: null
+        };
+        orders.court.push(order);
+        await saveAll();
+        renderAll();
+        showToast('✅ Иск подан! Ожидайте рассмотрения.');
+        closeModal('modalCourt');
+        this.reset();
+    });
+
+    document.getElementById('formVacancy').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const title = document.getElementById('vacancyTitle').value.trim();
+        const company = document.getElementById('vacancyCompany').value.trim();
+        const places = parseInt(document.getElementById('vacancyPlaces').value) || 1;
+        const desc = document.getElementById('vacancyDesc').value.trim();
+        const requirements = document.getElementById('vacancyRequirements').value.trim();
+        const vacancy = {
+            id: genSid('VAC'),
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            title, company, places, desc, requirements,
+            status: 'active',
+            time: now()
+        };
+        orders.vacancies.push(vacancy);
+        await saveAll();
+        renderAll();
+        showToast('✅ Вакансия создана!');
+        closeModal('modalVacancy');
+        this.reset();
+    });
+
+    document.getElementById('formApplication').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const vacancyId = document.getElementById('appVacancy').value.trim();
+        const info = document.getElementById('appInfo').value.trim();
+        const extras = Array.from(document.querySelectorAll('#formApplication .checkbox-group input:checked')).map(cb => cb.value);
+        const app = {
+            id: genSid('APP'),
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            vacancyId, info, extras,
+            status: 'pending',
+            time: now()
+        };
+        orders.applications.push(app);
+        await saveAll();
+        renderAll();
+        showToast('✅ Отклик отправлен!');
+        closeModal('modalApplication');
+        this.reset();
+    });
+
+    // ===== Открытие модалки отклика =====
+    window.openApplicationModal = function(vacancyId) {
+        document.getElementById('appVacancy').value = vacancyId;
+        openModal('modalApplication');
+    };
+
+    // ===== Массаж – активация кнопки при согласии =====
+    document.getElementById('massageAgreement').addEventListener('change', function() {
+        document.getElementById('massageSubmitBtn').disabled = !this.checked;
+    });
 
     // ================================================================
     // ЗАПУСК
