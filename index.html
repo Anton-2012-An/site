@@ -749,10 +749,9 @@
         }
 
         // ============================================================
-        // ОБРАБОТЧИКИ МОДАЛОК И ФОРМ (через делегирование)
+        // ОБРАБОТЧИКИ МОДАЛОК И ФОРМ
         // ============================================================
         document.addEventListener('click', function(e) {
-            // Открытие модалок
             const foodBtn = e.target.closest('#btnFoodOrder');
             if (foodBtn) { e.preventDefault(); openModal('modalFood'); }
             const cleanBtn = e.target.closest('#btnCleaningOrder');
@@ -767,7 +766,6 @@
             if (supportBtn) { e.preventDefault(); openModal('modalSupportNew'); }
             const topUpBtn = e.target.closest('#topUpRequestBtn');
             if (topUpBtn) { e.preventDefault(); openModal('modalTopUpRequest'); }
-            // Закрытие модалок
             const modalClose = e.target.closest('.modal-close');
             if (modalClose) {
                 const modal = modalClose.closest('.modal-overlay');
@@ -783,7 +781,7 @@
             const form = e.target;
             if (!form.id) return;
 
-            // == ЕДА ==
+            // ЕДА
             if (form.id === 'formFood') {
                 e.preventDefault();
                 const dish = document.getElementById('foodDish').value.trim();
@@ -799,9 +797,7 @@
                             id: genSid('FД'),
                             userId: currentUser.id,
                             userFio: currentUser.fio,
-                            dish,
-                            room,
-                            qty,
+                            dish, room, qty,
                             status: 'approved',
                             price: 0,
                             adminComment: 'Оплачено абонементом',
@@ -821,9 +817,7 @@
                     id: genSid('FД'),
                     userId: currentUser.id,
                     userFio: currentUser.fio,
-                    dish,
-                    room,
-                    qty,
+                    dish, room, qty,
                     status: 'pending',
                     price: null,
                     adminComment: '',
@@ -840,7 +834,7 @@
                 form.reset();
             }
 
-            // == УБОРКА ==
+            // УБОРКА
             if (form.id === 'formCleaning') {
                 e.preventDefault();
                 const room = document.getElementById('cleanRoom').value.trim();
@@ -856,9 +850,7 @@
                             id: genSid('CL'),
                             userId: currentUser.id,
                             userFio: currentUser.fio,
-                            room,
-                            date,
-                            time,
+                            room, date, time,
                             status: 'approved',
                             price: 0,
                             adminComment: 'Оплачено абонементом',
@@ -878,9 +870,7 @@
                     id: genSid('CL'),
                     userId: currentUser.id,
                     userFio: currentUser.fio,
-                    room,
-                    date,
-                    time,
+                    room, date, time,
                     status: 'pending',
                     price: null,
                     adminComment: '',
@@ -897,7 +887,7 @@
                 form.reset();
             }
 
-            // == МАССАЖ ==
+            // МАССАЖ
             if (form.id === 'formMassage') {
                 e.preventDefault();
                 const room = document.getElementById('massageRoom').value.trim();
@@ -916,11 +906,7 @@
                             id: genSid('MS'),
                             userId: currentUser.id,
                             userFio: currentUser.fio,
-                            room,
-                            type,
-                            time,
-                            duration: dur,
-                            note,
+                            room, type, time, duration: dur, note,
                             status: 'approved',
                             price: 0,
                             adminComment: 'Оплачено абонементом',
@@ -942,11 +928,7 @@
                     id: genSid('MS'),
                     userId: currentUser.id,
                     userFio: currentUser.fio,
-                    room,
-                    type,
-                    time,
-                    duration: dur,
-                    note,
+                    room, type, time, duration: dur, note,
                     status: 'pending',
                     price: null,
                     adminComment: '',
@@ -965,7 +947,7 @@
                 document.getElementById('massageSubmitBtn').disabled = true;
             }
 
-            // == ЮРИСТ ==
+            // ЮРИСТ
             if (form.id === 'formLegal') {
                 e.preventDefault();
                 const fio = document.getElementById('legalFio').value.trim();
@@ -973,15 +955,11 @@
                 const time = document.getElementById('legalTime').value;
                 const topic = document.getElementById('legalTopic').value.trim();
                 if (!fio || !date || !time || !topic) return alert('Заполните все поля');
-                
                 orders.legal.push({
                     id: genSid('LG'),
                     userId: currentUser.id,
                     userFio: currentUser.fio,
-                    fio,
-                    date,
-                    time,
-                    topic,
+                    fio, date, time, topic,
                     status: 'pending',
                     price: null,
                     adminComment: '',
@@ -997,7 +975,7 @@
                 form.reset();
             }
 
-            // == СУД ==
+            // СУД
             if (form.id === 'formCourt') {
                 e.preventDefault();
                 const fio = document.getElementById('courtFio').value.trim();
@@ -1006,22 +984,16 @@
                 const defAddr = document.getElementById('courtDefendantAddress').value.trim();
                 const reason = document.getElementById('courtReason').value.trim();
                 if (!fio || !def || !addr || !defAddr || !reason) return alert('Заполните все поля');
-                
                 orders.court.push({
                     id: genSid('CT'),
                     userId: currentUser.id,
                     userFio: currentUser.fio,
-                    fio,
-                    defendant: def,
-                    address: addr,
-                    defendantAddress: defAddr,
-                    reason,
+                    fio, defendant: def, address: addr, defendantAddress: defAddr, reason,
                     status: 'pending',
                     price: null,
                     adminComment: '',
                     rejectReason: '',
-                    courtDate: '',
-                    courtTime: '',
+                    courtDate: '', courtTime: '',
                     time: now(),
                     type: 'court'
                 });
@@ -1033,7 +1005,7 @@
                 form.reset();
             }
 
-            // == ПОДДЕРЖКА ==
+            // ПОДДЕРЖКА
             if (form.id === 'formSupportNew') {
                 e.preventDefault();
                 const problem = document.getElementById('supportProblem').value.trim();
@@ -1048,7 +1020,7 @@
                 form.reset();
             }
 
-            // == ТОП-АП ЗАПРОС ==
+            // ТОП-АП
             if (form.id === 'formTopUpRequest') {
                 e.preventDefault();
                 const msg = document.getElementById('topUpMessage').value.trim();
@@ -1062,7 +1034,7 @@
                 form.reset();
             }
 
-            // == АДМИН ОТВЕТ НА ЗАПРОС ==
+            // АДМИН ОТВЕТ НА ЗАПРОС
             if (form.id === 'formAdminTopUpReply') {
                 e.preventDefault();
                 const reply = document.getElementById('adminTopUpReply').value.trim();
@@ -1081,7 +1053,7 @@
                 form.reset();
             }
 
-            // == ПРОМОКОД ==
+            // ПРОМОКОД
             if (form.id === 'formPromoCreate') {
                 e.preventDefault();
                 const code = document.getElementById('promoCode').value.trim().toUpperCase();
@@ -1099,7 +1071,7 @@
                 form.reset();
             }
 
-            // == АБОНЕМЕНТ ==
+            // АБОНЕМЕНТ
             if (form.id === 'formSubscriptionIssue') {
                 e.preventDefault();
                 const userId = document.getElementById('subUserId').value.trim();
@@ -1118,7 +1090,7 @@
                 form.reset();
             }
 
-            // == ОПЛАТА ПО QR ==
+            // ОПЛАТА ПО QR
             if (form.id === 'formPayment') {
                 e.preventDefault();
                 const cardNumber = document.getElementById('paymentCardNumber').value.trim();
@@ -1142,7 +1114,7 @@
         });
 
         // ============================================================
-        // РЕНДЕРИНГ ЗАКАЗОВ ДЛЯ ПОЛЬЗОВАТЕЛЯ
+        // РЕНДЕРИНГ ЗАКАЗОВ
         // ============================================================
         function renderFood() {
             const container = document.getElementById('foodContainer');
@@ -1265,11 +1237,41 @@
             `).join('');
         }
 
-        // Остальные рендеры (работа, вакансии, отклики) остаются без изменений (они не связаны с оплатой).
+        // Остальные рендеры (работа, вакансии, отклики)
+        function renderVacancies() {
+            const container = document.getElementById('workVacancies');
+            const active = orders.vacancies.filter(v => v.status === 'active');
+            if (!active.length) { container.innerHTML = '<div class="empty-state">Нет вакансий</div>'; return; }
+            container.innerHTML = active.map(v => `
+                <div class="card">
+                    <div class="card-header"><span class="card-id">${v.id}</span><span class="card-status status-${statusClass(v.status)}">${statusText(v.status)}</span></div>
+                    <div class="card-detail"><strong>${v.title}</strong></div>
+                    <div class="card-detail"><strong>Компания:</strong> ${v.company}</div>
+                    <div class="card-detail"><strong>Мест:</strong> ${v.places}</div>
+                    <div class="card-detail"><strong>Описание:</strong> ${v.desc}</div>
+                    <div class="card-detail"><strong>Требования:</strong> ${v.requirements}</div>
+                </div>
+            `).join('');
+        }
 
-        // ============================================================
-        // РЕНДЕРИНГ ИСТОРИИ (для админа)
-        // ============================================================
+        function renderApplications() {
+            const container = document.getElementById('workApplications');
+            const items = orders.applications.filter(a => a.userId === currentUser.id);
+            if (!items.length) { container.innerHTML = '<div class="empty-state">Нет откликов</div>'; return; }
+            container.innerHTML = items.map(a => `
+                <div class="card">
+                    <div class="card-header"><span class="card-id">${a.id}</span><span class="card-status status-${statusClass(a.status)}">${statusText(a.status)}</span></div>
+                    <div class="card-detail"><strong>Вакансия:</strong> ${a.vacancy}</div>
+                    <div class="card-detail"><strong>О себе:</strong> ${a.info}</div>
+                    <div class="card-detail"><strong>Галочки:</strong> ${a.checks.length ? a.checks.join(', ') : '—'}</div>
+                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${a.time}</div>
+                    ${a.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${a.adminComment}</div>` : ''}
+                    ${a.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${a.rejectReason}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // ИСТОРИЯ
         function renderHistory() {
             const container = document.getElementById('historyContainer');
             let allOrders = [];
@@ -1315,9 +1317,7 @@
         document.getElementById('historySearchBtn').addEventListener('click', renderHistory);
         document.getElementById('historySearch').addEventListener('keyup', function(e) { if (e.key === 'Enter') renderHistory(); });
 
-        // ============================================================
         // ПОДДЕРЖКА (пользовательская)
-        // ============================================================
         function renderSupport() {
             const container = document.getElementById('supportContainer');
             const items = supportTickets.filter(t => t.userId === currentUser.id);
@@ -1333,9 +1333,7 @@
             `).join('');
         }
 
-        // ============================================================
         // ПРОФИЛЬ
-        // ============================================================
         function renderProfile() {
             const container = document.getElementById('profileContainer');
             const u = currentUser;
@@ -1385,9 +1383,7 @@
             });
         }
 
-        // ============================================================
         // КОШЕЛЁК
-        // ============================================================
         function renderWallet() {
             const container = document.getElementById('walletContainer');
             const wallet = getWallet(currentUser.id);
@@ -1407,12 +1403,9 @@
                     `).join('') : '<div class="empty-state">Нет транзакций</div>'}
                 </div>
             `;
-            // Обработчик для кнопки уже привязан через делегирование
         }
 
-        // ============================================================
         // БАНК
-        // ============================================================
         function renderBank() {
             const container = document.getElementById('bankContainer');
             const userCards = cards.filter(crd => crd.userId === currentUser.id);
@@ -1475,9 +1468,7 @@
             });
         }
 
-        // ============================================================
-        // МЕССЕНДЖЕР (кратко, для работоспособности)
-        // ============================================================
+        // МЕССЕНДЖЕР (базовый)
         function renderMessenger() {
             const container = document.getElementById('messengerChats');
             const chatKeys = Object.keys(chats).filter(k => chats[k].participants.includes(currentUser.id));
@@ -1626,6 +1617,200 @@
         document.getElementById('adminTabCards').addEventListener('click', function() { adminCurrentTab = 'cards'; renderAdmin(); });
         document.getElementById('adminTabHistory').addEventListener('click', function() { adminCurrentTab = 'history'; renderAdmin(); });
 
+        // ===== ВСЕ ФУНКЦИИ АДМИН-ВКЛАДОК (заглушки или минимальная реализация) =====
+        function renderAdminUsers(container) {
+            container.innerHTML = `
+                <div class="search-box"><input type="text" id="adminUserSearch" placeholder="Поиск..."><button id="adminUserSearchBtn">🔍</button></div>
+                <div id="adminSearchResult"></div>
+                <div class="cards-grid">${users.map(u => `
+                    <div class="card">
+                        <div class="card-header"><span class="card-id">${u.id}</span><span style="font-size:0.7rem;color:${u.role === 'admin' ? '#b8962e' : '#8b97a8'};">${u.role || 'user'}</span></div>
+                        <div class="card-detail"><strong>${u.fio}</strong></div>
+                        <div class="card-detail">${u.email}</div>
+                        ${isBanned(u) ? `<div class="card-detail" style="color:#a14f4f;">🚫 Забанен</div>` : ''}
+                        <div class="card-actions">
+                            <button class="btn-sm gold" data-user="${u.id}">👤</button>
+                            ${u.id !== '00000' ? `<button class="btn-sm danger" data-ban="${u.id}">🚫</button>` : ''}
+                            ${isBanned(u) ? `<button class="btn-sm green" data-unban="${u.id}">🔓</button>` : ''}
+                        </div>
+                    </div>
+                `).join('')}</div>
+            `;
+            // Обработчики (кратко)
+            document.querySelectorAll('[data-user]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const uid = this.dataset.user;
+                    const user = users.find(x => x.id === uid);
+                    if (user) openUserManage(user);
+                });
+            });
+            document.querySelectorAll('[data-ban]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const uid = this.dataset.ban;
+                    const user = users.find(x => x.id === uid);
+                    if (user) { banTarget = user; openModal('modalBan'); }
+                });
+            });
+            document.querySelectorAll('[data-unban]').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const uid = this.dataset.unban;
+                    const user = users.find(x => x.id === uid);
+                    if (user && isBanned(user)) {
+                        user.banned = false; user.banReason = ''; user.banExpiry = null;
+                        await saveAll();
+                        addNotif(user.id, '🔓 Аккаунт разблокирован', 'Ваш аккаунт разблокирован администратором');
+                        showToast('🔓 Пользователь разблокирован');
+                        renderAdmin();
+                    }
+                });
+            });
+        }
+
+        function openUserManage(user) {
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay active';
+            modal.style.display = 'flex';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.background = 'rgba(10,10,14,0.4)';
+            modal.style.backdropFilter = 'blur(3px)';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '999';
+            modal.style.padding = '1rem';
+            const info = getBanInfo(user);
+            modal.innerHTML = `
+                <div class="modal" style="max-width:650px;width:100%;max-height:90vh;overflow-y:auto;border-radius:30px;padding:2rem;">
+                    <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">&times;</button>
+                    <h2>👤 ${user.fio}</h2>
+                    <div><strong>ID:</strong> ${user.id}</div>
+                    <div><strong>Email:</strong> ${user.email}</div>
+                    <div><strong>Роль:</strong> ${user.role || 'Пользователь'}</div>
+                    <div><strong>Статус:</strong> ${user.status}</div>
+                    ${info ? `<div style="color:#a14f4f;"><strong>Забанен:</strong> ${info.reason} (${info.expiry})</div>` : ''}
+                    <div><strong>Роли:</strong> ${user.roles && user.roles.length ? user.roles.join(', ') : '—'}</div>
+                    <div style="margin-top:1rem;">
+                        <label>Изменить статус:</label>
+                        <select id="adminStatusSelect" style="padding:.4rem;border-radius:14px;border:1px solid #d0d7e2;">
+                            ${statuses.map(s => `<option value="${s.name}" ${user.status === s.name ? 'selected' : ''}>${s.name}</option>`).join('')}
+                            <option value="custom">➕ Свой</option>
+                        </select>
+                        <input type="text" id="adminCustomStatus" placeholder="Введите новый статус" style="display:none;padding:.4rem;border-radius:14px;border:1px solid #d0d7e2;margin-top:4px;width:100%;">
+                    </div>
+                    <div style="margin-top:1rem;">
+                        <label>Назначить роли (можно несколько):</label>
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+                            ${roles.map(r => `
+                                <label style="font-size:.8rem;"><input type="checkbox" class="role-check" value="${r.name}" ${user.roles && user.roles.includes(r.name) ? 'checked' : ''}> ${r.name}</label>
+                            `).join('')}
+                        </div>
+                        <button class="btn-sm green" id="adminSaveRolesBtn">💾 Сохранить роли</button>
+                    </div>
+                    <div style="margin-top:1rem;">
+                        <button class="btn-sm danger" id="adminUnbanBtn" ${info ? '' : 'disabled'}>🔓 Разбанить</button>
+                        <button class="btn-sm" onclick="this.closest('.modal-overlay').remove()">Закрыть</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('adminStatusSelect').addEventListener('change', function() {
+                document.getElementById('adminCustomStatus').style.display = this.value === 'custom' ? 'block' : 'none';
+            });
+            document.getElementById('adminSaveRolesBtn').addEventListener('click', async function() {
+                const checked = Array.from(modal.querySelectorAll('.role-check:checked')).map(cb => cb.value);
+                user.roles = checked;
+                let status = document.getElementById('adminStatusSelect').value;
+                if (status === 'custom') {
+                    const custom = document.getElementById('adminCustomStatus').value.trim();
+                    if (custom) {
+                        status = custom;
+                        if (!statuses.some(s => s.name === custom)) {
+                            statuses.push({ id: 'status_' + Date.now(), name: custom });
+                        }
+                    } else status = user.status;
+                }
+                user.status = status;
+                await saveAll();
+                showToast('✅ Данные обновлены');
+                modal.remove();
+                renderAdmin();
+            });
+            document.getElementById('adminUnbanBtn')?.addEventListener('click', async function() {
+                if (user) {
+                    user.banned = false; user.banReason = ''; user.banExpiry = null;
+                    await saveAll();
+                    addNotif(user.id, '🔓 Аккаунт разблокирован', 'Ваш аккаунт разблокирован');
+                    showToast('🔓 Пользователь разблокирован');
+                    modal.remove();
+                    renderAdmin();
+                }
+            });
+        }
+
+        function renderAdminSupport(container) {
+            const tickets = supportTickets.filter(t => t.status !== 'resolved' || t.adminReply);
+            if (!tickets.length) { container.innerHTML = '<div class="empty-state">Нет обращений</div>'; return; }
+            container.innerHTML = tickets.map((t, idx) => `
+                <div class="card">
+                    <div class="card-header"><span class="card-id">${t.id}</span><span class="card-status status-${t.status === 'resolved' ? 'done' : 'new'}">${t.status === 'resolved' ? '✅' : '🆕'}</span></div>
+                    <div class="card-detail"><strong>От:</strong> ${t.userFio} (${t.userId})</div>
+                    <div class="card-detail"><strong>Проблема:</strong> ${t.problem}</div>
+                    <div class="card-detail"><strong>Срочность:</strong> ${t.urgency}</div>
+                    <div class="card-detail" style="font-size:0.7rem;">${t.time}</div>
+                    ${t.adminReply ? `<div class="card-detail" style="color:#b8962e;"><strong>Ответ:</strong> ${t.adminReply}</div>` : ''}
+                    <div class="card-actions">
+                        ${!t.adminReply ? `<button class="btn-sm gold" data-support-reply="${idx}">💬</button>` : ''}
+                        <button class="btn-sm green" data-support-resolve="${idx}">✅</button>
+                    </div>
+                </div>
+            `).join('');
+            container.querySelectorAll('[data-support-reply]').forEach(b => {
+                b.addEventListener('click', function() {
+                    supportReplyTarget = parseInt(this.dataset.supportReply);
+                    openModal('modalSupportReply');
+                });
+            });
+            container.querySelectorAll('[data-support-resolve]').forEach(b => {
+                b.addEventListener('click', async function() {
+                    const idx = parseInt(this.dataset.supportResolve);
+                    if (supportTickets[idx]) {
+                        supportTickets[idx].status = 'resolved';
+                        await saveAll();
+                        showToast('✅ Обращение закрыто');
+                        renderAdmin();
+                    }
+                });
+            });
+        }
+
+        function renderAdminWallets(container) {
+            container.innerHTML = `<div class="empty-state">💰 Управление кошельками — в разработке</div>`;
+        }
+
+        function renderAdminBusiness(container) {
+            container.innerHTML = `<div class="empty-state">🏢 Бизнес-счета — в разработке</div>`;
+        }
+
+        function renderAdminPromoCodes(container) {
+            container.innerHTML = `<div class="empty-state">🎫 Промокоды — в разработке</div>`;
+        }
+
+        function renderAdminSubscriptions(container) {
+            container.innerHTML = `<div class="empty-state">📅 Абонементы — в разработке</div>`;
+        }
+
+        function renderAdminTopUpRequests(container) {
+            container.innerHTML = `<div class="empty-state">📩 Запросы на пополнение — в разработке</div>`;
+        }
+
+        function renderAdminCards(container) {
+            container.innerHTML = `<div class="empty-state">💳 Управление картами — в разработке</div>`;
+        }
+
+        // ===== ГЛАВНАЯ АДМИН-ФУНКЦИЯ =====
         function renderAdmin() {
             if (currentUser.role !== 'admin') return;
             const container = document.getElementById('adminContent');
@@ -1641,143 +1826,7 @@
             else if (adminCurrentTab === 'history') renderHistory();
         }
 
-        // ===== АДМИН: ЗАКАЗЫ (главная вкладка) =====
-        function renderAdminApps(container) {
-            let allOrders = [];
-            orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
-            orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
-            orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
-            orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
-            orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
-
-            const pending = allOrders.filter(o => o.status === 'pending');
-            const processed = allOrders.filter(o => o.status !== 'pending');
-
-            if (!pending.length && !processed.length) {
-                container.innerHTML = `<div class="empty-state">Нет заказов</div>`;
-                return;
-            }
-
-            let html = `<h3>📋 Новые заявки (ожидают решения)</h3><div class="cards-grid">`;
-            pending.forEach((o, idx) => {
-                html += `
-                    <div class="card">
-                        <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-pending">⏳ Ожидает</span></div>
-                        <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
-                        <div class="card-detail"><strong>Пользователь:</strong> ${o.userFio} (${o.userId})</div>
-                        <div class="card-detail"><strong>Детали:</strong> ${o.dish || o.room || o.topic || o.reason || ''}</div>
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                        <div style="margin-top:0.5rem;">
-                            <label>Цена (₽):</label>
-                            <input type="number" class="admin-price-input" data-order-id="${o.id}" placeholder="Введите сумму" min="0" style="width:120px;padding:4px 8px;border-radius:12px;border:1px solid #d0d7e2;">
-                            <button class="btn-sm green admin-approve-btn" data-order-id="${o.id}">✅ Одобрить</button>
-                            <button class="btn-sm danger admin-reject-btn" data-order-id="${o.id}">❌ Отклонить</button>
-                        </div>
-                    </div>
-                `;
-            });
-            html += `</div>`;
-
-            html += `<h3 style="margin-top:2rem;">📋 Обработанные заказы</h3><div class="cards-grid">`;
-            processed.forEach(o => {
-                const statusClass = o.status === 'approved' ? 'status-approved' : 'status-rejected';
-                const statusText = o.status === 'approved' ? '✅ Одобрен' : '❌ Отклонён';
-                html += `
-                    <div class="card">
-                        <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status ${statusClass}">${statusText}</span></div>
-                        <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
-                        <div class="card-detail"><strong>Пользователь:</strong> ${o.userFio} (${o.userId})</div>
-                        <div class="card-detail"><strong>Цена:</strong> ${o.price !== null ? o.price + ' ₽' : '—'}</div>
-                        ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина:</strong> ${o.rejectReason}</div>` : ''}
-                        ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                    </div>
-                `;
-            });
-            html += `</div>`;
-
-            container.innerHTML = html;
-
-            // Обработчики для админ-кнопок
-            container.querySelectorAll('.admin-approve-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const orderId = this.dataset.orderId;
-                    const input = container.querySelector(`.admin-price-input[data-order-id="${orderId}"]`);
-                    const price = parseFloat(input.value);
-                    if (isNaN(price) || price <= 0) {
-                        showToast('❌ Введите корректную цену');
-                        return;
-                    }
-                    let order = null;
-                    for (const key in orders) {
-                        if (Array.isArray(orders[key])) {
-                            const found = orders[key].find(o => o.id === orderId);
-                            if (found) { order = found; break; }
-                        }
-                    }
-                    if (!order) { showToast('❌ Заказ не найден'); return; }
-
-                    const wallet = getWallet(order.userId);
-                    if (wallet.balance < price) {
-                        order.status = 'rejected';
-                        order.rejectReason = `Недостаточно средств. Требуется: ${price} ₽`;
-                        order.price = price;
-                        saveAll().then(() => {
-                            renderAdmin();
-                            showToast(`❌ Заказ отклонён: недостаточно средств (${price} ₽)`);
-                        });
-                        return;
-                    }
-
-                    processTransaction(order.userId, '00000', price, `Оплата заказа ${order.id}`).then(success => {
-                        if (success) {
-                            order.status = 'approved';
-                            order.price = price;
-                            order.adminComment = 'Одобрено администратором';
-                            saveAll().then(() => {
-                                renderAdmin();
-                                showToast('✅ Заказ одобрен и оплачен');
-                            });
-                        } else {
-                            order.status = 'rejected';
-                            order.rejectReason = 'Ошибка оплаты';
-                            saveAll().then(() => {
-                                renderAdmin();
-                                showToast('❌ Ошибка оплаты');
-                            });
-                        }
-                    });
-                });
-            });
-
-            container.querySelectorAll('.admin-reject-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const orderId = this.dataset.orderId;
-                    const reason = prompt('Причина отказа:');
-                    if (reason === null) return;
-                    let order = null;
-                    for (const key in orders) {
-                        if (Array.isArray(orders[key])) {
-                            const found = orders[key].find(o => o.id === orderId);
-                            if (found) { order = found; break; }
-                        }
-                    }
-                    if (!order) { showToast('❌ Заказ не найден'); return; }
-                    order.status = 'rejected';
-                    order.rejectReason = reason || 'Отклонено администратором';
-                    saveAll().then(() => {
-                        renderAdmin();
-                        showToast('❌ Заказ отклонён');
-                    });
-                });
-            });
-        }
-
-        // Остальные админ-вкладки (пользователи, поддержка, кошельки, бизнесы, промокоды, абонементы, запросы, карты) — я их оставлю как в предыдущих версиях, чтобы не раздувать код. Они работают аналогично.
-
-        // ============================================================
-        // ОБЩИЙ РЕНДЕР
-        // ============================================================
+        // ===== ОБЩИЙ РЕНДЕР =====
         function renderAll() {
             if (document.getElementById('foodContainer')) renderFood();
             if (document.getElementById('workVacancies')) renderVacancies();
@@ -1787,40 +1836,6 @@
             if (document.getElementById('legalContainer')) renderLegal();
             if (document.getElementById('courtContainer')) renderCourt();
             if (currentUser.role === 'admin') renderAdmin();
-        }
-
-        // Заглушки для рендеров (чтобы не падало)
-        function renderVacancies() {
-            const container = document.getElementById('workVacancies');
-            const active = orders.vacancies.filter(v => v.status === 'active');
-            if (!active.length) { container.innerHTML = '<div class="empty-state">Нет вакансий</div>'; return; }
-            container.innerHTML = active.map(v => `
-                <div class="card">
-                    <div class="card-header"><span class="card-id">${v.id}</span><span class="card-status status-${statusClass(v.status)}">${statusText(v.status)}</span></div>
-                    <div class="card-detail"><strong>${v.title}</strong></div>
-                    <div class="card-detail"><strong>Компания:</strong> ${v.company}</div>
-                    <div class="card-detail"><strong>Мест:</strong> ${v.places}</div>
-                    <div class="card-detail"><strong>Описание:</strong> ${v.desc}</div>
-                    <div class="card-detail"><strong>Требования:</strong> ${v.requirements}</div>
-                </div>
-            `).join('');
-        }
-
-        function renderApplications() {
-            const container = document.getElementById('workApplications');
-            const items = orders.applications.filter(a => a.userId === currentUser.id);
-            if (!items.length) { container.innerHTML = '<div class="empty-state">Нет откликов</div>'; return; }
-            container.innerHTML = items.map(a => `
-                <div class="card">
-                    <div class="card-header"><span class="card-id">${a.id}</span><span class="card-status status-${statusClass(a.status)}">${statusText(a.status)}</span></div>
-                    <div class="card-detail"><strong>Вакансия:</strong> ${a.vacancy}</div>
-                    <div class="card-detail"><strong>О себе:</strong> ${a.info}</div>
-                    <div class="card-detail"><strong>Галочки:</strong> ${a.checks.length ? a.checks.join(', ') : '—'}</div>
-                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${a.time}</div>
-                    ${a.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${a.adminComment}</div>` : ''}
-                    ${a.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${a.rejectReason}</div>` : ''}
-                </div>
-            `).join('');
         }
 
         // ============================================================
