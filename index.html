@@ -188,7 +188,7 @@
         }
     }
 
-    // ===== ЛОКАЛЬНОЕ СОХРАНЕНИЕ (резерв) =====
+    // ===== ЛОКАЛЬНОЕ СОХРАНЕНИЕ =====
     function saveLocal() {
         try {
             const data = { users, orders, notifications, supportTickets, chats, messages, stickers, roles, statuses, wallets, businessAccounts, promoCodes, subscriptions, debts, cards, topUpRequests };
@@ -565,7 +565,6 @@
 
         if (!orders.passes) orders.passes = [];
         const items = orders.passes.filter(p => p.userId === currentUser.id);
-        console.log('📋 Пропуска для пользователя:', items);
         
         if (!items.length) {
             container.innerHTML = '<div class="empty-state">Нет пропусков</div>';
@@ -630,7 +629,6 @@
                             colorLight: "#ffffff",
                             correctLevel: QRCode.CorrectLevel.H
                         });
-                        console.log('✅ QR-код сгенерирован для', p.id);
                     } catch (e) {
                         console.error('❌ Ошибка генерации QR:', e);
                         container.innerHTML = '<p style="color:#8b97a8;">QR-код</p>';
@@ -644,7 +642,6 @@
     function renderAdminPass(container) {
         if (!orders.passes) orders.passes = [];
         const passes = orders.passes;
-        console.log('📋 Все пропуска (админ):', passes);
         
         if (!passes.length) {
             container.innerHTML = '<div class="empty-state">Нет пропусков</div>';
@@ -1110,7 +1107,7 @@
         openModal('modalPassExtend');
     };
 
-    // ===== РЕНДЕРЫ ОСТАЛЬНЫХ РАЗДЕЛОВ =====
+    // ===== ОСТАЛЬНЫЕ РЕНДЕРЫ =====
     
     function renderFood() {
         const container = document.getElementById('foodContainer');
@@ -1623,6 +1620,7 @@
     }
 
     function bindAdminEvents(container) {
+        // Кнопки одобрения/отклонения заказов
         container.querySelectorAll('.admin-approve-btn').forEach(btn => {
             if (btn) {
                 btn.removeEventListener('click', handleApprove);
@@ -1751,13 +1749,16 @@
         });
     }
 
-    // ----- Обработчики админа -----
+    // ----- ОБРАБОТЧИКИ ОДОБРЕНИЯ/ОТКЛОНЕНИЯ ЗАКАЗОВ -----
     async function handleApprove(e) {
         const btn = e.currentTarget;
         const orderId = btn.dataset.orderId;
         const input = document.querySelector(`.admin-price-input[data-order-id="${orderId}"]`);
         const price = parseFloat(input?.value);
-        if (isNaN(price) || price <= 0) { showToast('❌ Введите цену'); return; }
+        if (isNaN(price) || price <= 0) {
+            showToast('❌ Введите корректную цену');
+            return;
+        }
         let order = null;
         for (const key in orders) {
             if (Array.isArray(orders[key])) {
@@ -1768,10 +1769,10 @@
         if (!order) { showToast('❌ Заказ не найден'); return; }
         order.status = 'approved';
         order.price = price;
-        order.adminComment = 'Одобрено';
+        order.adminComment = 'Одобрено администратором';
         await saveAll();
         renderAdmin();
-        showToast('✅ Заказ одобрен');
+        showToast('✅ Заказ одобрен!');
     }
 
     async function handleReject(e) {
@@ -1788,12 +1789,13 @@
         }
         if (!order) { showToast('❌ Заказ не найден'); return; }
         order.status = 'rejected';
-        order.rejectReason = reason || 'Отклонено';
+        order.rejectReason = reason || 'Отклонено администратором';
         await saveAll();
         renderAdmin();
         showToast('❌ Заказ отклонён');
     }
 
+    // ----- ОСТАЛЬНЫЕ ОБРАБОТЧИКИ АДМИНА -----
     function handleRoomEdit(e) {
         const btn = e.currentTarget;
         const id = btn.dataset.roomvisitEdit;
@@ -2042,7 +2044,7 @@
         }
     }
 
-    // ----- Рендеры админ-вкладок -----
+    // ----- РЕНДЕРЫ АДМИН-ВКЛАДОК -----
     function renderAdminApplications(container) {
         let allOrders = [];
         if (orders.food) orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
@@ -2059,16 +2061,19 @@
             return;
         }
 
-        let html = '<h3>📋 Новые заявки</h3><div class="cards-grid">';
+        let html = '<h3>📋 Новые заявки (ожидают решения)</h3><div class="cards-grid">';
         pending.forEach(o => {
             html += `
                 <div class="card">
-                    <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-pending">⏳ Ожидает</span></div>
+                    <div class="card-header">
+                        <span class="card-id">${o.id}</span>
+                        <span class="card-status status-pending">⏳ Ожидает</span>
+                    </div>
                     <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
                     <div class="card-detail"><strong>Пользователь:</strong> ${o.userFio} (${o.userId})</div>
-                    <div class="card-detail"><strong>Детали:</strong> ${o.dish || o.room || o.topic || o.reason || ''}</div>
-                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
-                    <div style="margin-top:0.5rem;">
+                    <div class="card-detail"><strong>Детали:</strong> ${o.dish || o.room || o.topic || o.reason || o.fio || ''}</div>
+                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time || o.timeCreated}</div>
+                    <div style="margin-top:0.5rem;display:flex;flex-wrap:wrap;gap:4px;">
                         <label>Цена (₽):</label>
                         <input type="number" class="admin-price-input" data-order-id="${o.id}" placeholder="Сумма" min="0" style="width:120px;padding:4px 8px;border-radius:12px;border:1px solid #d0d7e2;">
                         <button class="btn-sm green admin-approve-btn" data-order-id="${o.id}">✅ Одобрить</button>
@@ -2077,19 +2082,25 @@
                 </div>
             `;
         });
-        html += '</div><h3 style="margin-top:2rem;">📋 Обработанные</h3><div class="cards-grid">';
+        html += '</div>';
+
+        html += '<h3 style="margin-top:2rem;">📋 Обработанные заказы</h3><div class="cards-grid">';
         processed.forEach(o => {
-            const cls = o.status === 'approved' ? 'approved' : 'rejected';
-            const txt = o.status === 'approved' ? '✅ Одобрен' : '❌ Отклонён';
+            const cls = o.status === 'approved' ? 'approved' : o.status === 'rejected' ? 'rejected' : 'processing';
+            const txt = o.status === 'approved' ? '✅ Одобрен' : o.status === 'rejected' ? '❌ Отклонён' : statusText(o.status);
             html += `
                 <div class="card">
-                    <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${cls}">${txt}</span></div>
+                    <div class="card-header">
+                        <span class="card-id">${o.id}</span>
+                        <span class="card-status status-${cls}">${txt}</span>
+                    </div>
                     <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
                     <div class="card-detail"><strong>Пользователь:</strong> ${o.userFio} (${o.userId})</div>
-                    <div class="card-detail"><strong>Цена:</strong> ${o.price !== null ? o.price + ' ₽' : '—'}</div>
+                    <div class="card-detail"><strong>Детали:</strong> ${o.dish || o.room || o.topic || o.reason || o.fio || ''}</div>
+                    <div class="card-detail"><strong>Цена:</strong> ${o.price !== null && o.price !== undefined ? o.price + ' ₽' : '—'}</div>
                     ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина:</strong> ${o.rejectReason}</div>` : ''}
                     ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
+                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time || o.timeCreated}</div>
                 </div>
             `;
         });
