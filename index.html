@@ -95,11 +95,11 @@
 </div>
 
 <!-- МОДАЛКИ -->
-<div id="modalPassOrder" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassOrder">&times;</button><h2>🎫 Заказ пропуска</h2><form id="formPassOrder"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="passFio" required></div><div class="form-group"><label>Адрес</label><input type="text" id="passAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div><div class="form-group"><label>Цель получения пропуска</label><textarea id="passPurpose" placeholder="Для прохода в офис..." required></textarea></div><div class="form-group"><label>Срок действия (дней)</label><input type="number" id="passDuration" value="30" min="1" required></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalPassOrder" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassOrder">&times;</button><h2>🎫 Заказ пропуска</h2><form id="formPassOrder"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="passFio" required></div><div class="form-group"><label>Адрес</label><input type="text" id="passAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div><div class="form-group"><label>Цель получения пропуска</label><textarea id="passPurpose" placeholder="Для прохода в офис..." required></textarea></div><div class="form-group"><label>Срок действия</label><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><input type="number" id="passDuration" value="30" min="1" style="flex:2;min-width:100px;"><select id="passDurationUnit" style="flex:1;min-width:100px;"><option value="minutes">Минуты</option><option value="hours">Часы</option><option value="days" selected>Дни</option><option value="months">Месяцы</option><option value="years">Годы</option></select></div></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
 <div id="modalPassAddVisit" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassAddVisit">&times;</button><h2>📝 Добавить посещение</h2><form id="formPassAddVisit"><div class="form-group"><label>Дата</label><input type="date" id="passVisitDate" required></div><div class="form-group"><label>Время</label><input type="time" id="passVisitTime" required></div><div class="form-group"><label>Причина посещения</label><textarea id="passVisitReason" required></textarea></div><input type="hidden" id="passVisitPassId"><button type="submit" class="btn-submit">➕ Добавить посещение</button></form></div></div>
 <div id="modalPassClose" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassClose">&times;</button><h2>🔒 Закрыть пропуск</h2><form id="formPassClose"><div class="form-group"><label>Причина закрытия</label><textarea id="passCloseReason" required></textarea></div><input type="hidden" id="passCloseId"><button type="submit" class="btn-submit">🔒 Закрыть пропуск</button></form></div></div>
 <div id="modalPassTempClose" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassTempClose">&times;</button><h2>⏳ Временно закрыть пропуск</h2><form id="formPassTempClose"><div class="form-group"><label>Причина</label><textarea id="passTempCloseReason" required></textarea></div><div class="form-group"><label>Дата окончания</label><input type="date" id="passTempCloseDate" required></div><div class="form-group"><label>Время окончания</label><input type="time" id="passTempCloseTime" required></div><input type="hidden" id="passTempCloseId"><button type="submit" class="btn-submit">⏳ Закрыть на время</button></form></div></div>
-<div id="modalPassExtend" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassExtend">&times;</button><h2>🔄 Продлить пропуск</h2><form id="formPassExtend"><div class="form-group"><label>Причина продления</label><textarea id="passExtendReason" required></textarea></div><div class="form-group"><label>Продлить на (дней)</label><input type="number" id="passExtendDays" value="30" min="1" required></div><input type="hidden" id="passExtendId"><button type="submit" class="btn-submit">🔄 Продлить</button></form></div></div>
+<div id="modalPassExtend" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassExtend">&times;</button><h2>🔄 Продлить пропуск</h2><form id="formPassExtend"><div class="form-group"><label>Причина продления</label><textarea id="passExtendReason" required></textarea></div><div class="form-group"><label>Продлить на</label><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><input type="number" id="passExtendDays" value="30" min="1" style="flex:2;min-width:100px;"><select id="passExtendUnit" style="flex:1;min-width:100px;"><option value="minutes">Минуты</option><option value="hours">Часы</option><option value="days" selected>Дни</option><option value="months">Месяцы</option><option value="years">Годы</option></select></div></div><input type="hidden" id="passExtendId"><button type="submit" class="btn-submit">🔄 Продлить</button></form></div></div>
 <div id="modalPassVisits" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassVisits">&times;</button><h2>📋 История посещений</h2><div id="passVisitsContent"></div></div></div>
 <div id="modalPassActions" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassActions">&times;</button><h2>📋 Все действия по пропуску</h2><div id="passActionsContent"></div></div></div>
 <div id="modalPassScan" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassScan">&times;</button><h2>📷 Сканирование QR-кода пропуска</h2><div id="passScanner" style="width:100%;max-width:300px;margin:0 auto;"></div><div id="passScanResult" style="margin-top:1rem;"></div></div></div>
@@ -140,6 +140,7 @@
     let currentChatId = null;
     let supportReplyTarget = null;
 
+    // ===== ФУНКЦИИ РАБОТЫ С API =====
     async function readBin(id) {
         try {
             const r = await fetch(`https://api.jsonbin.io/v3/b/${id}/latest`, { 
@@ -168,6 +169,7 @@
         }
     }
 
+    // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
     function generateId() { let id; do { id = String(Math.floor(10000 + Math.random() * 90000)); } while (users.some(u => u.id === id)); return id; }
     function genSid(p) { return p + '-' + String(Math.floor(1000 + Math.random() * 9000)); }
     function statusText(s) { const map = { 'new': 'Новый', 'cooking': 'Готовится', 'delivering': 'В пути', 'done': 'Выполнено', 'active': 'Активен', 'closed': 'Закрыт', 'accepted': 'Принят', 'rejected': 'Отклонён', 'processing': 'В работе', 'pending': 'На модерации', 'cancelled': 'Отменён', 'approved': 'Одобрено', 'denied': 'Отказано', 'completed': 'Завершено', 'temp_closed': 'Временно закрыт' }; return map[s] || s; }
@@ -188,7 +190,26 @@
         });
     }
 
-    // ---------- АВТОРИЗАЦИЯ ----------
+    // ===== РАСЧЁТ СРОКА ДЕЙСТВИЯ =====
+    function calculateExpiry(value, unit) {
+        const now = new Date();
+        switch(unit) {
+            case 'minutes': now.setMinutes(now.getMinutes() + parseInt(value)); break;
+            case 'hours': now.setHours(now.getHours() + parseInt(value)); break;
+            case 'days': now.setDate(now.getDate() + parseInt(value)); break;
+            case 'months': now.setMonth(now.getMonth() + parseInt(value)); break;
+            case 'years': now.setFullYear(now.getFullYear() + parseInt(value)); break;
+            default: now.setDate(now.getDate() + parseInt(value));
+        }
+        return now.toLocaleString('ru-RU');
+    }
+
+    function getUnitLabel(unit) {
+        const map = { 'minutes': 'мин', 'hours': 'ч', 'days': 'дн', 'months': 'мес', 'years': 'лет' };
+        return map[unit] || 'дн';
+    }
+
+    // ===== АВТОРИЗАЦИЯ =====
     document.querySelectorAll('[data-tab]').forEach(b => {
         if (b) {
             b.addEventListener('click', function() {
@@ -352,7 +373,7 @@
         });
     }
 
-    // ---------- НАВИГАЦИЯ ----------
+    // ===== НАВИГАЦИЯ =====
     const sections = [
         { id: 'food', icon: '🍕', title: 'Еда', desc: 'Заказать' },
         { id: 'work', icon: '💼', title: 'Работа', desc: 'Вакансии' },
@@ -438,10 +459,9 @@
         }
     });
 
-    // ================================================================
-    // РАЗДЕЛ ПРОПУСКОВ
-    // ================================================================
+    // ===== РАЗДЕЛ ПРОПУСКОВ =====
     
+    // Заказ пропуска (пользователь)
     const formPassOrder = document.getElementById('formPassOrder');
     if (formPassOrder) {
         formPassOrder.addEventListener('submit', async function(e) {
@@ -449,7 +469,8 @@
             const fio = document.getElementById('passFio')?.value?.trim() || '';
             const address = document.getElementById('passAddress')?.value?.trim() || '';
             const purpose = document.getElementById('passPurpose')?.value?.trim() || '';
-            const duration = parseInt(document.getElementById('passDuration')?.value) || 30;
+            const duration = parseInt(document.getElementById('passDuration')?.value) || 1;
+            const unit = document.getElementById('passDurationUnit')?.value || 'days';
             
             if (!fio || !address || !purpose) {
                 showToast('❌ Заполните все поля');
@@ -457,6 +478,8 @@
             }
             
             const passId = genSid('PASS');
+            const validUntil = calculateExpiry(duration, unit);
+            
             const newPass = {
                 id: passId,
                 userId: currentUser.id,
@@ -465,12 +488,13 @@
                 address: address,
                 purpose: purpose,
                 duration: duration,
+                durationUnit: unit,
                 status: 'pending',
                 createdAt: now(),
-                validUntil: new Date(Date.now() + duration * 86400000).toLocaleString('ru-RU'),
+                validUntil: validUntil,
                 code: passId,
                 visits: [],
-                actions: [{ action: 'Создан', time: now(), details: `Срок ${duration} дней` }],
+                actions: [{ action: 'Создан', time: now(), details: `Срок ${duration} ${getUnitLabel(unit)}` }],
                 closeReason: '',
                 tempCloseReason: '',
                 tempCloseUntil: ''
@@ -486,6 +510,7 @@
         });
     }
 
+    // Рендер пропусков (пользователь)
     function renderPass() {
         const container = document.getElementById('passContainer');
         if (!container) return;
@@ -504,6 +529,14 @@
             else if (p.status === 'temp_closed') statusHtml = '<span class="card-status status-processing">⏸️ Временно закрыт</span>';
             else if (p.status === 'closed') statusHtml = '<span class="card-status status-closed">🔒 Закрыт</span>';
             
+            // Проверка на истечение срока
+            const now = new Date();
+            const expiryDate = new Date(p.validUntil);
+            let expiryWarning = '';
+            if (p.status === 'active' && expiryDate < now) {
+                expiryWarning = '<div style="color:#a14f4f;font-size:0.8rem;margin-top:4px;">⚠️ Срок действия истёк</div>';
+            }
+            
             return `
                 <div class="card">
                     <div class="card-header">
@@ -513,7 +546,9 @@
                     <div class="card-detail"><strong>ФИО:</strong> ${p.fio}</div>
                     <div class="card-detail"><strong>Адрес:</strong> ${p.address}</div>
                     <div class="card-detail"><strong>Цель:</strong> ${p.purpose}</div>
+                    <div class="card-detail"><strong>Срок:</strong> ${p.duration} ${getUnitLabel(p.durationUnit || 'days')}</div>
                     <div class="card-detail"><strong>Действует до:</strong> ${p.validUntil}</div>
+                    ${expiryWarning}
                     ${p.tempCloseReason ? `<div class="card-detail" style="color:#a86f1a;"><strong>Временно закрыт:</strong> ${p.tempCloseReason} (до ${p.tempCloseUntil})</div>` : ''}
                     ${p.closeReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Закрыт:</strong> ${p.closeReason}</div>` : ''}
                     <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">Создан: ${p.createdAt}</div>
@@ -533,6 +568,7 @@
             `;
         }).join('');
         
+        // Генерация QR-кодов для активных пропусков
         items.filter(p => p.status === 'active' || p.status === 'temp_closed').forEach(p => {
             setTimeout(() => {
                 const container = document.getElementById('qrContainerPass_' + p.id);
@@ -554,7 +590,7 @@
         });
     }
 
-    // ---------- АДМИН: ПРОПУСКА ----------
+    // ===== АДМИН: ПРОПУСКА =====
     function renderAdminPass(container) {
         if (!orders.passes) orders.passes = [];
         const passes = orders.passes;
@@ -565,6 +601,7 @@
         
         let html = `<div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
             <button class="btn-sm blue" id="adminPassScanBtn">📷 Сканировать QR</button>
+            <button class="btn-sm green" id="adminPassRefreshBtn">🔄 Обновить</button>
         </div><div class="cards-grid">`;
         
         passes.forEach(p => {
@@ -574,16 +611,26 @@
             else if (p.status === 'temp_closed') { statusText = '⏸️ Временно закрыт'; statusClass = 'processing'; }
             else if (p.status === 'closed') { statusText = '🔒 Закрыт'; statusClass = 'closed'; }
             
+            // Проверка на истечение срока
+            const now = new Date();
+            const expiryDate = new Date(p.validUntil);
+            let expiryWarning = '';
+            if (p.status === 'active' && expiryDate < now) {
+                expiryWarning = '<span style="color:#a14f4f;font-size:0.7rem;">⚠️ Истёк</span>';
+            }
+            
             html += `
                 <div class="card">
                     <div class="card-header">
                         <span class="card-id">${p.id}</span>
                         <span class="card-status status-${statusClass}">${statusText}</span>
+                        ${expiryWarning}
                     </div>
                     <div class="card-detail"><strong>Пользователь:</strong> ${p.userFio} (${p.userId})</div>
                     <div class="card-detail"><strong>ФИО:</strong> ${p.fio}</div>
                     <div class="card-detail"><strong>Адрес:</strong> ${p.address}</div>
                     <div class="card-detail"><strong>Цель:</strong> ${p.purpose}</div>
+                    <div class="card-detail"><strong>Срок:</strong> ${p.duration} ${getUnitLabel(p.durationUnit || 'days')}</div>
                     <div class="card-detail"><strong>Действует до:</strong> ${p.validUntil}</div>
                     <div class="card-detail"><strong>Код:</strong> ${p.code}</div>
                     ${p.tempCloseReason ? `<div class="card-detail" style="color:#a86f1a;">⏸️ ${p.tempCloseReason} (до ${p.tempCloseUntil})</div>` : ''}
@@ -606,6 +653,7 @@
         html += '</div>';
         container.innerHTML = html;
         
+        // Обработчики для кнопок
         container.querySelectorAll('[data-pass-addvisit]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -685,9 +733,17 @@
                 startPassScanner(null);
             });
         }
+        
+        const adminPassRefreshBtn = document.getElementById('adminPassRefreshBtn');
+        if (adminPassRefreshBtn) {
+            adminPassRefreshBtn.addEventListener('click', function() {
+                renderAdminPass(container);
+                showToast('✅ Обновлено');
+            });
+        }
     }
 
-    // ---------- ОБРАБОТЧИКИ АДМИН-ДЕЙСТВИЙ С ПРОПУСКАМИ ----------
+    // ===== ОБРАБОТЧИКИ АДМИН-ДЕЙСТВИЙ С ПРОПУСКАМИ =====
     
     const formPassAddVisit = document.getElementById('formPassAddVisit');
     if (formPassAddVisit) {
@@ -792,6 +848,7 @@
             const passId = document.getElementById('passExtendId')?.value || '';
             const reason = document.getElementById('passExtendReason')?.value?.trim() || '';
             const days = parseInt(document.getElementById('passExtendDays')?.value) || 30;
+            const unit = document.getElementById('passExtendUnit')?.value || 'days';
             
             if (!reason || days < 1) {
                 showToast('❌ Заполните все поля');
@@ -807,16 +864,25 @@
                 pass.closeReason = '';
             }
             
+            // Продлеваем срок
             const currentDate = new Date(pass.validUntil);
-            currentDate.setDate(currentDate.getDate() + days);
+            switch(unit) {
+                case 'minutes': currentDate.setMinutes(currentDate.getMinutes() + days); break;
+                case 'hours': currentDate.setHours(currentDate.getHours() + days); break;
+                case 'days': currentDate.setDate(currentDate.getDate() + days); break;
+                case 'months': currentDate.setMonth(currentDate.getMonth() + days); break;
+                case 'years': currentDate.setFullYear(currentDate.getFullYear() + days); break;
+                default: currentDate.setDate(currentDate.getDate() + days);
+            }
             pass.validUntil = currentDate.toLocaleString('ru-RU');
-            pass.duration += days;
+            pass.duration = days;
+            pass.durationUnit = unit;
             if (!pass.actions) pass.actions = [];
-            pass.actions.push({ action: 'Продлён', time: now(), details: `Причина: ${reason}, продлён на ${days} дней` });
+            pass.actions.push({ action: 'Продлён', time: now(), details: `Причина: ${reason}, продлён на ${days} ${getUnitLabel(unit)}` });
             
             await saveAll();
             renderAll();
-            showToast(`🔄 Пропуск продлён на ${days} дней`);
+            showToast(`🔄 Пропуск продлён на ${days} ${getUnitLabel(unit)}`);
             closeModal('modalPassExtend');
             this.reset();
         });
@@ -881,11 +947,8 @@
         openModal('modalPassActions');
     }
 
-    // ---------- СКАНЕР QR ДЛЯ ПРОПУСКОВ ----------
-    let passScanTarget = null;
-
+    // ===== СКАНЕР QR ДЛЯ ПРОПУСКОВ =====
     function startPassScanner(passId) {
-        passScanTarget = passId;
         const readerDiv = document.getElementById('passScanner');
         if (!readerDiv) return;
         readerDiv.innerHTML = '';
@@ -959,6 +1022,7 @@
                 <div class="card-detail"><strong>ФИО:</strong> ${pass.fio}</div>
                 <div class="card-detail"><strong>Адрес:</strong> ${pass.address}</div>
                 <div class="card-detail"><strong>Цель:</strong> ${pass.purpose}</div>
+                <div class="card-detail"><strong>Срок:</strong> ${pass.duration} ${getUnitLabel(pass.durationUnit || 'days')}</div>
                 <div class="card-detail"><strong>Действует до:</strong> ${pass.validUntil}</div>
                 ${pass.tempCloseReason ? `<div class="card-detail" style="color:#a86f1a;">⏸️ ${pass.tempCloseReason} (до ${pass.tempCloseUntil})</div>` : ''}
                 ${pass.closeReason ? `<div class="card-detail" style="color:#a14f4f;">🔒 ${pass.closeReason}</div>` : ''}
@@ -969,6 +1033,7 @@
         `;
     }
 
+    // Глобальные функции для вызова из HTML
     window.addVisitFromScan = function(passId) {
         const input = document.getElementById('passVisitPassId');
         if (input) input.value = passId;
@@ -997,7 +1062,7 @@
         openModal('modalPassExtend');
     };
 
-    // ---------- ОСТАЛЬНЫЕ РЕНДЕРЫ ----------
+    // ===== ОСТАЛЬНЫЕ РЕНДЕРЫ (сокращённо) =====
     function renderFood() {
         const container = document.getElementById('foodContainer');
         if (!container) return;
@@ -1346,7 +1411,7 @@
         });
     }
 
-    // ---------- ИСТОРИЯ ----------
+    // ===== ИСТОРИЯ =====
     function renderHistory() {
         const container = document.getElementById('historyContainer');
         if (!container) return;
@@ -1388,7 +1453,7 @@
         `).join('');
     }
 
-    // ---------- ПОСЕЩЕНИЕ КОМНАТЫ ----------
+    // ===== ПОСЕЩЕНИЕ КОМНАТЫ =====
     function renderRoomVisit() {
         const container = document.getElementById('roomVisitContainer');
         if (!container) return;
@@ -1431,7 +1496,7 @@
         });
     }
 
-    // ---------- АДМИН-ПАНЕЛЬ ----------
+    // ===== АДМИН-ПАНЕЛЬ =====
     document.querySelectorAll('[id^="adminTab"]').forEach(btn => {
         if (btn) {
             btn.addEventListener('click', function() {
@@ -2254,7 +2319,7 @@
         }
     }
 
-    // ---------- ОБРАБОТЧИКИ ФОРМ ----------
+    // ===== ОБРАБОТЧИКИ ФОРМ =====
     const formFood = document.getElementById('formFood');
     if (formFood) {
         formFood.addEventListener('submit', async function(e) {
@@ -2460,7 +2525,7 @@
         });
     }
 
-    // ---------- ОБЩИЙ РЕНДЕР ----------
+    // ===== ОБЩИЙ РЕНДЕР =====
     function renderAll() {
         renderFood();
         renderVacancies();
@@ -2472,7 +2537,7 @@
         renderPass();
     }
 
-    // ---------- ЗАПУСК ----------
+    // ===== ЗАПУСК =====
     document.addEventListener('DOMContentLoaded', function() {
         loadAll();
     });
