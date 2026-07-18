@@ -95,7 +95,7 @@
 </div>
 
 <!-- МОДАЛКИ -->
-<div id="modalPassOrder" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassOrder">&times;</button><h2>🎫 Заказ пропуска</h2><form id="formPassOrder"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="passFio" required></div><div class="form-group"><label>Адрес</label><input type="text" id="passAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div><div class="form-group"><label>Цель получения пропуска</label><textarea id="passPurpose" placeholder="Для прохода в офис..." required></textarea></div><div class="form-group"><label>Срок действия</label><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><input type="number" id="passDuration" value="30" min="1" style="flex:2;min-width:100px;"><select id="passDurationUnit" style="flex:1;min-width:100px;"><option value="minutes">Минуты</option><option value="hours">Часы</option><option value="days" selected>Дни</option><option value="months">Месяцы</option><option value="years">Годы</option></select></div></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalPassOrder" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassOrder">&times;</button><h2>🎫 Заказ пропуска</h2><form id="formPassOrder"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="passFio" required></div><div class="form-group"><label>Адрес</label><input type="text" id="passAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div><div class="form-group"><label>Цель получения пропуска</label><textarea id="passPurpose" placeholder="Для прохода в офис..." required></textarea></div><div class="form-group"><label>Срок действия</label><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><input type="number" id="passDuration" value="30" min="1" style="flex:2;min-width:100px;"><select id="passDurationUnit" style="flex:1;min-width:100px;"><option value="minutes">Минуты</option><option value="hours">Часы</option><option value="days" selected>Дни</option><option value="months">Месяцы</option><option value="years">Годы</option></select></div></div><button type="submit" class="btn-submit">📤 Создать пропуск</button></form></div></div>
 <div id="modalPassAddVisit" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassAddVisit">&times;</button><h2>📝 Добавить посещение</h2><form id="formPassAddVisit"><div class="form-group"><label>Дата</label><input type="date" id="passVisitDate" required></div><div class="form-group"><label>Время</label><input type="time" id="passVisitTime" required></div><div class="form-group"><label>Причина посещения</label><textarea id="passVisitReason" required></textarea></div><input type="hidden" id="passVisitPassId"><button type="submit" class="btn-submit">➕ Добавить посещение</button></form></div></div>
 <div id="modalPassClose" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassClose">&times;</button><h2>🔒 Закрыть пропуск</h2><form id="formPassClose"><div class="form-group"><label>Причина закрытия</label><textarea id="passCloseReason" required></textarea></div><input type="hidden" id="passCloseId"><button type="submit" class="btn-submit">🔒 Закрыть пропуск</button></form></div></div>
 <div id="modalPassTempClose" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassTempClose">&times;</button><h2>⏳ Временно закрыть пропуск</h2><form id="formPassTempClose"><div class="form-group"><label>Причина</label><textarea id="passTempCloseReason" required></textarea></div><div class="form-group"><label>Дата окончания</label><input type="date" id="passTempCloseDate" required></div><div class="form-group"><label>Время окончания</label><input type="time" id="passTempCloseTime" required></div><input type="hidden" id="passTempCloseId"><button type="submit" class="btn-submit">⏳ Закрыть на время</button></form></div></div>
@@ -508,7 +508,7 @@
         }
     });
 
-    // ===== РАЗДЕЛ ПРОПУСКОВ =====
+    // ===== РАЗДЕЛ ПРОПУСКОВ (QR-код выдаётся сразу) =====
 
     const formPassOrder = document.getElementById('formPassOrder');
     if (formPassOrder) {
@@ -537,7 +537,7 @@
                 purpose: purpose,
                 duration: duration,
                 durationUnit: unit,
-                status: 'pending',
+                status: 'active',  // ← СРАЗУ АКТИВЕН, QR-КОД ВЫДАЁТСЯ СРАЗУ
                 createdAt: now(),
                 validUntil: validUntil,
                 code: passId,
@@ -552,7 +552,7 @@
             orders.passes.push(newPass);
             await saveAll();
             renderAll();
-            showToast('✅ Заявка на пропуск отправлена!');
+            showToast('✅ Пропуск создан! QR-код готов.');
             closeModal('modalPassOrder');
             this.reset();
             console.log('📝 Создан пропуск:', newPass);
@@ -573,10 +573,10 @@
 
         container.innerHTML = items.map(p => {
             let statusHtml = '';
-            if (p.status === 'pending') statusHtml = '<span class="card-status status-pending">⏳ На модерации</span>';
-            else if (p.status === 'active') statusHtml = '<span class="card-status status-active">✅ Активен</span>';
+            if (p.status === 'active') statusHtml = '<span class="card-status status-active">✅ Активен</span>';
             else if (p.status === 'temp_closed') statusHtml = '<span class="card-status status-processing">⏸️ Временно закрыт</span>';
             else if (p.status === 'closed') statusHtml = '<span class="card-status status-closed">🔒 Закрыт</span>';
+            else statusHtml = '<span class="card-status status-pending">⏳ На модерации</span>';
 
             const now = new Date();
             const expiryDate = new Date(p.validUntil);
@@ -629,6 +629,7 @@
                             colorLight: "#ffffff",
                             correctLevel: QRCode.CorrectLevel.H
                         });
+                        console.log('✅ QR-код сгенерирован для', p.id);
                     } catch (e) {
                         console.error('❌ Ошибка генерации QR:', e);
                         container.innerHTML = '<p style="color:#8b97a8;">QR-код</p>';
@@ -655,10 +656,10 @@
 
         passes.forEach(p => {
             let statusText = '', statusClass = '';
-            if (p.status === 'pending') { statusText = '⏳ Ожидает'; statusClass = 'pending'; }
-            else if (p.status === 'active') { statusText = '✅ Активен'; statusClass = 'active'; }
+            if (p.status === 'active') { statusText = '✅ Активен'; statusClass = 'active'; }
             else if (p.status === 'temp_closed') { statusText = '⏸️ Временно закрыт'; statusClass = 'processing'; }
             else if (p.status === 'closed') { statusText = '🔒 Закрыт'; statusClass = 'closed'; }
+            else { statusText = '⏳ Ожидает'; statusClass = 'pending'; }
 
             const now = new Date();
             const expiryDate = new Date(p.validUntil);
@@ -1039,10 +1040,10 @@
         if (!resultDiv) return;
 
         let statusText = '';
-        if (pass.status === 'pending') statusText = '⏳ На модерации';
-        else if (pass.status === 'active') statusText = '✅ Активен';
+        if (pass.status === 'active') statusText = '✅ Активен';
         else if (pass.status === 'temp_closed') statusText = '⏸️ Временно закрыт';
         else if (pass.status === 'closed') statusText = '🔒 Закрыт';
+        else statusText = '⏳ На модерации';
 
         let actionsHtml = '';
         if (currentUser.role === 'admin') {
@@ -1107,7 +1108,7 @@
         openModal('modalPassExtend');
     };
 
-    // ===== ОСТАЛЬНЫЕ РЕНДЕРЫ =====
+    // ===== ОСТАЛЬНЫЕ РЕНДЕРЫ (кратко) =====
     
     function renderFood() {
         const container = document.getElementById('foodContainer');
@@ -1620,7 +1621,6 @@
     }
 
     function bindAdminEvents(container) {
-        // Кнопки одобрения/отклонения заказов
         container.querySelectorAll('.admin-approve-btn').forEach(btn => {
             if (btn) {
                 btn.removeEventListener('click', handleApprove);
