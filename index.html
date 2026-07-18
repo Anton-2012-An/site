@@ -51,57 +51,65 @@
 
     // ---------- АВТОРИЗАЦИЯ ----------
     document.querySelectorAll('[data-tab]').forEach(b => {
-        b.addEventListener('click', function() {
-            document.querySelectorAll('[data-tab]').forEach(x => x.classList.remove('active'));
-            this.classList.add('active');
-            document.querySelectorAll('.auth-form').forEach(x => x.classList.remove('active'));
-            const formId = 'form' + this.dataset.tab.charAt(0).toUpperCase() + this.dataset.tab.slice(1);
-            const el = document.getElementById(formId);
-            if (el) el.classList.add('active');
+        if (b) {
+            b.addEventListener('click', function() {
+                document.querySelectorAll('[data-tab]').forEach(x => x.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.auth-form').forEach(x => x.classList.remove('active'));
+                const formId = 'form' + this.dataset.tab.charAt(0).toUpperCase() + this.dataset.tab.slice(1);
+                const el = document.getElementById(formId);
+                if (el) el.classList.add('active');
+            });
+        }
+    });
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
+            const rem = document.getElementById('rememberMe').checked;
+            const err = document.getElementById('loginError');
+            const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === pass);
+            if (!user) { err.textContent = '❌ Неверный email или пароль'; err.classList.add('show'); return; }
+            if (isBanned(user)) { err.textContent = '🚫 Аккаунт забанен'; err.classList.add('show'); return; }
+            err.classList.remove('show');
+            currentUser = user;
+            if (rem) localStorage.setItem('ad_remember', JSON.stringify({ id: user.id }));
+            else localStorage.removeItem('ad_remember');
+            sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
+            showMain();
         });
-    });
+    }
 
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value.trim();
-        const pass = document.getElementById('loginPassword').value.trim();
-        const rem = document.getElementById('rememberMe').checked;
-        const err = document.getElementById('loginError');
-        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === pass);
-        if (!user) { err.textContent = '❌ Неверный email или пароль'; err.classList.add('show'); return; }
-        if (isBanned(user)) { err.textContent = '🚫 Аккаунт забанен'; err.classList.add('show'); return; }
-        err.classList.remove('show');
-        currentUser = user;
-        if (rem) localStorage.setItem('ad_remember', JSON.stringify({ id: user.id }));
-        else localStorage.removeItem('ad_remember');
-        sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
-        showMain();
-    });
-
-    document.getElementById('registerForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fio = document.getElementById('regFio').value.trim();
-        const email = document.getElementById('regEmail').value.trim();
-        const pass = document.getElementById('regPassword').value.trim();
-        const agree = document.getElementById('regAgreement').checked;
-        const err = document.getElementById('registerError');
-        if (!agree) { err.textContent = '❌ Примите соглашение'; err.classList.add('show'); return; }
-        if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) { err.textContent = '❌ Email уже зарегистрирован'; err.classList.add('show'); return; }
-        if (pass.length < 6) { err.textContent = '❌ Пароль минимум 6 символов'; err.classList.add('show'); return; }
-        const nu = { id: generateId(), fio, email, password: pass, role: 'user', status: 'Пользователь', roles: [], avatar: '', bio: '', phone: '', banned: false, banReason: '', banExpiry: null, cardId: '' };
-        users.push(nu);
-        wallets[nu.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', qrCode: '', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
-        await saveAll();
-        err.classList.remove('show');
-        showToast('✅ Аккаунт создан! Войдите.');
-        document.querySelector('[data-tab="login"]').click();
-        document.getElementById('loginEmail').value = email;
-        document.getElementById('loginPassword').value = '';
-        document.getElementById('regFio').value = '';
-        document.getElementById('regEmail').value = '';
-        document.getElementById('regPassword').value = '';
-        document.getElementById('regAgreement').checked = false;
-    });
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fio = document.getElementById('regFio').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPassword').value.trim();
+            const agree = document.getElementById('regAgreement').checked;
+            const err = document.getElementById('registerError');
+            if (!agree) { err.textContent = '❌ Примите соглашение'; err.classList.add('show'); return; }
+            if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) { err.textContent = '❌ Email уже зарегистрирован'; err.classList.add('show'); return; }
+            if (pass.length < 6) { err.textContent = '❌ Пароль минимум 6 символов'; err.classList.add('show'); return; }
+            const nu = { id: generateId(), fio, email, password: pass, role: 'user', status: 'Пользователь', roles: [], avatar: '', bio: '', phone: '', banned: false, banReason: '', banExpiry: null, cardId: '' };
+            users.push(nu);
+            wallets[nu.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', qrCode: '', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
+            await saveAll();
+            err.classList.remove('show');
+            showToast('✅ Аккаунт создан! Войдите.');
+            document.querySelector('[data-tab="login"]').click();
+            document.getElementById('loginEmail').value = email;
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('regFio').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regAgreement').checked = false;
+        });
+    }
 
     function checkRemember() {
         const d = localStorage.getItem('ad_remember');
@@ -168,15 +176,19 @@
             if (btn) btn.addEventListener('click', () => openModal(modalId));
         }
         document.querySelectorAll('.modal-close').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const overlay = this.closest('.modal-overlay');
-                if (overlay) overlay.style.display = 'none';
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const overlay = this.closest('.modal-overlay');
+                    if (overlay) overlay.style.display = 'none';
+                });
+            }
         });
         document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) this.style.display = 'none';
-            });
+            if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) this.style.display = 'none';
+                });
+            }
         });
     }
 
@@ -201,6 +213,7 @@
 
     function generateSections() {
         const grid = document.getElementById('sectionsGrid');
+        if (!grid) return;
         grid.innerHTML = '';
         sections.forEach(sec => {
             if (sec.id === 'admin' && currentUser.role !== 'admin') return;
@@ -268,46 +281,49 @@
     // ================================================================
     
     // Заказ пропуска (пользователь)
-    document.getElementById('formPassOrder').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fio = document.getElementById('passFio').value.trim();
-        const address = document.getElementById('passAddress').value.trim();
-        const purpose = document.getElementById('passPurpose').value.trim();
-        const duration = parseInt(document.getElementById('passDuration').value) || 30;
-        
-        if (!fio || !address || !purpose) {
-            showToast('❌ Заполните все поля');
-            return;
-        }
-        
-        const passId = genSid('PASS');
-        const newPass = {
-            id: passId,
-            userId: currentUser.id,
-            userFio: currentUser.fio,
-            fio: fio,
-            address: address,
-            purpose: purpose,
-            duration: duration,
-            status: 'pending',
-            createdAt: now(),
-            validUntil: new Date(Date.now() + duration * 86400000).toLocaleString('ru-RU'),
-            code: passId,
-            visits: [],
-            actions: [{ action: 'Создан', time: now(), details: `Срок ${duration} дней` }],
-            closeReason: '',
-            tempCloseReason: '',
-            tempCloseUntil: ''
-        };
-        
-        if (!orders.passes) orders.passes = [];
-        orders.passes.push(newPass);
-        await saveAll();
-        renderAll();
-        showToast('✅ Заявка на пропуск отправлена администратору!');
-        closeModal('modalPassOrder');
-        this.reset();
-    });
+    const formPassOrder = document.getElementById('formPassOrder');
+    if (formPassOrder) {
+        formPassOrder.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fio = document.getElementById('passFio').value.trim();
+            const address = document.getElementById('passAddress').value.trim();
+            const purpose = document.getElementById('passPurpose').value.trim();
+            const duration = parseInt(document.getElementById('passDuration').value) || 30;
+            
+            if (!fio || !address || !purpose) {
+                showToast('❌ Заполните все поля');
+                return;
+            }
+            
+            const passId = genSid('PASS');
+            const newPass = {
+                id: passId,
+                userId: currentUser.id,
+                userFio: currentUser.fio,
+                fio: fio,
+                address: address,
+                purpose: purpose,
+                duration: duration,
+                status: 'pending',
+                createdAt: now(),
+                validUntil: new Date(Date.now() + duration * 86400000).toLocaleString('ru-RU'),
+                code: passId,
+                visits: [],
+                actions: [{ action: 'Создан', time: now(), details: `Срок ${duration} дней` }],
+                closeReason: '',
+                tempCloseReason: '',
+                tempCloseUntil: ''
+            };
+            
+            if (!orders.passes) orders.passes = [];
+            orders.passes.push(newPass);
+            await saveAll();
+            renderAll();
+            showToast('✅ Заявка на пропуск отправлена администратору!');
+            closeModal('modalPassOrder');
+            this.reset();
+        });
+    }
 
     // Рендер пропусков (пользователь)
     function renderPass() {
@@ -436,193 +452,222 @@
         
         // Обработчики для кнопок админа
         container.querySelectorAll('[data-pass-addvisit]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const passId = this.dataset.passAddvisit;
-                document.getElementById('passVisitPassId').value = passId;
-                openModal('modalPassAddVisit');
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const passId = this.dataset.passAddvisit;
+                    document.getElementById('passVisitPassId').value = passId;
+                    openModal('modalPassAddVisit');
+                });
+            }
         });
         
         container.querySelectorAll('[data-pass-close]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const passId = this.dataset.passClose;
-                document.getElementById('passCloseId').value = passId;
-                openModal('modalPassClose');
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const passId = this.dataset.passClose;
+                    document.getElementById('passCloseId').value = passId;
+                    openModal('modalPassClose');
+                });
+            }
         });
         
         container.querySelectorAll('[data-pass-tempclose]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const passId = this.dataset.passTempClose;
-                document.getElementById('passTempCloseId').value = passId;
-                openModal('modalPassTempClose');
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const passId = this.dataset.passTempClose;
+                    document.getElementById('passTempCloseId').value = passId;
+                    openModal('modalPassTempClose');
+                });
+            }
         });
         
         container.querySelectorAll('[data-pass-extend]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const passId = this.dataset.passExtend;
-                document.getElementById('passExtendId').value = passId;
-                openModal('modalPassExtend');
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const passId = this.dataset.passExtend;
+                    document.getElementById('passExtendId').value = passId;
+                    openModal('modalPassExtend');
+                });
+            }
         });
         
         container.querySelectorAll('[data-pass-visits]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const passId = this.dataset.passVisits;
-                showPassVisits(passId);
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const passId = this.dataset.passVisits;
+                    showPassVisits(passId);
+                });
+            }
         });
         
         container.querySelectorAll('[data-pass-actions]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const passId = this.dataset.passActions;
-                showPassActions(passId);
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const passId = this.dataset.passActions;
+                    showPassActions(passId);
+                });
+            }
         });
         
         container.querySelectorAll('[data-pass-scan]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const passId = this.dataset.passScan;
-                openModal('modalPassScan');
-                startPassScanner(passId);
-            });
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const passId = this.dataset.passScan;
+                    openModal('modalPassScan');
+                    startPassScanner(passId);
+                });
+            }
         });
         
-        document.getElementById('adminPassScanBtn')?.addEventListener('click', function() {
-            openModal('modalPassScan');
-            startPassScanner(null);
-        });
+        const adminPassScanBtn = document.getElementById('adminPassScanBtn');
+        if (adminPassScanBtn) {
+            adminPassScanBtn.addEventListener('click', function() {
+                openModal('modalPassScan');
+                startPassScanner(null);
+            });
+        }
     }
 
     // ---------- ОБРАБОТЧИКИ АДМИН-ДЕЙСТВИЙ С ПРОПУСКАМИ ----------
     
     // Добавить посещение
-    document.getElementById('formPassAddVisit').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const passId = document.getElementById('passVisitPassId').value;
-        const date = document.getElementById('passVisitDate').value;
-        const time = document.getElementById('passVisitTime').value;
-        const reason = document.getElementById('passVisitReason').value.trim();
-        
-        if (!date || !time || !reason) {
-            showToast('❌ Заполните все поля');
-            return;
-        }
-        
-        if (!orders.passes) orders.passes = [];
-        const pass = orders.passes.find(p => p.id === passId);
-        if (!pass) { showToast('❌ Пропуск не найден'); return; }
-        
-        const visit = {
-            id: 'visit_' + Date.now(),
-            date: date,
-            time: time,
-            reason: reason,
-            addedAt: now()
-        };
-        if (!pass.visits) pass.visits = [];
-        pass.visits.push(visit);
-        if (!pass.actions) pass.actions = [];
-        pass.actions.push({ action: 'Добавлено посещение', time: now(), details: `${date} ${time} - ${reason}` });
-        
-        await saveAll();
-        renderAll();
-        showToast('✅ Посещение добавлено!');
-        closeModal('modalPassAddVisit');
-        this.reset();
-    });
+    const formPassAddVisit = document.getElementById('formPassAddVisit');
+    if (formPassAddVisit) {
+        formPassAddVisit.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const passId = document.getElementById('passVisitPassId').value;
+            const date = document.getElementById('passVisitDate').value;
+            const time = document.getElementById('passVisitTime').value;
+            const reason = document.getElementById('passVisitReason').value.trim();
+            
+            if (!date || !time || !reason) {
+                showToast('❌ Заполните все поля');
+                return;
+            }
+            
+            if (!orders.passes) orders.passes = [];
+            const pass = orders.passes.find(p => p.id === passId);
+            if (!pass) { showToast('❌ Пропуск не найден'); return; }
+            
+            const visit = {
+                id: 'visit_' + Date.now(),
+                date: date,
+                time: time,
+                reason: reason,
+                addedAt: now()
+            };
+            if (!pass.visits) pass.visits = [];
+            pass.visits.push(visit);
+            if (!pass.actions) pass.actions = [];
+            pass.actions.push({ action: 'Добавлено посещение', time: now(), details: `${date} ${time} - ${reason}` });
+            
+            await saveAll();
+            renderAll();
+            showToast('✅ Посещение добавлено!');
+            closeModal('modalPassAddVisit');
+            this.reset();
+        });
+    }
 
     // Закрыть пропуск
-    document.getElementById('formPassClose').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const passId = document.getElementById('passCloseId').value;
-        const reason = document.getElementById('passCloseReason').value.trim();
-        
-        if (!reason) { showToast('❌ Укажите причину'); return; }
-        
-        if (!orders.passes) orders.passes = [];
-        const pass = orders.passes.find(p => p.id === passId);
-        if (!pass) { showToast('❌ Пропуск не найден'); return; }
-        
-        pass.status = 'closed';
-        pass.closeReason = reason;
-        if (!pass.actions) pass.actions = [];
-        pass.actions.push({ action: 'Закрыт', time: now(), details: `Причина: ${reason}` });
-        
-        await saveAll();
-        renderAll();
-        showToast('🔒 Пропуск закрыт. Карточку с кодом верните туда, где выпускали.');
-        closeModal('modalPassClose');
-        this.reset();
-    });
+    const formPassClose = document.getElementById('formPassClose');
+    if (formPassClose) {
+        formPassClose.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const passId = document.getElementById('passCloseId').value;
+            const reason = document.getElementById('passCloseReason').value.trim();
+            
+            if (!reason) { showToast('❌ Укажите причину'); return; }
+            
+            if (!orders.passes) orders.passes = [];
+            const pass = orders.passes.find(p => p.id === passId);
+            if (!pass) { showToast('❌ Пропуск не найден'); return; }
+            
+            pass.status = 'closed';
+            pass.closeReason = reason;
+            if (!pass.actions) pass.actions = [];
+            pass.actions.push({ action: 'Закрыт', time: now(), details: `Причина: ${reason}` });
+            
+            await saveAll();
+            renderAll();
+            showToast('🔒 Пропуск закрыт. Карточку с кодом верните туда, где выпускали.');
+            closeModal('modalPassClose');
+            this.reset();
+        });
+    }
 
     // Временно закрыть
-    document.getElementById('formPassTempClose').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const passId = document.getElementById('passTempCloseId').value;
-        const reason = document.getElementById('passTempCloseReason').value.trim();
-        const date = document.getElementById('passTempCloseDate').value;
-        const time = document.getElementById('passTempCloseTime').value;
-        
-        if (!reason || !date || !time) {
-            showToast('❌ Заполните все поля');
-            return;
-        }
-        
-        if (!orders.passes) orders.passes = [];
-        const pass = orders.passes.find(p => p.id === passId);
-        if (!pass) { showToast('❌ Пропуск не найден'); return; }
-        
-        pass.status = 'temp_closed';
-        pass.tempCloseReason = reason;
-        pass.tempCloseUntil = `${date} ${time}`;
-        if (!pass.actions) pass.actions = [];
-        pass.actions.push({ action: 'Временно закрыт', time: now(), details: `Причина: ${reason}, до ${date} ${time}` });
-        
-        await saveAll();
-        renderAll();
-        showToast(`⏸️ Пропуск временно закрыт до ${date} ${time}`);
-        closeModal('modalPassTempClose');
-        this.reset();
-    });
+    const formPassTempClose = document.getElementById('formPassTempClose');
+    if (formPassTempClose) {
+        formPassTempClose.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const passId = document.getElementById('passTempCloseId').value;
+            const reason = document.getElementById('passTempCloseReason').value.trim();
+            const date = document.getElementById('passTempCloseDate').value;
+            const time = document.getElementById('passTempCloseTime').value;
+            
+            if (!reason || !date || !time) {
+                showToast('❌ Заполните все поля');
+                return;
+            }
+            
+            if (!orders.passes) orders.passes = [];
+            const pass = orders.passes.find(p => p.id === passId);
+            if (!pass) { showToast('❌ Пропуск не найден'); return; }
+            
+            pass.status = 'temp_closed';
+            pass.tempCloseReason = reason;
+            pass.tempCloseUntil = `${date} ${time}`;
+            if (!pass.actions) pass.actions = [];
+            pass.actions.push({ action: 'Временно закрыт', time: now(), details: `Причина: ${reason}, до ${date} ${time}` });
+            
+            await saveAll();
+            renderAll();
+            showToast(`⏸️ Пропуск временно закрыт до ${date} ${time}`);
+            closeModal('modalPassTempClose');
+            this.reset();
+        });
+    }
 
     // Продлить пропуск
-    document.getElementById('formPassExtend').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const passId = document.getElementById('passExtendId').value;
-        const reason = document.getElementById('passExtendReason').value.trim();
-        const days = parseInt(document.getElementById('passExtendDays').value) || 30;
-        
-        if (!reason || days < 1) {
-            showToast('❌ Заполните все поля');
-            return;
-        }
-        
-        if (!orders.passes) orders.passes = [];
-        const pass = orders.passes.find(p => p.id === passId);
-        if (!pass) { showToast('❌ Пропуск не найден'); return; }
-        
-        // Если пропуск закрыт, меняем статус на активный
-        if (pass.status === 'closed') {
-            pass.status = 'active';
-            pass.closeReason = '';
-        }
-        
-        // Продлеваем срок
-        const currentDate = new Date(pass.validUntil);
-        currentDate.setDate(currentDate.getDate() + days);
-        pass.validUntil = currentDate.toLocaleString('ru-RU');
-        pass.duration += days;
-        if (!pass.actions) pass.actions = [];
-        pass.actions.push({ action: 'Продлён', time: now(), details: `Причина: ${reason}, продлён на ${days} дней` });
-        
-        await saveAll();
-        renderAll();
-        showToast(`🔄 Пропуск продлён на ${days} дней`);
-        closeModal('modalPassExtend');
-        this.reset();
-    });
+    const formPassExtend = document.getElementById('formPassExtend');
+    if (formPassExtend) {
+        formPassExtend.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const passId = document.getElementById('passExtendId').value;
+            const reason = document.getElementById('passExtendReason').value.trim();
+            const days = parseInt(document.getElementById('passExtendDays').value) || 30;
+            
+            if (!reason || days < 1) {
+                showToast('❌ Заполните все поля');
+                return;
+            }
+            
+            if (!orders.passes) orders.passes = [];
+            const pass = orders.passes.find(p => p.id === passId);
+            if (!pass) { showToast('❌ Пропуск не найден'); return; }
+            
+            // Если пропуск закрыт, меняем статус на активный
+            if (pass.status === 'closed') {
+                pass.status = 'active';
+                pass.closeReason = '';
+            }
+            
+            // Продлеваем срок
+            const currentDate = new Date(pass.validUntil);
+            currentDate.setDate(currentDate.getDate() + days);
+            pass.validUntil = currentDate.toLocaleString('ru-RU');
+            pass.duration += days;
+            if (!pass.actions) pass.actions = [];
+            pass.actions.push({ action: 'Продлён', time: now(), details: `Причина: ${reason}, продлён на ${days} дней` });
+            
+            await saveAll();
+            renderAll();
+            showToast(`🔄 Пропуск продлён на ${days} дней`);
+            closeModal('modalPassExtend');
+            this.reset();
+        });
+    }
 
     // Просмотр посещений
     function showPassVisits(passId) {
@@ -631,6 +676,7 @@
         if (!pass) { showToast('❌ Пропуск не найден'); return; }
         
         const container = document.getElementById('passVisitsContent');
+        if (!container) return;
         if (!pass.visits || !pass.visits.length) {
             container.innerHTML = '<div class="empty-state">Нет посещений</div>';
         } else {
@@ -659,6 +705,7 @@
         if (!pass) { showToast('❌ Пропуск не найден'); return; }
         
         const container = document.getElementById('passActionsContent');
+        if (!container) return;
         if (!pass.actions || !pass.actions.length) {
             container.innerHTML = '<div class="empty-state">Нет действий</div>';
         } else {
@@ -959,11 +1006,15 @@
                 `).join('') : '<div class="empty-state">Нет транзакций</div>'}
             </div>
         `;
-        document.getElementById('walletTopUpBtn')?.addEventListener('click', () => openModal('modalTopUpRequest'));
-        document.getElementById('walletHistoryBtn')?.addEventListener('click', function() {
-            const div = document.getElementById('walletTransactions');
-            if (div) div.style.display = div.style.display === 'none' ? 'block' : 'none';
-        });
+        const walletTopUpBtn = document.getElementById('walletTopUpBtn');
+        if (walletTopUpBtn) walletTopUpBtn.addEventListener('click', () => openModal('modalTopUpRequest'));
+        const walletHistoryBtn = document.getElementById('walletHistoryBtn');
+        if (walletHistoryBtn) {
+            walletHistoryBtn.addEventListener('click', function() {
+                const div = document.getElementById('walletTransactions');
+                if (div) div.style.display = div.style.display === 'none' ? 'block' : 'none';
+            });
+        }
     }
 
     function renderBank() {
@@ -999,55 +1050,67 @@
         container.innerHTML = html;
 
         if (!userCard) {
-            document.getElementById('issueCardBtn')?.addEventListener('click', async function() {
-                let number = '';
-                for (let i = 0; i < 16; i++) { number += Math.floor(Math.random() * 10); if (i === 3 || i === 7 || i === 11) number += ' '; }
-                const card = { id: 'card_' + Date.now(), userId: currentUser.id, cardNumber: number, qrCode: '', issued: now(), blocked: false, blockReason: '', blockExpiry: null };
-                cards.push(card);
-                wallets[currentUser.id].cardNumber = number;
-                await saveAll();
-                showToast('✅ Карта выпущена!');
-                renderBank();
-            });
+            const issueCardBtn = document.getElementById('issueCardBtn');
+            if (issueCardBtn) {
+                issueCardBtn.addEventListener('click', async function() {
+                    let number = '';
+                    for (let i = 0; i < 16; i++) { number += Math.floor(Math.random() * 10); if (i === 3 || i === 7 || i === 11) number += ' '; }
+                    const card = { id: 'card_' + Date.now(), userId: currentUser.id, cardNumber: number, qrCode: '', issued: now(), blocked: false, blockReason: '', blockExpiry: null };
+                    cards.push(card);
+                    wallets[currentUser.id].cardNumber = number;
+                    await saveAll();
+                    showToast('✅ Карта выпущена!');
+                    renderBank();
+                });
+            }
         } else {
-            document.getElementById('blockCardBtn')?.addEventListener('click', function() {
-                const reason = prompt('Причина блокировки:');
-                if (reason !== null) {
-                    userCard.blocked = true;
-                    userCard.blockReason = reason;
-                    userCard.blockExpiry = 'forever';
-                    wallets[currentUser.id].blocked = true;
-                    wallets[currentUser.id].blockReason = reason;
-                    wallets[currentUser.id].blockExpiry = 'forever';
-                    saveAll().then(() => { showToast('🔒 Карта заблокирована'); renderBank(); });
-                }
-            });
-            document.getElementById('unblockCardBtn')?.addEventListener('click', async function() {
-                userCard.blocked = false;
-                userCard.blockReason = '';
-                userCard.blockExpiry = null;
-                wallets[currentUser.id].blocked = false;
-                wallets[currentUser.id].blockReason = '';
-                wallets[currentUser.id].blockExpiry = null;
-                await saveAll();
-                showToast('🔓 Карта разблокирована');
-                renderBank();
-            });
-            document.getElementById('generateQRBtn')?.addEventListener('click', function() {
-                const amount = document.getElementById('qrAmount').value.trim();
-                const desc = document.getElementById('qrDesc').value.trim() || 'Оплата';
-                if (!amount || isNaN(amount) || parseFloat(amount) <= 0) { showToast('❌ Введите сумму'); return; }
-                const qrData = `pay:${userCard.id}:${amount}:${desc}`;
-                const container = document.getElementById('qrContainer');
-                if (!container) return;
-                container.innerHTML = '';
-                try {
-                    new QRCode(container, { text: qrData, width: 200, height: 200 });
-                    showToast('✅ QR-код сгенерирован');
-                } catch (e) {
-                    container.innerHTML = '<p style="color:#8b97a8;">Ошибка генерации QR</p>';
-                }
-            });
+            const blockCardBtn = document.getElementById('blockCardBtn');
+            if (blockCardBtn) {
+                blockCardBtn.addEventListener('click', function() {
+                    const reason = prompt('Причина блокировки:');
+                    if (reason !== null) {
+                        userCard.blocked = true;
+                        userCard.blockReason = reason;
+                        userCard.blockExpiry = 'forever';
+                        wallets[currentUser.id].blocked = true;
+                        wallets[currentUser.id].blockReason = reason;
+                        wallets[currentUser.id].blockExpiry = 'forever';
+                        saveAll().then(() => { showToast('🔒 Карта заблокирована'); renderBank(); });
+                    }
+                });
+            }
+            const unblockCardBtn = document.getElementById('unblockCardBtn');
+            if (unblockCardBtn) {
+                unblockCardBtn.addEventListener('click', async function() {
+                    userCard.blocked = false;
+                    userCard.blockReason = '';
+                    userCard.blockExpiry = null;
+                    wallets[currentUser.id].blocked = false;
+                    wallets[currentUser.id].blockReason = '';
+                    wallets[currentUser.id].blockExpiry = null;
+                    await saveAll();
+                    showToast('🔓 Карта разблокирована');
+                    renderBank();
+                });
+            }
+            const generateQRBtn = document.getElementById('generateQRBtn');
+            if (generateQRBtn) {
+                generateQRBtn.addEventListener('click', function() {
+                    const amount = document.getElementById('qrAmount').value.trim();
+                    const desc = document.getElementById('qrDesc').value.trim() || 'Оплата';
+                    if (!amount || isNaN(amount) || parseFloat(amount) <= 0) { showToast('❌ Введите сумму'); return; }
+                    const qrData = `pay:${userCard.id}:${amount}:${desc}`;
+                    const container = document.getElementById('qrContainer');
+                    if (!container) return;
+                    container.innerHTML = '';
+                    try {
+                        new QRCode(container, { text: qrData, width: 200, height: 200 });
+                        showToast('✅ QR-код сгенерирован');
+                    } catch (e) {
+                        container.innerHTML = '<p style="color:#8b97a8;">Ошибка генерации QR</p>';
+                    }
+                });
+            }
         }
     }
 
@@ -1102,23 +1165,27 @@
         container.innerHTML = html;
 
         container.querySelectorAll('[data-chat]').forEach(el => {
-            el.addEventListener('click', function() { openChat(this.dataset.chat); });
+            if (el) {
+                el.addEventListener('click', function() { openChat(this.dataset.chat); });
+            }
         });
         container.querySelectorAll('[data-newchat]').forEach(el => {
-            el.addEventListener('click', function() {
-                const userId = this.dataset.newchat;
-                let existing = null;
-                for (const [cid, participants] of Object.entries(chats)) {
-                    if (participants.includes(currentUser.id) && participants.includes(userId)) { existing = cid; break; }
-                }
-                if (existing) openChat(existing);
-                else {
-                    const newId = 'chat_' + Date.now();
-                    chats[newId] = [currentUser.id, userId];
-                    messages[newId] = [];
-                    saveAll().then(() => openChat(newId));
-                }
-            });
+            if (el) {
+                el.addEventListener('click', function() {
+                    const userId = this.dataset.newchat;
+                    let existing = null;
+                    for (const [cid, participants] of Object.entries(chats)) {
+                        if (participants.includes(currentUser.id) && participants.includes(userId)) { existing = cid; break; }
+                    }
+                    if (existing) openChat(existing);
+                    else {
+                        const newId = 'chat_' + Date.now();
+                        chats[newId] = [currentUser.id, userId];
+                        messages[newId] = [];
+                        saveAll().then(() => openChat(newId));
+                    }
+                });
+            }
         });
     }
 
@@ -1147,62 +1214,82 @@
         area.scrollTop = area.scrollHeight;
     }
 
-    document.getElementById('sendMessageBtn')?.addEventListener('click', async function() {
-        const input = document.getElementById('messageInput');
-        const text = input.value.trim();
-        if (!text || !currentChatId) return;
-        if (!messages[currentChatId]) messages[currentChatId] = [];
-        messages[currentChatId].push({ userId: currentUser.id, text, time: now(), file: null });
-        input.value = '';
-        await saveAll();
-        renderMessages();
-    });
-    document.getElementById('messageInput')?.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') document.getElementById('sendMessageBtn').click();
-    });
-    document.getElementById('chatBackBtn')?.addEventListener('click', function() {
-        currentChatId = null;
-        document.getElementById('messengerChats').style.display = 'block';
-        document.getElementById('messengerChatWindow').style.display = 'none';
-        renderMessenger();
-    });
+    const sendMessageBtn = document.getElementById('sendMessageBtn');
+    if (sendMessageBtn) {
+        sendMessageBtn.addEventListener('click', async function() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            if (!text || !currentChatId) return;
+            if (!messages[currentChatId]) messages[currentChatId] = [];
+            messages[currentChatId].push({ userId: currentUser.id, text, time: now(), file: null });
+            input.value = '';
+            await saveAll();
+            renderMessages();
+        });
+    }
 
-    document.getElementById('stickerBtn')?.addEventListener('click', function() {
-        const panel = document.getElementById('stickerPanel');
-        if (!panel) return;
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-        if (panel.style.display === 'block') {
-            const grid = document.getElementById('stickerGrid');
-            if (!grid) return;
-            grid.innerHTML = '';
-            const emojis = ['😊','😂','❤️','👍','🔥','💯','🎉','🤔','😎','🥳','👋','🙏','💪','🤝','✨'];
-            emojis.forEach(e => {
-                const div = document.createElement('div');
-                div.className = 'sticker-item';
-                div.textContent = e;
-                div.addEventListener('click', async function() {
-                    if (!currentChatId) return;
-                    if (!messages[currentChatId]) messages[currentChatId] = [];
-                    messages[currentChatId].push({ userId: currentUser.id, text: this.textContent, time: now(), file: null });
-                    await saveAll();
-                    renderMessages();
-                    panel.style.display = 'none';
+    const messageInput = document.getElementById('messageInput');
+    if (messageInput) {
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const btn = document.getElementById('sendMessageBtn');
+                if (btn) btn.click();
+            }
+        });
+    }
+
+    const chatBackBtn = document.getElementById('chatBackBtn');
+    if (chatBackBtn) {
+        chatBackBtn.addEventListener('click', function() {
+            currentChatId = null;
+            document.getElementById('messengerChats').style.display = 'block';
+            document.getElementById('messengerChatWindow').style.display = 'none';
+            renderMessenger();
+        });
+    }
+
+    const stickerBtn = document.getElementById('stickerBtn');
+    if (stickerBtn) {
+        stickerBtn.addEventListener('click', function() {
+            const panel = document.getElementById('stickerPanel');
+            if (!panel) return;
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            if (panel.style.display === 'block') {
+                const grid = document.getElementById('stickerGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                const emojis = ['😊','😂','❤️','👍','🔥','💯','🎉','🤔','😎','🥳','👋','🙏','💪','🤝','✨'];
+                emojis.forEach(e => {
+                    const div = document.createElement('div');
+                    div.className = 'sticker-item';
+                    div.textContent = e;
+                    div.addEventListener('click', async function() {
+                        if (!currentChatId) return;
+                        if (!messages[currentChatId]) messages[currentChatId] = [];
+                        messages[currentChatId].push({ userId: currentUser.id, text: this.textContent, time: now(), file: null });
+                        await saveAll();
+                        renderMessages();
+                        panel.style.display = 'none';
+                    });
+                    grid.appendChild(div);
                 });
-                grid.appendChild(div);
-            });
-        }
-    });
+            }
+        });
+    }
 
-    document.getElementById('fileInput')?.addEventListener('change', async function(e) {
-        const file = e.target.files[0];
-        if (!file || !currentChatId) return;
-        const fileUrl = URL.createObjectURL(file);
-        if (!messages[currentChatId]) messages[currentChatId] = [];
-        messages[currentChatId].push({ userId: currentUser.id, text: `📎 ${file.name}`, time: now(), file: fileUrl });
-        await saveAll();
-        renderMessages();
-        this.value = '';
-    });
+    const fileInput = document.getElementById('fileInput');
+    if (fileInput) {
+        fileInput.addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file || !currentChatId) return;
+            const fileUrl = URL.createObjectURL(file);
+            if (!messages[currentChatId]) messages[currentChatId] = [];
+            messages[currentChatId].push({ userId: currentUser.id, text: `📎 ${file.name}`, time: now(), file: fileUrl });
+            await saveAll();
+            renderMessages();
+            this.value = '';
+        });
+    }
 
     // ---------- ИСТОРИЯ ----------
     function renderHistory() {
@@ -1246,10 +1333,16 @@
         `).join('');
     }
 
-    document.getElementById('historyTypeFilter')?.addEventListener('change', renderHistory);
-    document.getElementById('historyStatusFilter')?.addEventListener('change', renderHistory);
-    document.getElementById('historySearchBtn')?.addEventListener('click', renderHistory);
-    document.getElementById('historySearch')?.addEventListener('keyup', function(e) { if (e.key === 'Enter') renderHistory(); });
+    const historyTypeFilter = document.getElementById('historyTypeFilter');
+    if (historyTypeFilter) historyTypeFilter.addEventListener('change', renderHistory);
+    const historyStatusFilter = document.getElementById('historyStatusFilter');
+    if (historyStatusFilter) historyStatusFilter.addEventListener('change', renderHistory);
+    const historySearchBtn = document.getElementById('historySearchBtn');
+    if (historySearchBtn) historySearchBtn.addEventListener('click', renderHistory);
+    const historySearch = document.getElementById('historySearch');
+    if (historySearch) {
+        historySearch.addEventListener('keyup', function(e) { if (e.key === 'Enter') renderHistory(); });
+    }
 
     // ---------- ПОСЕЩЕНИЕ КОМНАТЫ ----------
     function renderRoomVisit() {
@@ -1292,29 +1385,34 @@
         });
     }
 
-    document.getElementById('formRoomVisitRequest')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const purpose = document.getElementById('roomVisitPurpose').value.trim();
-        const date = document.getElementById('roomVisitDate').value;
-        const time = document.getElementById('roomVisitTime').value;
-        if (!purpose || !date || !time) return alert('Заполните все поля');
-        orders.roomVisits.push({
-            id: genSid('RV'), userId: currentUser.id, userFio: currentUser.fio,
-            purpose, date, time, status: 'pending', adminComment: '', rejectReason: '', timeCreated: now()
+    const formRoomVisitRequest = document.getElementById('formRoomVisitRequest');
+    if (formRoomVisitRequest) {
+        formRoomVisitRequest.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const purpose = document.getElementById('roomVisitPurpose').value.trim();
+            const date = document.getElementById('roomVisitDate').value;
+            const time = document.getElementById('roomVisitTime').value;
+            if (!purpose || !date || !time) return alert('Заполните все поля');
+            orders.roomVisits.push({
+                id: genSid('RV'), userId: currentUser.id, userFio: currentUser.fio,
+                purpose, date, time, status: 'pending', adminComment: '', rejectReason: '', timeCreated: now()
+            });
+            await saveAll();
+            renderAll();
+            showToast('✅ Заявка отправлена!');
+            closeModal('modalRoomVisitRequest');
+            this.reset();
         });
-        await saveAll();
-        renderAll();
-        showToast('✅ Заявка отправлена!');
-        closeModal('modalRoomVisitRequest');
-        this.reset();
-    });
+    }
 
     // ---------- АДМИН-ПАНЕЛЬ ----------
     document.querySelectorAll('[id^="adminTab"]').forEach(btn => {
-        btn.addEventListener('click', function() {
-            adminCurrentTab = this.id.replace('adminTab', '').toLowerCase();
-            renderAdmin();
-        });
+        if (btn) {
+            btn.addEventListener('click', function() {
+                adminCurrentTab = this.id.replace('adminTab', '').toLowerCase();
+                renderAdmin();
+            });
+        }
     });
 
     function renderAdmin() {
@@ -1341,88 +1439,130 @@
 
     function bindAdminEvents(container) {
         container.querySelectorAll('.admin-approve-btn').forEach(btn => {
-            btn.removeEventListener('click', handleApprove);
-            btn.addEventListener('click', handleApprove);
+            if (btn) {
+                btn.removeEventListener('click', handleApprove);
+                btn.addEventListener('click', handleApprove);
+            }
         });
         container.querySelectorAll('.admin-reject-btn').forEach(btn => {
-            btn.removeEventListener('click', handleReject);
-            btn.addEventListener('click', handleReject);
+            if (btn) {
+                btn.removeEventListener('click', handleReject);
+                btn.addEventListener('click', handleReject);
+            }
         });
         container.querySelectorAll('[data-roomvisit-edit]').forEach(btn => {
-            btn.removeEventListener('click', handleRoomEdit);
-            btn.addEventListener('click', handleRoomEdit);
+            if (btn) {
+                btn.removeEventListener('click', handleRoomEdit);
+                btn.addEventListener('click', handleRoomEdit);
+            }
         });
         container.querySelectorAll('[data-roomvisit-approve]').forEach(btn => {
-            btn.removeEventListener('click', handleRoomApprove);
-            btn.addEventListener('click', handleRoomApprove);
+            if (btn) {
+                btn.removeEventListener('click', handleRoomApprove);
+                btn.addEventListener('click', handleRoomApprove);
+            }
         });
         container.querySelectorAll('[data-roomvisit-reject]').forEach(btn => {
-            btn.removeEventListener('click', handleRoomReject);
-            btn.addEventListener('click', handleRoomReject);
+            if (btn) {
+                btn.removeEventListener('click', handleRoomReject);
+                btn.addEventListener('click', handleRoomReject);
+            }
         });
         container.querySelectorAll('[data-roomvisit-scan]').forEach(btn => {
-            btn.removeEventListener('click', handleRoomScan);
-            btn.addEventListener('click', handleRoomScan);
+            if (btn) {
+                btn.removeEventListener('click', handleRoomScan);
+                btn.addEventListener('click', handleRoomScan);
+            }
         });
         container.querySelectorAll('[data-roomvisit-finish]').forEach(btn => {
-            btn.removeEventListener('click', handleRoomFinish);
-            btn.addEventListener('click', handleRoomFinish);
+            if (btn) {
+                btn.removeEventListener('click', handleRoomFinish);
+                btn.addEventListener('click', handleRoomFinish);
+            }
         });
         container.querySelectorAll('[data-user]').forEach(btn => {
-            btn.removeEventListener('click', handleUserManage);
-            btn.addEventListener('click', handleUserManage);
+            if (btn) {
+                btn.removeEventListener('click', handleUserManage);
+                btn.addEventListener('click', handleUserManage);
+            }
         });
         container.querySelectorAll('[data-ban]').forEach(btn => {
-            btn.removeEventListener('click', handleUserBan);
-            btn.addEventListener('click', handleUserBan);
+            if (btn) {
+                btn.removeEventListener('click', handleUserBan);
+                btn.addEventListener('click', handleUserBan);
+            }
         });
         container.querySelectorAll('[data-unban]').forEach(btn => {
-            btn.removeEventListener('click', handleUserUnban);
-            btn.addEventListener('click', handleUserUnban);
+            if (btn) {
+                btn.removeEventListener('click', handleUserUnban);
+                btn.addEventListener('click', handleUserUnban);
+            }
         });
         container.querySelectorAll('[data-support-reply]').forEach(btn => {
-            btn.removeEventListener('click', handleSupportReply);
-            btn.addEventListener('click', handleSupportReply);
+            if (btn) {
+                btn.removeEventListener('click', handleSupportReply);
+                btn.addEventListener('click', handleSupportReply);
+            }
         });
         container.querySelectorAll('[data-support-resolve]').forEach(btn => {
-            btn.removeEventListener('click', handleSupportResolve);
-            btn.addEventListener('click', handleSupportResolve);
+            if (btn) {
+                btn.removeEventListener('click', handleSupportResolve);
+                btn.addEventListener('click', handleSupportResolve);
+            }
         });
         container.querySelectorAll('[data-wallet-topup]').forEach(btn => {
-            btn.removeEventListener('click', handleWalletTopup);
-            btn.addEventListener('click', handleWalletTopup);
+            if (btn) {
+                btn.removeEventListener('click', handleWalletTopup);
+                btn.addEventListener('click', handleWalletTopup);
+            }
         });
         container.querySelectorAll('[data-wallet-deduct]').forEach(btn => {
-            btn.removeEventListener('click', handleWalletDeduct);
-            btn.addEventListener('click', handleWalletDeduct);
+            if (btn) {
+                btn.removeEventListener('click', handleWalletDeduct);
+                btn.addEventListener('click', handleWalletDeduct);
+            }
         });
         container.querySelectorAll('[data-wallet-block]').forEach(btn => {
-            btn.removeEventListener('click', handleWalletBlock);
-            btn.addEventListener('click', handleWalletBlock);
+            if (btn) {
+                btn.removeEventListener('click', handleWalletBlock);
+                btn.addEventListener('click', handleWalletBlock);
+            }
         });
         container.querySelectorAll('[data-wallet-unblock]').forEach(btn => {
-            btn.removeEventListener('click', handleWalletUnblock);
-            btn.addEventListener('click', handleWalletUnblock);
+            if (btn) {
+                btn.removeEventListener('click', handleWalletUnblock);
+                btn.addEventListener('click', handleWalletUnblock);
+            }
         });
         container.querySelectorAll('[data-promo-delete]').forEach(btn => {
-            btn.removeEventListener('click', handlePromoDelete);
-            btn.addEventListener('click', handlePromoDelete);
+            if (btn) {
+                btn.removeEventListener('click', handlePromoDelete);
+                btn.addEventListener('click', handlePromoDelete);
+            }
         });
         container.querySelectorAll('[data-sub-delete]').forEach(btn => {
-            btn.removeEventListener('click', handleSubDelete);
-            btn.addEventListener('click', handleSubDelete);
+            if (btn) {
+                btn.removeEventListener('click', handleSubDelete);
+                btn.addEventListener('click', handleSubDelete);
+            }
         });
         container.querySelectorAll('[data-topup-reply]').forEach(btn => {
-            btn.removeEventListener('click', handleTopUpReply);
-            btn.addEventListener('click', handleTopUpReply);
+            if (btn) {
+                btn.removeEventListener('click', handleTopUpReply);
+                btn.addEventListener('click', handleTopUpReply);
+            }
         });
         container.querySelectorAll('[data-card-block]').forEach(btn => {
-            btn.removeEventListener('click', handleCardBlock);
-            btn.addEventListener('click', handleCardBlock);
+            if (btn) {
+                btn.removeEventListener('click', handleCardBlock);
+                btn.addEventListener('click', handleCardBlock);
+            }
         });
         container.querySelectorAll('[data-card-unblock]').forEach(btn => {
-            btn.removeEventListener('click', handleCardUnblock);
-            btn.addEventListener('click', handleCardUnblock);
+            if (btn) {
+                btn.removeEventListener('click', handleCardUnblock);
+                btn.addEventListener('click', handleCardUnblock);
+            }
         });
     }
 
@@ -1789,10 +1929,13 @@
         });
         html += '</div>';
         container.innerHTML = html;
-        document.getElementById('adminRoomVisitScanBtn')?.addEventListener('click', function() {
-            openModal('modalRoomVisitScan');
-            startRoomVisitScanner(null);
-        });
+        const adminRoomVisitScanBtn = document.getElementById('adminRoomVisitScanBtn');
+        if (adminRoomVisitScanBtn) {
+            adminRoomVisitScanBtn.addEventListener('click', function() {
+                openModal('modalRoomVisitScan');
+                startRoomVisitScanner(null);
+            });
+        }
     }
 
     function renderAdminUsers(container) {
@@ -1873,13 +2016,16 @@
         }
         html += '</div>';
         container.innerHTML = html;
-        document.getElementById('createBusinessBtn')?.addEventListener('click', function() {
-            const name = prompt('Название бизнеса:');
-            if (name && !businessAccounts[name]) {
-                businessAccounts[name] = { balance: 0, ownerId: currentUser.id, transactions: [] };
-                saveAll().then(() => { showToast('✅ Создано'); renderAdmin(); });
-            } else showToast('❌ Такой бизнес уже есть');
-        });
+        const createBusinessBtn = document.getElementById('createBusinessBtn');
+        if (createBusinessBtn) {
+            createBusinessBtn.addEventListener('click', function() {
+                const name = prompt('Название бизнеса:');
+                if (name && !businessAccounts[name]) {
+                    businessAccounts[name] = { balance: 0, ownerId: currentUser.id, transactions: [] };
+                    saveAll().then(() => { showToast('✅ Создано'); renderAdmin(); });
+                } else showToast('❌ Такой бизнес уже есть');
+            });
+        }
     }
 
     function renderAdminPromoCodes(container) {
@@ -1902,7 +2048,8 @@
         }
         html += '</div>';
         container.innerHTML = html;
-        document.getElementById('createPromoBtn')?.addEventListener('click', () => openModal('modalPromoCreate'));
+        const createPromoBtn = document.getElementById('createPromoBtn');
+        if (createPromoBtn) createPromoBtn.addEventListener('click', () => openModal('modalPromoCreate'));
     }
 
     function renderAdminSubscriptions(container) {
@@ -1926,7 +2073,8 @@
         }
         html += '</div>';
         container.innerHTML = html;
-        document.getElementById('issueSubBtn')?.addEventListener('click', () => openModal('modalSubscriptionIssue'));
+        const issueSubBtn = document.getElementById('issueSubBtn');
+        if (issueSubBtn) issueSubBtn.addEventListener('click', () => openModal('modalSubscriptionIssue'));
     }
 
     function renderAdminTopUpRequests(container) {
@@ -2019,209 +2167,254 @@
             </div>
         `;
         document.body.appendChild(overlay);
-        document.getElementById('adminStatusSelect').addEventListener('change', function() {
-            document.getElementById('adminCustomStatus').style.display = this.value === 'custom' ? 'block' : 'none';
-        });
-        document.getElementById('adminSaveRolesBtn').addEventListener('click', async function() {
-            const checked = Array.from(overlay.querySelectorAll('.role-check:checked')).map(cb => cb.value);
-            user.roles = checked;
-            let status = document.getElementById('adminStatusSelect').value;
-            if (status === 'custom') {
-                const custom = document.getElementById('adminCustomStatus').value.trim();
-                if (custom) {
-                    status = custom;
-                    if (!statuses.some(s => s.name === custom)) {
-                        statuses.push({ id: 'status_' + Date.now(), name: custom });
-                    }
-                } else status = user.status;
-            }
-            user.status = status;
-            await saveAll();
-            showToast('✅ Данные обновлены');
-            overlay.remove();
-            renderAdmin();
-        });
-        document.getElementById('adminUnbanBtn')?.addEventListener('click', async function() {
-            if (user) {
-                user.banned = false;
-                user.banReason = '';
-                user.banExpiry = null;
+        const adminStatusSelect = document.getElementById('adminStatusSelect');
+        if (adminStatusSelect) {
+            adminStatusSelect.addEventListener('change', function() {
+                document.getElementById('adminCustomStatus').style.display = this.value === 'custom' ? 'block' : 'none';
+            });
+        }
+        const adminSaveRolesBtn = document.getElementById('adminSaveRolesBtn');
+        if (adminSaveRolesBtn) {
+            adminSaveRolesBtn.addEventListener('click', async function() {
+                const checked = Array.from(overlay.querySelectorAll('.role-check:checked')).map(cb => cb.value);
+                user.roles = checked;
+                let status = document.getElementById('adminStatusSelect').value;
+                if (status === 'custom') {
+                    const custom = document.getElementById('adminCustomStatus').value.trim();
+                    if (custom) {
+                        status = custom;
+                        if (!statuses.some(s => s.name === custom)) {
+                            statuses.push({ id: 'status_' + Date.now(), name: custom });
+                        }
+                    } else status = user.status;
+                }
+                user.status = status;
                 await saveAll();
-                showToast('🔓 Пользователь разбанен');
+                showToast('✅ Данные обновлены');
                 overlay.remove();
+                renderAdmin();
+            });
+        }
+        const adminUnbanBtn = document.getElementById('adminUnbanBtn');
+        if (adminUnbanBtn) {
+            adminUnbanBtn.addEventListener('click', async function() {
+                if (user) {
+                    user.banned = false;
+                    user.banReason = '';
+                    user.banExpiry = null;
+                    await saveAll();
+                    showToast('🔓 Пользователь разбанен');
+                    overlay.remove();
+                    renderAdmin();
+                }
+            });
+        }
+    }
+
+    // ---------- ОБРАБОТЧИКИ ФОРМ (основные) ----------
+    const formFood = document.getElementById('formFood');
+    if (formFood) {
+        formFood.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const dish = document.getElementById('foodDish').value.trim();
+            const room = document.getElementById('foodRoom').value.trim();
+            const qty = parseInt(document.getElementById('foodQty').value) || 1;
+            orders.food.push({ id: genSid('FOOD'), userId: currentUser.id, userFio: currentUser.fio, dish, room, qty, status: 'pending', time: now(), price: null });
+            await saveAll();
+            renderAll();
+            showToast('✅ Заказ отправлен!');
+            closeModal('modalFood');
+            this.reset();
+        });
+    }
+
+    const formCleaning = document.getElementById('formCleaning');
+    if (formCleaning) {
+        formCleaning.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const room = document.getElementById('cleanRoom').value.trim();
+            const date = document.getElementById('cleanDate').value;
+            const time = document.getElementById('cleanTime').value;
+            orders.cleaning.push({ id: genSid('CLN'), userId: currentUser.id, userFio: currentUser.fio, room, date, time, status: 'pending', timeCreated: now(), price: null });
+            await saveAll();
+            renderAll();
+            showToast('✅ Заявка отправлена!');
+            closeModal('modalCleaning');
+            this.reset();
+        });
+    }
+
+    const formMassage = document.getElementById('formMassage');
+    if (formMassage) {
+        formMassage.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const room = document.getElementById('massageRoom').value.trim();
+            const type = document.getElementById('massageType').value;
+            const time = document.getElementById('massageTime').value;
+            const duration = parseInt(document.getElementById('massageDuration').value);
+            const note = document.getElementById('massageNote').value.trim();
+            const agree = document.getElementById('massageAgreement').checked;
+            if (!agree) { showToast('❌ Примите соглашение'); return; }
+            orders.massage.push({ id: genSid('MSG'), userId: currentUser.id, userFio: currentUser.fio, room, type, time, duration, note, status: 'pending', timeCreated: now(), price: null });
+            await saveAll();
+            renderAll();
+            showToast('✅ Запись отправлена!');
+            closeModal('modalMassage');
+            this.reset();
+            document.getElementById('massageAgreement').checked = false;
+        });
+    }
+
+    const formLegal = document.getElementById('formLegal');
+    if (formLegal) {
+        formLegal.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fio = document.getElementById('legalFio').value.trim();
+            const date = document.getElementById('legalDate').value;
+            const time = document.getElementById('legalTime').value;
+            const topic = document.getElementById('legalTopic').value.trim();
+            orders.legal.push({ id: genSid('LEG'), userId: currentUser.id, userFio: currentUser.fio, fio, date, time, topic, status: 'pending', timeCreated: now(), price: null });
+            await saveAll();
+            renderAll();
+            showToast('✅ Заявка отправлена!');
+            closeModal('modalLegal');
+            this.reset();
+        });
+    }
+
+    const formCourt = document.getElementById('formCourt');
+    if (formCourt) {
+        formCourt.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fio = document.getElementById('courtFio').value.trim();
+            const defendant = document.getElementById('courtDefendant').value.trim();
+            const address = document.getElementById('courtAddress').value.trim();
+            const defendantAddress = document.getElementById('courtDefendantAddress').value.trim();
+            const reason = document.getElementById('courtReason').value.trim();
+            orders.court.push({ id: genSid('CRT'), userId: currentUser.id, userFio: currentUser.fio, fio, defendant, address, defendantAddress, reason, status: 'pending', timeCreated: now(), price: null });
+            await saveAll();
+            renderAll();
+            showToast('✅ Иск подан!');
+            closeModal('modalCourt');
+            this.reset();
+        });
+    }
+
+    const formVacancy = document.getElementById('formVacancy');
+    if (formVacancy) {
+        formVacancy.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const title = document.getElementById('vacancyTitle').value.trim();
+            const company = document.getElementById('vacancyCompany').value.trim();
+            const places = parseInt(document.getElementById('vacancyPlaces').value) || 1;
+            const desc = document.getElementById('vacancyDesc').value.trim();
+            const requirements = document.getElementById('vacancyRequirements').value.trim();
+            orders.vacancies.push({ id: genSid('VAC'), userId: currentUser.id, userFio: currentUser.fio, title, company, places, desc, requirements, status: 'active', time: now() });
+            await saveAll();
+            renderAll();
+            showToast('✅ Вакансия создана!');
+            closeModal('modalVacancy');
+            this.reset();
+        });
+    }
+
+    const formApplication = document.getElementById('formApplication');
+    if (formApplication) {
+        formApplication.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const vacancyId = document.getElementById('appVacancy').value.trim();
+            const info = document.getElementById('appInfo').value.trim();
+            const extras = Array.from(document.querySelectorAll('#formApplication .checkbox-group input:checked')).map(cb => cb.value);
+            orders.applications.push({ id: genSid('APP'), userId: currentUser.id, userFio: currentUser.fio, vacancyId, info, extras, status: 'pending', time: now() });
+            await saveAll();
+            renderAll();
+            showToast('✅ Отклик отправлен!');
+            closeModal('modalApplication');
+            this.reset();
+        });
+    }
+
+    const formSupportNew = document.getElementById('formSupportNew');
+    if (formSupportNew) {
+        formSupportNew.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const problem = document.getElementById('supportProblem').value.trim();
+            const urgency = document.getElementById('supportUrgency').value;
+            supportTickets.push({ id: genSid('SPT'), userId: currentUser.id, userFio: currentUser.fio, problem, urgency, status: 'open', time: now(), adminReply: '' });
+            await saveAll();
+            renderAll();
+            showToast('✅ Обращение отправлено!');
+            closeModal('modalSupportNew');
+            this.reset();
+        });
+    }
+
+    const formSupportReply = document.getElementById('formSupportReply');
+    if (formSupportReply) {
+        formSupportReply.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const reply = document.getElementById('supportReplyText').value.trim();
+            if (supportReplyTarget !== null && supportTickets[supportReplyTarget]) {
+                supportTickets[supportReplyTarget].adminReply = reply;
+                supportTickets[supportReplyTarget].status = 'resolved';
+                await saveAll();
+                showToast('✅ Ответ отправлен');
+                closeModal('modalSupportReply');
                 renderAdmin();
             }
         });
     }
 
-    // ---------- ОБРАБОТЧИКИ ФОРМ (основные) ----------
-    document.getElementById('formFood')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const dish = document.getElementById('foodDish').value.trim();
-        const room = document.getElementById('foodRoom').value.trim();
-        const qty = parseInt(document.getElementById('foodQty').value) || 1;
-        orders.food.push({ id: genSid('FOOD'), userId: currentUser.id, userFio: currentUser.fio, dish, room, qty, status: 'pending', time: now(), price: null });
-        await saveAll();
-        renderAll();
-        showToast('✅ Заказ отправлен!');
-        closeModal('modalFood');
-        this.reset();
-    });
-
-    document.getElementById('formCleaning')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const room = document.getElementById('cleanRoom').value.trim();
-        const date = document.getElementById('cleanDate').value;
-        const time = document.getElementById('cleanTime').value;
-        orders.cleaning.push({ id: genSid('CLN'), userId: currentUser.id, userFio: currentUser.fio, room, date, time, status: 'pending', timeCreated: now(), price: null });
-        await saveAll();
-        renderAll();
-        showToast('✅ Заявка отправлена!');
-        closeModal('modalCleaning');
-        this.reset();
-    });
-
-    document.getElementById('formMassage')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const room = document.getElementById('massageRoom').value.trim();
-        const type = document.getElementById('massageType').value;
-        const time = document.getElementById('massageTime').value;
-        const duration = parseInt(document.getElementById('massageDuration').value);
-        const note = document.getElementById('massageNote').value.trim();
-        const agree = document.getElementById('massageAgreement').checked;
-        if (!agree) { showToast('❌ Примите соглашение'); return; }
-        orders.massage.push({ id: genSid('MSG'), userId: currentUser.id, userFio: currentUser.fio, room, type, time, duration, note, status: 'pending', timeCreated: now(), price: null });
-        await saveAll();
-        renderAll();
-        showToast('✅ Запись отправлена!');
-        closeModal('modalMassage');
-        this.reset();
-        document.getElementById('massageAgreement').checked = false;
-    });
-
-    document.getElementById('formLegal')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fio = document.getElementById('legalFio').value.trim();
-        const date = document.getElementById('legalDate').value;
-        const time = document.getElementById('legalTime').value;
-        const topic = document.getElementById('legalTopic').value.trim();
-        orders.legal.push({ id: genSid('LEG'), userId: currentUser.id, userFio: currentUser.fio, fio, date, time, topic, status: 'pending', timeCreated: now(), price: null });
-        await saveAll();
-        renderAll();
-        showToast('✅ Заявка отправлена!');
-        closeModal('modalLegal');
-        this.reset();
-    });
-
-    document.getElementById('formCourt')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fio = document.getElementById('courtFio').value.trim();
-        const defendant = document.getElementById('courtDefendant').value.trim();
-        const address = document.getElementById('courtAddress').value.trim();
-        const defendantAddress = document.getElementById('courtDefendantAddress').value.trim();
-        const reason = document.getElementById('courtReason').value.trim();
-        orders.court.push({ id: genSid('CRT'), userId: currentUser.id, userFio: currentUser.fio, fio, defendant, address, defendantAddress, reason, status: 'pending', timeCreated: now(), price: null });
-        await saveAll();
-        renderAll();
-        showToast('✅ Иск подан!');
-        closeModal('modalCourt');
-        this.reset();
-    });
-
-    document.getElementById('formVacancy')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const title = document.getElementById('vacancyTitle').value.trim();
-        const company = document.getElementById('vacancyCompany').value.trim();
-        const places = parseInt(document.getElementById('vacancyPlaces').value) || 1;
-        const desc = document.getElementById('vacancyDesc').value.trim();
-        const requirements = document.getElementById('vacancyRequirements').value.trim();
-        orders.vacancies.push({ id: genSid('VAC'), userId: currentUser.id, userFio: currentUser.fio, title, company, places, desc, requirements, status: 'active', time: now() });
-        await saveAll();
-        renderAll();
-        showToast('✅ Вакансия создана!');
-        closeModal('modalVacancy');
-        this.reset();
-    });
-
-    document.getElementById('formApplication')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const vacancyId = document.getElementById('appVacancy').value.trim();
-        const info = document.getElementById('appInfo').value.trim();
-        const extras = Array.from(document.querySelectorAll('#formApplication .checkbox-group input:checked')).map(cb => cb.value);
-        orders.applications.push({ id: genSid('APP'), userId: currentUser.id, userFio: currentUser.fio, vacancyId, info, extras, status: 'pending', time: now() });
-        await saveAll();
-        renderAll();
-        showToast('✅ Отклик отправлен!');
-        closeModal('modalApplication');
-        this.reset();
-    });
-
-    document.getElementById('formSupportNew')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const problem = document.getElementById('supportProblem').value.trim();
-        const urgency = document.getElementById('supportUrgency').value;
-        supportTickets.push({ id: genSid('SPT'), userId: currentUser.id, userFio: currentUser.fio, problem, urgency, status: 'open', time: now(), adminReply: '' });
-        await saveAll();
-        renderAll();
-        showToast('✅ Обращение отправлено!');
-        closeModal('modalSupportNew');
-        this.reset();
-    });
-
-    document.getElementById('formSupportReply')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const reply = document.getElementById('supportReplyText').value.trim();
-        if (supportReplyTarget !== null && supportTickets[supportReplyTarget]) {
-            supportTickets[supportReplyTarget].adminReply = reply;
-            supportTickets[supportReplyTarget].status = 'resolved';
+    const formTopUpRequest = document.getElementById('formTopUpRequest');
+    if (formTopUpRequest) {
+        formTopUpRequest.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const message = document.getElementById('topUpMessage').value.trim();
+            if (!message) { showToast('❌ Напишите сообщение'); return; }
+            topUpRequests.push({ id: genSid('TUR'), userId: currentUser.id, userFio: currentUser.fio, message, status: 'pending', time: now(), adminReply: '' });
             await saveAll();
-            showToast('✅ Ответ отправлен');
-            closeModal('modalSupportReply');
+            showToast('✅ Запрос отправлен');
+            closeModal('modalTopUpRequest');
+            this.reset();
+        });
+    }
+
+    const formPromoCreate = document.getElementById('formPromoCreate');
+    if (formPromoCreate) {
+        formPromoCreate.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const code = document.getElementById('promoCode').value.trim().toUpperCase();
+            const discount = parseInt(document.getElementById('promoDiscount').value);
+            const validUntil = document.getElementById('promoValidUntil').value;
+            const maxActivations = parseInt(document.getElementById('promoMaxActivations').value);
+            const service = document.getElementById('promoService').value;
+            if (promoCodes.some(p => p.code === code)) { showToast('❌ Промокод уже существует'); return; }
+            promoCodes.push({ code, discount, validUntil, maxActivations, service, usedCount: 0, usedBy: [] });
+            await saveAll();
+            showToast('🎫 Промокод создан!');
+            closeModal('modalPromoCreate');
+            this.reset();
             renderAdmin();
-        }
-    });
+        });
+    }
 
-    document.getElementById('formTopUpRequest')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const message = document.getElementById('topUpMessage').value.trim();
-        if (!message) { showToast('❌ Напишите сообщение'); return; }
-        topUpRequests.push({ id: genSid('TUR'), userId: currentUser.id, userFio: currentUser.fio, message, status: 'pending', time: now(), adminReply: '' });
-        await saveAll();
-        showToast('✅ Запрос отправлен');
-        closeModal('modalTopUpRequest');
-        this.reset();
-    });
-
-    document.getElementById('formPromoCreate')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const code = document.getElementById('promoCode').value.trim().toUpperCase();
-        const discount = parseInt(document.getElementById('promoDiscount').value);
-        const validUntil = document.getElementById('promoValidUntil').value;
-        const maxActivations = parseInt(document.getElementById('promoMaxActivations').value);
-        const service = document.getElementById('promoService').value;
-        if (promoCodes.some(p => p.code === code)) { showToast('❌ Промокод уже существует'); return; }
-        promoCodes.push({ code, discount, validUntil, maxActivations, service, usedCount: 0, usedBy: [] });
-        await saveAll();
-        showToast('🎫 Промокод создан!');
-        closeModal('modalPromoCreate');
-        this.reset();
-        renderAdmin();
-    });
-
-    document.getElementById('formSubscriptionIssue')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const userId = document.getElementById('subUserId').value.trim();
-        const service = document.getElementById('subService').value;
-        const sessions = parseInt(document.getElementById('subSessions').value);
-        const validUntil = document.getElementById('subValidUntil').value;
-        if (!getUser(userId)) { showToast('❌ Пользователь не найден'); return; }
-        subscriptions.push({ id: genSid('SUB'), userId, service, remainingSessions: sessions, validUntil, issued: now() });
-        await saveAll();
-        showToast('✅ Абонемент выдан!');
-        closeModal('modalSubscriptionIssue');
-        this.reset();
-        renderAdmin();
-    });
+    const formSubscriptionIssue = document.getElementById('formSubscriptionIssue');
+    if (formSubscriptionIssue) {
+        formSubscriptionIssue.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const userId = document.getElementById('subUserId').value.trim();
+            const service = document.getElementById('subService').value;
+            const sessions = parseInt(document.getElementById('subSessions').value);
+            const validUntil = document.getElementById('subValidUntil').value;
+            if (!getUser(userId)) { showToast('❌ Пользователь не найден'); return; }
+            subscriptions.push({ id: genSid('SUB'), userId, service, remainingSessions: sessions, validUntil, issued: now() });
+            await saveAll();
+            showToast('✅ Абонемент выдан!');
+            closeModal('modalSubscriptionIssue');
+            this.reset();
+            renderAdmin();
+        });
+    }
 
     // ---------- ОБЩИЙ РЕНДЕР ----------
     function renderAll() {
