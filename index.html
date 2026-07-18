@@ -12,6 +12,7 @@
 </head>
 <body>
 
+<!-- АВТОРИЗАЦИЯ -->
 <div id="authPage" class="auth-page">
     <div class="auth-box">
         <div class="logo">ad.<span>сервисы</span></div>
@@ -42,6 +43,7 @@
     </div>
 </div>
 
+<!-- ПРОВЕРКА ПОЛЬЗОВАТЕЛЯ -->
 <div id="checkUserOverlay" class="check-user-overlay">
     <div class="check-user-box">
         <div class="avatar-big" id="checkAvatar">A</div>
@@ -55,6 +57,7 @@
     </div>
 </div>
 
+<!-- ГЛАВНАЯ -->
 <div id="mainPage" class="main-page">
     <div class="container">
         <div class="main-header">
@@ -70,26 +73,167 @@
     </div>
 </div>
 
+<!-- ПАНЕЛИ -->
 <div id="panelsContainer" class="panels-container">
     <div class="container">
+        <!-- Еда -->
         <div id="panel-food" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🍕 Еда</h2><button class="btn" id="btnFoodOrder">➕ Заказать</button></div><div id="foodContainer" class="cards-grid"><div class="empty-state">Нет заказов</div></div></div>
+        
+        <!-- Работа -->
         <div id="panel-work" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💼 Работа</h2><button class="btn" id="btnWorkVacancy">➕ Создать вакансию</button></div><h3 style="font-weight:300;border-left:4px solid #8e44ad;padding-left:1rem;margin:1rem 0;">Вакансии</h3><div id="workVacancies" class="cards-grid"><div class="empty-state">Нет вакансий</div></div><h3 style="font-weight:300;border-left:4px solid #8e44ad;padding-left:1rem;margin:1rem 0;">Мои отклики</h3><div id="workApplications" class="cards-grid"><div class="empty-state">Нет откликов</div></div></div>
+        
+        <!-- Уборка -->
         <div id="panel-cleaning" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🧹 Уборка</h2><button class="btn" id="btnCleaningOrder">➕ Заказать</button></div><div id="cleaningContainer" class="cards-grid"><div class="empty-state">Нет заявок</div></div></div>
+        
+        <!-- Массаж -->
         <div id="panel-massage" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💆 Массаж</h2><button class="btn" id="btnMassageOrder">➕ Записаться</button></div><div id="massageContainer" class="cards-grid"><div class="empty-state">Нет записей</div></div></div>
+        
+        <!-- Юрист -->
         <div id="panel-legal" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>⚖️ Юрист</h2><button class="btn" id="btnLegalOrder">➕ Записаться</button></div><div id="legalContainer" class="cards-grid"><div class="empty-state">Нет записей</div></div></div>
+        
+        <!-- Суд -->
         <div id="panel-court" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🏛️ Суд</h2><button class="btn" id="btnCourtOrder">➕ Подать иск</button></div><div id="courtContainer" class="cards-grid"><div class="empty-state">Нет исков</div></div></div>
-        <div id="panel-history" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>📋 История</h2></div><div class="history-filter"><select id="historyTypeFilter"><option value="all">Все типы</option><option value="food">🍕 Еда</option><option value="cleaning">🧹 Уборка</option><option value="work">💼 Работа</option><option value="massage">💆 Массаж</option><option value="legal">⚖️ Консультация</option><option value="court">🏛️ Суд</option><option value="roomvisit">🚪 Посещение</option></select><select id="historyStatusFilter"><option value="all">Все статусы</option><option value="new">Новый</option><option value="processing">В работе</option><option value="done">Выполнено</option><option value="cancelled">Отменён</option><option value="rejected">Отклонён</option><option value="approved">Одобрено</option><option value="denied">Отказано</option><option value="completed">Завершено</option></select><input type="text" id="historySearch" placeholder="Поиск по ID..."><button class="btn-sm" id="historySearchBtn">🔍</button></div><div id="historyContainer" class="cards-grid"><div class="empty-state">Нет заказов</div></div></div>
-        <div id="panel-messenger" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💬 Мессенджер</h2></div><div class="search-box"><input type="text" id="messengerSearch" placeholder="Поиск по ID или ФИО..."><button id="messengerSearchBtn">🔍 Найти</button></div><div id="messengerChats" class="cards-grid"><div class="empty-state">Нет чатов</div></div><div id="messengerChatWindow" style="display:none;margin-top:1rem;border-top:1px solid #e2e8f0;padding-top:1rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;"><h3 id="chatPartnerName">Собеседник</h3><button class="btn-sm" id="chatBackBtn">← Назад</button></div><div id="messageArea" class="message-area"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><input type="text" id="messageInput" placeholder="Сообщение..." style="flex:1;padding:.4rem .8rem;border:1px solid #e2e8f0;border-radius:30px;font-size:.85rem;"><button class="btn-sm" id="sendMessageBtn">📤</button><button class="btn-sm" id="stickerBtn">😺</button><label class="file-upload-btn">📷<input type="file" id="fileInput" accept="image/*,audio/*,video/*" style="display:none"></label></div><div id="stickerPanel" style="display:none;margin-top:8px;border-top:1px solid #e2e8f0;padding-top:8px;"><div class="sticker-grid" id="stickerGrid"></div></div></div></div>
+        
+        <!-- История -->
+        <div id="panel-history" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>📋 История</h2></div><div class="history-filter"><select id="historyTypeFilter"><option value="all">Все типы</option><option value="food">🍕 Еда</option><option value="cleaning">🧹 Уборка</option><option value="work">💼 Работа</option><option value="massage">💆 Массаж</option><option value="legal">⚖️ Консультация</option><option value="court">🏛️ Суд</option><option value="roomvisit">🚪 Посещение</option><option value="pass">🎫 Пропуск</option></select><select id="historyStatusFilter"><option value="all">Все статусы</option><option value="new">Новый</option><option value="processing">В работе</option><option value="done">Выполнено</option><option value="cancelled">Отменён</option><option value="rejected">Отклонён</option><option value="approved">Одобрено</option><option value="denied">Отказано</option><option value="completed">Завершено</option></select><input type="text" id="historySearch" placeholder="Поиск по ID..."><button class="btn-sm" id="historySearchBtn">🔍</button></div><div id="historyContainer" class="cards-grid"><div class="empty-state">Нет заказов</div></div></div>
+        
+        <!-- Мессенджер -->
+        <div id="panel-messenger" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💬 Мессенджер</h2></div><div class="search-box"><input type="text" id="messengerSearch" placeholder="Поиск..."><button id="messengerSearchBtn">🔍</button></div><div id="messengerChats" class="cards-grid"><div class="empty-state">Нет чатов</div></div><div id="messengerChatWindow" style="display:none;margin-top:1rem;border-top:1px solid #e2e8f0;padding-top:1rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;"><h3 id="chatPartnerName">Собеседник</h3><button class="btn-sm" id="chatBackBtn">← Назад</button></div><div id="messageArea" class="message-area"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><input type="text" id="messageInput" placeholder="Сообщение..." style="flex:1;padding:.4rem .8rem;border:1px solid #e2e8f0;border-radius:30px;font-size:.85rem;"><button class="btn-sm" id="sendMessageBtn">📤</button><button class="btn-sm" id="stickerBtn">😺</button><label class="file-upload-btn">📷<input type="file" id="fileInput" accept="image/*,audio/*,video/*" style="display:none"></label></div><div id="stickerPanel" style="display:none;margin-top:8px;border-top:1px solid #e2e8f0;padding-top:8px;"><div class="sticker-grid" id="stickerGrid"></div></div></div></div>
+        
+        <!-- Профиль -->
         <div id="panel-profile" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👤 Профиль</h2></div><div id="profileContainer"><div class="empty-state">Загрузка...</div></div></div>
+        
+        <!-- Поддержка -->
         <div id="panel-support" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🆘 Поддержка</h2><button class="btn" id="btnSupportNew">➕ Новое</button></div><div id="supportContainer" class="cards-grid"><div class="empty-state">Нет обращений</div></div></div>
+        
+        <!-- Кошелёк -->
         <div id="panel-wallet" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💰 Кошелёк</h2></div><div id="walletContainer"><div class="empty-state">Загрузка...</div></div></div>
+        
+        <!-- Банк -->
         <div id="panel-bank" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💳 Банк</h2></div><div id="bankContainer"><div class="empty-state">Загрузка...</div></div></div>
+        
+        <!-- Посещение комнаты -->
         <div id="panel-roomvisit" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🚪 Посещение комнаты</h2><button class="btn" id="btnRoomVisitRequest">➕ Новая заявка</button></div><div id="roomVisitContainer" class="cards-grid"><div class="empty-state">Нет заявок</div></div></div>
-        <div id="panel-admin" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👑 Админ-панель</h2></div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;"><button class="btn-sm gold" id="adminTabApplications">📋 Заказы</button><button class="btn-sm purple" id="adminTabUsers">👥 Пользователи</button><button class="btn-sm green" id="adminTabSupport">💬 Поддержка</button><button class="btn-sm blue" id="adminTabWallets">💰 Кошельки</button><button class="btn-sm blue" id="adminTabBusiness">🏢 Бизнесы</button><button class="btn-sm purple" id="adminTabPromoCodes">🎫 Промокоды</button><button class="btn-sm green" id="adminTabSubscriptions">📅 Абонементы</button><button class="btn-sm gold" id="adminTabTopUpRequests">📩 Запросы</button><button class="btn-sm danger" id="adminTabCards">💳 Карты</button><button class="btn-sm gold" id="adminTabRoomVisits">🚪 Посещения</button><button class="btn-sm gold" id="adminTabHistory">📋 История</button></div><div id="adminContent"></div></div>
+        
+        <!-- ⭐ НОВЫЙ РАЗДЕЛ: ПРОПУСКА -->
+        <div id="panel-pass" class="service-panel">
+            <div class="panel-header">
+                <button class="btn-back" data-back>← Назад</button>
+                <h2>🎫 Пропуска</h2>
+                <button class="btn" id="btnPassOrder">➕ Заказать пропуск</button>
+            </div>
+            <h3 style="font-weight:300;border-left:4px solid #3b82f6;padding-left:1rem;margin:1rem 0;">Мои пропуска</h3>
+            <div id="passContainer" class="cards-grid"><div class="empty-state">Нет пропусков</div></div>
+        </div>
+        
+        <!-- Админка -->
+        <div id="panel-admin" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👑 Админ-панель</h2></div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;"><button class="btn-sm gold" id="adminTabApplications">📋 Заказы</button><button class="btn-sm purple" id="adminTabUsers">👥 Пользователи</button><button class="btn-sm green" id="adminTabSupport">💬 Поддержка</button><button class="btn-sm blue" id="adminTabWallets">💰 Кошельки</button><button class="btn-sm blue" id="adminTabBusiness">🏢 Бизнесы</button><button class="btn-sm purple" id="adminTabPromoCodes">🎫 Промокоды</button><button class="btn-sm green" id="adminTabSubscriptions">📅 Абонементы</button><button class="btn-sm gold" id="adminTabTopUpRequests">📩 Запросы</button><button class="btn-sm danger" id="adminTabCards">💳 Карты</button><button class="btn-sm gold" id="adminTabRoomVisits">🚪 Посещения</button><button class="btn-sm blue" id="adminTabPass">🎫 Пропуска</button><button class="btn-sm gold" id="adminTabHistory">📋 История</button></div><div id="adminContent"></div></div>
     </div>
 </div>
 
-<!-- МОДАЛКИ (все оставляем как есть) -->
+<!-- МОДАЛКИ -->
+
+<!-- Заказ пропуска -->
+<div id="modalPassOrder" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassOrder">&times;</button>
+        <h2>🎫 Заказ пропуска</h2>
+        <form id="formPassOrder">
+            <div class="form-group"><label>Ваше ФИО</label><input type="text" id="passFio" required></div>
+            <div class="form-group"><label>Адрес</label><input type="text" id="passAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div>
+            <div class="form-group"><label>Цель получения пропуска</label><textarea id="passPurpose" placeholder="Для прохода в офис..." required></textarea></div>
+            <div class="form-group"><label>Срок действия (дней)</label><input type="number" id="passDuration" value="30" min="1" required></div>
+            <button type="submit" class="btn-submit">📤 Отправить заявку</button>
+        </form>
+    </div>
+</div>
+
+<!-- Админ: Добавить посещение -->
+<div id="modalPassAddVisit" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassAddVisit">&times;</button>
+        <h2>📝 Добавить посещение</h2>
+        <form id="formPassAddVisit">
+            <div class="form-group"><label>Дата</label><input type="date" id="passVisitDate" required></div>
+            <div class="form-group"><label>Время</label><input type="time" id="passVisitTime" required></div>
+            <div class="form-group"><label>Причина посещения</label><textarea id="passVisitReason" required></textarea></div>
+            <input type="hidden" id="passVisitPassId">
+            <button type="submit" class="btn-submit">➕ Добавить посещение</button>
+        </form>
+    </div>
+</div>
+
+<!-- Админ: Закрыть пропуск -->
+<div id="modalPassClose" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassClose">&times;</button>
+        <h2>🔒 Закрыть пропуск</h2>
+        <form id="formPassClose">
+            <div class="form-group"><label>Причина закрытия</label><textarea id="passCloseReason" required></textarea></div>
+            <input type="hidden" id="passCloseId">
+            <button type="submit" class="btn-submit">🔒 Закрыть пропуск</button>
+        </form>
+    </div>
+</div>
+
+<!-- Админ: Временно закрыть -->
+<div id="modalPassTempClose" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassTempClose">&times;</button>
+        <h2>⏳ Временно закрыть пропуск</h2>
+        <form id="formPassTempClose">
+            <div class="form-group"><label>Причина</label><textarea id="passTempCloseReason" required></textarea></div>
+            <div class="form-group"><label>Дата окончания</label><input type="date" id="passTempCloseDate" required></div>
+            <div class="form-group"><label>Время окончания</label><input type="time" id="passTempCloseTime" required></div>
+            <input type="hidden" id="passTempCloseId">
+            <button type="submit" class="btn-submit">⏳ Закрыть на время</button>
+        </form>
+    </div>
+</div>
+
+<!-- Админ: Продлить -->
+<div id="modalPassExtend" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassExtend">&times;</button>
+        <h2>🔄 Продлить пропуск</h2>
+        <form id="formPassExtend">
+            <div class="form-group"><label>Причина продления</label><textarea id="passExtendReason" required></textarea></div>
+            <div class="form-group"><label>Продлить на (дней)</label><input type="number" id="passExtendDays" value="30" min="1" required></div>
+            <input type="hidden" id="passExtendId">
+            <button type="submit" class="btn-submit">🔄 Продлить</button>
+        </form>
+    </div>
+</div>
+
+<!-- Админ: Просмотр посещений -->
+<div id="modalPassVisits" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassVisits">&times;</button>
+        <h2>📋 История посещений</h2>
+        <div id="passVisitsContent"></div>
+    </div>
+</div>
+
+<!-- Админ: Просмотр всех действий -->
+<div id="modalPassActions" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassActions">&times;</button>
+        <h2>📋 Все действия по пропуску</h2>
+        <div id="passActionsContent"></div>
+    </div>
+</div>
+
+<!-- Сканер QR (для пропусков) -->
+<div id="modalPassScan" class="modal-overlay">
+    <div class="modal">
+        <button class="modal-close" id="closePassScan">&times;</button>
+        <h2>📷 Сканирование QR-кода пропуска</h2>
+        <div id="passScanner" style="width:100%;max-width:300px;margin:0 auto;"></div>
+        <div id="passScanResult" style="margin-top:1rem;"></div>
+    </div>
+</div>
+
+<!-- Остальные модалки (уже были) -->
 <div id="modalRoomVisitRequest" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeRoomVisitRequest">&times;</button><h2>🚪 Заявка на посещение комнаты</h2><form id="formRoomVisitRequest"><div class="form-group"><label>Цель посещения</label><textarea id="roomVisitPurpose" placeholder="Встреча с администратором, ремонт..." required></textarea></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="roomVisitDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="roomVisitTime" required></div></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
 <div id="modalRoomVisitEdit" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeRoomVisitEdit">&times;</button><h2>✏️ Редактирование заявки</h2><form id="formRoomVisitEdit"><div class="form-group"><label>Цель посещения</label><textarea id="roomVisitEditPurpose" required></textarea></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="roomVisitEditDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="roomVisitEditTime" required></div></div><input type="hidden" id="roomVisitEditId"><button type="submit" class="btn-submit">💾 Сохранить изменения</button></form></div></div>
 <div id="modalRoomVisitScan" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeRoomVisitScan">&times;</button><h2>📷 Сканирование QR-кода</h2><div id="roomVisitScanner" style="width:100%;max-width:300px;margin:0 auto;"></div><div id="roomVisitScanResult" style="margin-top:1rem;"></div></div></div>
@@ -125,7 +269,7 @@
     const ORDERS_BIN_ID = '6a57a8b9f5f4af5e29933361';
 
     let users = [], currentUser = null;
-    let orders = { food: [], cleaning: [], massage: [], legal: [], court: [], applications: [], vacancies: [], roomVisits: [] };
+    let orders = { food: [], cleaning: [], massage: [], legal: [], court: [], applications: [], vacancies: [], roomVisits: [], passes: [] };
     let notifications = [], supportTickets = [], chats = {}, messages = {}, stickers = [], roles = [], statuses = [];
     let wallets = {}, businessAccounts = {}, promoCodes = [], subscriptions = [], debts = [], cards = [], topUpRequests = [];
     let adminCurrentTab = 'applications';
@@ -148,8 +292,8 @@
 
     function generateId() { let id; do { id = String(Math.floor(10000 + Math.random() * 90000)); } while (users.some(u => u.id === id)); return id; }
     function genSid(p) { return p + '-' + String(Math.floor(1000 + Math.random() * 9000)); }
-    function statusText(s) { const map = { 'new': 'Новый', 'cooking': 'Готовится', 'delivering': 'В пути', 'done': 'Выполнено', 'active': 'Активна', 'closed': 'Закрыта', 'accepted': 'Принят', 'rejected': 'Отклонён', 'processing': 'В работе', 'pending': 'На модерации', 'cancelled': 'Отменён', 'approved': 'Одобрено', 'denied': 'Отказано', 'completed': 'Завершено' }; return map[s] || s; }
-    function statusClass(s) { const map = { 'new': 'new', 'cooking': 'processing', 'delivering': 'processing', 'done': 'done', 'active': 'active', 'closed': 'closed', 'accepted': 'accepted', 'rejected': 'rejected', 'processing': 'processing', 'pending': 'pending', 'cancelled': 'cancelled', 'approved': 'approved', 'denied': 'denied', 'completed': 'done' }; return map[s] || 'new'; }
+    function statusText(s) { const map = { 'new': 'Новый', 'cooking': 'Готовится', 'delivering': 'В пути', 'done': 'Выполнено', 'active': 'Активен', 'closed': 'Закрыт', 'accepted': 'Принят', 'rejected': 'Отклонён', 'processing': 'В работе', 'pending': 'На модерации', 'cancelled': 'Отменён', 'approved': 'Одобрено', 'denied': 'Отказано', 'completed': 'Завершено', 'temp_closed': 'Временно закрыт' }; return map[s] || s; }
+    function statusClass(s) { const map = { 'new': 'new', 'cooking': 'processing', 'delivering': 'processing', 'done': 'done', 'active': 'active', 'closed': 'closed', 'accepted': 'accepted', 'rejected': 'rejected', 'processing': 'processing', 'pending': 'pending', 'cancelled': 'cancelled', 'approved': 'approved', 'denied': 'denied', 'completed': 'done', 'temp_closed': 'processing' }; return map[s] || 'new'; }
     function now() { return new Date().toLocaleString('ru-RU', { hour12: false }); }
     function showToast(msg) { const e = document.getElementById('toast'); if (!e) return; e.innerHTML = msg; e.classList.add('show'); clearTimeout(window.tt); window.tt = setTimeout(() => e.classList.remove('show'), 3000); }
     function openModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'flex'; }
@@ -157,35 +301,6 @@
     function isBanned(u) { if (!u || !u.banned) return false; if (u.banExpiry && u.banExpiry !== 'forever') { if (new Date(u.banExpiry) > new Date()) return true; u.banned = false; u.banReason = ''; u.banExpiry = null; saveAll(); return false; } return u.banExpiry === 'forever' || u.banned === true; }
     function getUser(id) { return users.find(u => u.id === id); }
     function getWallet(userId) { if (!wallets[userId]) wallets[userId] = { balance: 0, cardNumber: '0000 0000 0000 0000', qrCode: '', blocked: false, blockReason: '', blockExpiry: null, transactions: [] }; return wallets[userId]; }
-
-    async function processTransaction(fromUserId, toUserId, amount, description) {
-        const fromW = getWallet(fromUserId);
-        const toW = getWallet(toUserId);
-        if (!fromW || !toW) { showToast('❌ Ошибка кошелька'); return false; }
-        if (fromW.blocked) { showToast('❌ Кошелёк заблокирован'); return false; }
-        if (fromW.balance < amount) { showToast('❌ Недостаточно средств'); return false; }
-        fromW.balance -= amount;
-        toW.balance += amount;
-        fromW.transactions.push({ id: 'txn_' + Date.now(), type: 'payment', amount, description, from: fromUserId, to: toUserId, time: now() });
-        toW.transactions.push({ id: 'txn_' + Date.now(), type: 'receipt', amount, description, from: fromUserId, to: toUserId, time: now() });
-        await saveAll();
-        showToast(`✅ Оплата ${amount} ₽ прошла успешно`);
-        return true;
-    }
-
-    function applyPromo(code, userId, service) {
-        const promo = promoCodes.find(p => p.code.toUpperCase() === code.toUpperCase());
-        if (!promo) { showToast('❌ Промокод не найден'); return null; }
-        if (new Date(promo.validUntil) < new Date()) { showToast('❌ Промокод истёк'); return null; }
-        if (promo.usedCount >= promo.maxActivations) { showToast('❌ Промокод исчерпан'); return null; }
-        if (promo.usedBy.includes(userId)) { showToast('❌ Вы уже использовали этот промокод'); return null; }
-        if (promo.service !== 'all' && promo.service !== service) { showToast('❌ Промокод не подходит'); return null; }
-        promo.usedCount++;
-        promo.usedBy.push(userId);
-        saveAll();
-        showToast(`✅ Промокод применён! Скидка ${promo.discount}%`);
-        return promo.discount;
-    }
 
     async function saveAll() {
         await writeBin(USERS_BIN_ID, { users });
@@ -306,7 +421,8 @@
             'btnLegalOrder': 'modalLegal',
             'btnCourtOrder': 'modalCourt',
             'btnSupportNew': 'modalSupportNew',
-            'btnRoomVisitRequest': 'modalRoomVisitRequest'
+            'btnRoomVisitRequest': 'modalRoomVisitRequest',
+            'btnPassOrder': 'modalPassOrder'
         };
         for (const [btnId, modalId] of Object.entries(btns)) {
             const btn = document.getElementById(btnId);
@@ -339,7 +455,8 @@
         { id: 'support', icon: '🆘', title: 'Поддержка', desc: 'Написать' },
         { id: 'wallet', icon: '💰', title: 'Кошелёк', desc: 'Баланс' },
         { id: 'bank', icon: '💳', title: 'Банк', desc: 'Карты и QR' },
-        { id: 'roomvisit', icon: '🚪', title: 'Посещение', desc: 'Заявки на вход' },
+        { id: 'roomvisit', icon: '🚪', title: 'Посещение комнаты', desc: 'Заявки на вход' },
+        { id: 'pass', icon: '🎫', title: 'Пропуска', desc: 'Заказать пропуск' },
         { id: 'admin', icon: '👑', title: 'Админка', desc: 'Управление', badge: 'Только админ' }
     ];
 
@@ -383,6 +500,7 @@
         if (panelId === 'wallet') renderWallet();
         if (panelId === 'bank') renderBank();
         if (panelId === 'roomvisit') renderRoomVisit();
+        if (panelId === 'pass') renderPass();
     }
 
     function goBack() {
@@ -406,7 +524,524 @@
         }
     });
 
-    // ---------- РЕНДЕРЫ ----------
+    // ================================================================
+    // ⭐ РАЗДЕЛ ПРОПУСКОВ
+    // ================================================================
+    
+    // Заказ пропуска (пользователь)
+    document.getElementById('formPassOrder').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const fio = document.getElementById('passFio').value.trim();
+        const address = document.getElementById('passAddress').value.trim();
+        const purpose = document.getElementById('passPurpose').value.trim();
+        const duration = parseInt(document.getElementById('passDuration').value) || 30;
+        
+        if (!fio || !address || !purpose) {
+            showToast('❌ Заполните все поля');
+            return;
+        }
+        
+        const passId = genSid('PASS');
+        const newPass = {
+            id: passId,
+            userId: currentUser.id,
+            userFio: currentUser.fio,
+            fio: fio,
+            address: address,
+            purpose: purpose,
+            duration: duration,
+            status: 'pending', // pending, active, temp_closed, closed
+            createdAt: now(),
+            validUntil: new Date(Date.now() + duration * 86400000).toLocaleString('ru-RU'),
+            code: passId,
+            visits: [],
+            actions: [{ action: 'Создан', time: now(), details: `Срок ${duration} дней` }],
+            closeReason: '',
+            tempCloseReason: '',
+            tempCloseUntil: ''
+        };
+        
+        orders.passes.push(newPass);
+        await saveAll();
+        renderAll();
+        showToast('✅ Заявка на пропуск отправлена администратору!');
+        closeModal('modalPassOrder');
+        this.reset();
+    });
+
+    // Рендер пропусков (пользователь)
+    function renderPass() {
+        const container = document.getElementById('passContainer');
+        if (!container) return;
+        
+        const items = orders.passes.filter(p => p.userId === currentUser.id);
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет пропусков</div>';
+            return;
+        }
+        
+        container.innerHTML = items.map(p => {
+            let statusHtml = '';
+            if (p.status === 'pending') statusHtml = '<span class="card-status status-pending">⏳ На модерации</span>';
+            else if (p.status === 'active') statusHtml = '<span class="card-status status-active">✅ Активен</span>';
+            else if (p.status === 'temp_closed') statusHtml = '<span class="card-status status-processing">⏸️ Временно закрыт</span>';
+            else if (p.status === 'closed') statusHtml = '<span class="card-status status-closed">🔒 Закрыт</span>';
+            
+            return `
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-id">${p.id}</span>
+                        ${statusHtml}
+                    </div>
+                    <div class="card-detail"><strong>ФИО:</strong> ${p.fio}</div>
+                    <div class="card-detail"><strong>Адрес:</strong> ${p.address}</div>
+                    <div class="card-detail"><strong>Цель:</strong> ${p.purpose}</div>
+                    <div class="card-detail"><strong>Действует до:</strong> ${p.validUntil}</div>
+                    ${p.tempCloseReason ? `<div class="card-detail" style="color:#a86f1a;"><strong>Временно закрыт:</strong> ${p.tempCloseReason} (до ${p.tempCloseUntil})</div>` : ''}
+                    ${p.closeReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Закрыт:</strong> ${p.closeReason}</div>` : ''}
+                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">Создан: ${p.createdAt}</div>
+                    ${p.status === 'active' || p.status === 'temp_closed' ? `
+                        <div style="margin-top:0.5rem;">
+                            <p><strong>Ваш QR-код пропуска:</strong></p>
+                            <div id="qrContainerPass_${p.id}" style="display:flex;justify-content:center;margin:0.5rem 0;"></div>
+                            <p style="font-size:0.7rem;color:#8b97a8;">Код: ${p.code}</p>
+                        </div>
+                    ` : ''}
+                    ${p.status === 'closed' ? `
+                        <div style="margin-top:0.5rem;padding:0.5rem;background:#fde8e8;border-radius:12px;color:#a14f4f;font-size:0.8rem;">
+                            ⚠️ Пропуск закрыт. Верните карточку с кодом туда, где выпускали.
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+        
+        // Генерация QR-кодов для активных пропусков
+        items.filter(p => p.status === 'active' || p.status === 'temp_closed').forEach(p => {
+            setTimeout(() => {
+                const container = document.getElementById('qrContainerPass_' + p.id);
+                if (container && !container.querySelector('canvas')) {
+                    try {
+                        new QRCode(container, {
+                            text: 'pass:' + p.id,
+                            width: 180,
+                            height: 180,
+                            colorDark: "#000000",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+                    } catch (e) {
+                        container.innerHTML = '<p style="color:#8b97a8;">QR-код (ошибка)</p>';
+                    }
+                }
+            }, 200);
+        });
+    }
+
+    // ================================================================
+    // АДМИН: УПРАВЛЕНИЕ ПРОПУСКАМИ
+    // ================================================================
+    
+    function renderAdminPass(container) {
+        const passes = orders.passes || [];
+        if (!passes.length) {
+            container.innerHTML = '<div class="empty-state">Нет пропусков</div>';
+            return;
+        }
+        
+        let html = `<div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+            <button class="btn-sm blue" id="adminPassScanBtn">📷 Сканировать QR</button>
+        </div><div class="cards-grid">`;
+        
+        passes.forEach(p => {
+            let statusText = '', statusClass = '';
+            if (p.status === 'pending') { statusText = '⏳ Ожидает'; statusClass = 'pending'; }
+            else if (p.status === 'active') { statusText = '✅ Активен'; statusClass = 'active'; }
+            else if (p.status === 'temp_closed') { statusText = '⏸️ Временно закрыт'; statusClass = 'processing'; }
+            else if (p.status === 'closed') { statusText = '🔒 Закрыт'; statusClass = 'closed'; }
+            
+            html += `
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-id">${p.id}</span>
+                        <span class="card-status status-${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="card-detail"><strong>Пользователь:</strong> ${p.userFio} (${p.userId})</div>
+                    <div class="card-detail"><strong>ФИО:</strong> ${p.fio}</div>
+                    <div class="card-detail"><strong>Адрес:</strong> ${p.address}</div>
+                    <div class="card-detail"><strong>Цель:</strong> ${p.purpose}</div>
+                    <div class="card-detail"><strong>Действует до:</strong> ${p.validUntil}</div>
+                    <div class="card-detail"><strong>Код:</strong> ${p.code}</div>
+                    ${p.tempCloseReason ? `<div class="card-detail" style="color:#a86f1a;">⏸️ ${p.tempCloseReason} (до ${p.tempCloseUntil})</div>` : ''}
+                    ${p.closeReason ? `<div class="card-detail" style="color:#a14f4f;">🔒 ${p.closeReason}</div>` : ''}
+                    <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">Создан: ${p.createdAt}</div>
+                    <div class="card-actions">
+                        <button class="btn-sm green" data-pass-addvisit="${p.id}">📝 Добавить посещение</button>
+                        <button class="btn-sm danger" data-pass-close="${p.id}">🔒 Закрыть</button>
+                        <button class="btn-sm gold" data-pass-tempclose="${p.id}">⏸️ Временно закрыть</button>
+                        <button class="btn-sm blue" data-pass-extend="${p.id}">🔄 Продлить</button>
+                        <button class="btn-sm purple" data-pass-visits="${p.id}">📋 Посещения</button>
+                        <button class="btn-sm gold" data-pass-actions="${p.id}">📋 Все действия</button>
+                        ${p.status === 'active' || p.status === 'temp_closed' ? `
+                            <button class="btn-sm blue" data-pass-scan="${p.id}">📷 Сканировать</button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+        
+        // Обработчики для кнопок админа
+        container.querySelectorAll('[data-pass-addvisit]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passId = this.dataset.passAddvisit;
+                document.getElementById('passVisitPassId').value = passId;
+                openModal('modalPassAddVisit');
+            });
+        });
+        
+        container.querySelectorAll('[data-pass-close]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passId = this.dataset.passClose;
+                document.getElementById('passCloseId').value = passId;
+                openModal('modalPassClose');
+            });
+        });
+        
+        container.querySelectorAll('[data-pass-tempclose]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passId = this.dataset.passTempClose;
+                document.getElementById('passTempCloseId').value = passId;
+                openModal('modalPassTempClose');
+            });
+        });
+        
+        container.querySelectorAll('[data-pass-extend]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passId = this.dataset.passExtend;
+                document.getElementById('passExtendId').value = passId;
+                openModal('modalPassExtend');
+            });
+        });
+        
+        container.querySelectorAll('[data-pass-visits]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passId = this.dataset.passVisits;
+                showPassVisits(passId);
+            });
+        });
+        
+        container.querySelectorAll('[data-pass-actions]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passId = this.dataset.passActions;
+                showPassActions(passId);
+            });
+        });
+        
+        container.querySelectorAll('[data-pass-scan]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const passId = this.dataset.passScan;
+                openModal('modalPassScan');
+                startPassScanner(passId);
+            });
+        });
+        
+        document.getElementById('adminPassScanBtn')?.addEventListener('click', function() {
+            openModal('modalPassScan');
+            startPassScanner(null);
+        });
+    }
+
+    // ---------- ОБРАБОТЧИКИ АДМИН-ДЕЙСТВИЙ С ПРОПУСКАМИ ----------
+    
+    // Добавить посещение
+    document.getElementById('formPassAddVisit').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const passId = document.getElementById('passVisitPassId').value;
+        const date = document.getElementById('passVisitDate').value;
+        const time = document.getElementById('passVisitTime').value;
+        const reason = document.getElementById('passVisitReason').value.trim();
+        
+        if (!date || !time || !reason) {
+            showToast('❌ Заполните все поля');
+            return;
+        }
+        
+        const pass = orders.passes.find(p => p.id === passId);
+        if (!pass) { showToast('❌ Пропуск не найден'); return; }
+        
+        const visit = {
+            id: 'visit_' + Date.now(),
+            date: date,
+            time: time,
+            reason: reason,
+            addedAt: now()
+        };
+        pass.visits.push(visit);
+        pass.actions.push({ action: 'Добавлено посещение', time: now(), details: `${date} ${time} - ${reason}` });
+        
+        await saveAll();
+        renderAll();
+        showToast('✅ Посещение добавлено!');
+        closeModal('modalPassAddVisit');
+        this.reset();
+    });
+
+    // Закрыть пропуск
+    document.getElementById('formPassClose').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const passId = document.getElementById('passCloseId').value;
+        const reason = document.getElementById('passCloseReason').value.trim();
+        
+        if (!reason) { showToast('❌ Укажите причину'); return; }
+        
+        const pass = orders.passes.find(p => p.id === passId);
+        if (!pass) { showToast('❌ Пропуск не найден'); return; }
+        
+        pass.status = 'closed';
+        pass.closeReason = reason;
+        pass.actions.push({ action: 'Закрыт', time: now(), details: `Причина: ${reason}` });
+        
+        await saveAll();
+        renderAll();
+        showToast('🔒 Пропуск закрыт. Карточку с кодом верните туда, где выпускали.');
+        closeModal('modalPassClose');
+        this.reset();
+    });
+
+    // Временно закрыть
+    document.getElementById('formPassTempClose').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const passId = document.getElementById('passTempCloseId').value;
+        const reason = document.getElementById('passTempCloseReason').value.trim();
+        const date = document.getElementById('passTempCloseDate').value;
+        const time = document.getElementById('passTempCloseTime').value;
+        
+        if (!reason || !date || !time) {
+            showToast('❌ Заполните все поля');
+            return;
+        }
+        
+        const pass = orders.passes.find(p => p.id === passId);
+        if (!pass) { showToast('❌ Пропуск не найден'); return; }
+        
+        pass.status = 'temp_closed';
+        pass.tempCloseReason = reason;
+        pass.tempCloseUntil = `${date} ${time}`;
+        pass.actions.push({ action: 'Временно закрыт', time: now(), details: `Причина: ${reason}, до ${date} ${time}` });
+        
+        await saveAll();
+        renderAll();
+        showToast(`⏸️ Пропуск временно закрыт до ${date} ${time}`);
+        closeModal('modalPassTempClose');
+        this.reset();
+    });
+
+    // Продлить пропуск
+    document.getElementById('formPassExtend').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const passId = document.getElementById('passExtendId').value;
+        const reason = document.getElementById('passExtendReason').value.trim();
+        const days = parseInt(document.getElementById('passExtendDays').value) || 30;
+        
+        if (!reason || days < 1) {
+            showToast('❌ Заполните все поля');
+            return;
+        }
+        
+        const pass = orders.passes.find(p => p.id === passId);
+        if (!pass) { showToast('❌ Пропуск не найден'); return; }
+        
+        // Если пропуск закрыт, меняем статус на активный
+        if (pass.status === 'closed') {
+            pass.status = 'active';
+            pass.closeReason = '';
+        }
+        
+        // Продлеваем срок
+        const currentDate = new Date(pass.validUntil);
+        currentDate.setDate(currentDate.getDate() + days);
+        pass.validUntil = currentDate.toLocaleString('ru-RU');
+        pass.duration += days;
+        pass.actions.push({ action: 'Продлён', time: now(), details: `Причина: ${reason}, продлён на ${days} дней` });
+        
+        await saveAll();
+        renderAll();
+        showToast(`🔄 Пропуск продлён на ${days} дней`);
+        closeModal('modalPassExtend');
+        this.reset();
+    });
+
+    // Просмотр посещений
+    function showPassVisits(passId) {
+        const pass = orders.passes.find(p => p.id === passId);
+        if (!pass) { showToast('❌ Пропуск не найден'); return; }
+        
+        const container = document.getElementById('passVisitsContent');
+        if (!pass.visits || !pass.visits.length) {
+            container.innerHTML = '<div class="empty-state">Нет посещений</div>';
+        } else {
+            let html = '<div class="cards-grid">';
+            pass.visits.forEach((v, index) => {
+                html += `
+                    <div class="card">
+                        <div class="card-header"><span class="card-id">#${index + 1}</span></div>
+                        <div class="card-detail"><strong>Дата:</strong> ${v.date}</div>
+                        <div class="card-detail"><strong>Время:</strong> ${v.time}</div>
+                        <div class="card-detail"><strong>Причина:</strong> ${v.reason}</div>
+                        <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">Добавлено: ${v.addedAt}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        openModal('modalPassVisits');
+    }
+
+    // Просмотр всех действий
+    function showPassActions(passId) {
+        const pass = orders.passes.find(p => p.id === passId);
+        if (!pass) { showToast('❌ Пропуск не найден'); return; }
+        
+        const container = document.getElementById('passActionsContent');
+        if (!pass.actions || !pass.actions.length) {
+            container.innerHTML = '<div class="empty-state">Нет действий</div>';
+        } else {
+            let html = '<div class="cards-grid">';
+            pass.actions.forEach((a, index) => {
+                const isLast = index === pass.actions.length - 1;
+                html += `
+                    <div class="card" style="${isLast ? 'border-color:#d4af37;' : ''}">
+                        <div class="card-header">
+                            <span class="card-id">#${index + 1}</span>
+                            ${isLast ? '<span class="badge gold">Последнее</span>' : ''}
+                        </div>
+                        <div class="card-detail"><strong>Действие:</strong> ${a.action}</div>
+                        <div class="card-detail"><strong>Время:</strong> ${a.time}</div>
+                        <div class="card-detail"><strong>Детали:</strong> ${a.details}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        openModal('modalPassActions');
+    }
+
+    // ---------- СКАНЕР QR ДЛЯ ПРОПУСКОВ ----------
+    let passScanTarget = null;
+
+    function startPassScanner(passId) {
+        passScanTarget = passId;
+        const readerDiv = document.getElementById('passScanner');
+        if (!readerDiv) return;
+        readerDiv.innerHTML = '';
+        
+        // Если передан конкретный ID, показываем информацию без сканирования
+        if (passId) {
+            const pass = orders.passes.find(p => p.id === passId);
+            if (pass) {
+                showPassScanResult(pass);
+                return;
+            }
+        }
+        
+        const scanner = new Html5Qrcode("passScanner");
+        scanner.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: { width: 250, height: 250 } },
+            async function(decodedText) {
+                if (decodedText.startsWith('pass:')) {
+                    const id = decodedText.replace('pass:', '');
+                    const pass = orders.passes.find(p => p.id === id);
+                    if (!pass) {
+                        showToast('❌ Пропуск не найден');
+                        scanner.stop();
+                        return;
+                    }
+                    scanner.stop();
+                    showPassScanResult(pass);
+                }
+            },
+            function(err) {}
+        );
+    }
+
+    function showPassScanResult(pass) {
+        const resultDiv = document.getElementById('passScanResult');
+        if (!resultDiv) return;
+        
+        let statusText = '';
+        if (pass.status === 'pending') statusText = '⏳ На модерации';
+        else if (pass.status === 'active') statusText = '✅ Активен';
+        else if (pass.status === 'temp_closed') statusText = '⏸️ Временно закрыт';
+        else if (pass.status === 'closed') statusText = '🔒 Закрыт';
+        
+        let actionsHtml = '';
+        if (currentUser.role === 'admin') {
+            actionsHtml = `
+                <div style="margin-top:1rem;">
+                    <button class="btn-sm green" onclick="addVisitFromScan('${pass.id}')">📝 Добавить посещение</button>
+                    <button class="btn-sm danger" onclick="closePassFromScan('${pass.id}')">🔒 Закрыть</button>
+                    <button class="btn-sm gold" onclick="tempClosePassFromScan('${pass.id}')">⏸️ Временно закрыть</button>
+                    <button class="btn-sm blue" onclick="extendPassFromScan('${pass.id}')">🔄 Продлить</button>
+                    <button class="btn-sm purple" onclick="showPassVisits('${pass.id}')">📋 Посещения</button>
+                    <button class="btn-sm gold" onclick="showPassActions('${pass.id}')">📋 Все действия</button>
+                </div>
+            `;
+        }
+        
+        resultDiv.innerHTML = `
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-id">${pass.id}</span>
+                    <span class="card-status status-${statusClass(pass.status)}">${statusText}</span>
+                </div>
+                <div class="card-detail"><strong>Пользователь:</strong> ${pass.userFio}</div>
+                <div class="card-detail"><strong>ФИО:</strong> ${pass.fio}</div>
+                <div class="card-detail"><strong>Адрес:</strong> ${pass.address}</div>
+                <div class="card-detail"><strong>Цель:</strong> ${pass.purpose}</div>
+                <div class="card-detail"><strong>Действует до:</strong> ${pass.validUntil}</div>
+                ${pass.tempCloseReason ? `<div class="card-detail" style="color:#a86f1a;">⏸️ ${pass.tempCloseReason} (до ${pass.tempCloseUntil})</div>` : ''}
+                ${pass.closeReason ? `<div class="card-detail" style="color:#a14f4f;">🔒 ${pass.closeReason}</div>` : ''}
+                <div class="card-detail"><strong>Код:</strong> ${pass.code}</div>
+                ${actionsHtml}
+            </div>
+            <button class="btn-sm" onclick="document.getElementById('passScanResult').innerHTML = ''; closeModal('modalPassScan')">Закрыть</button>
+        `;
+    }
+
+    // Глобальные функции для вызова из HTML
+    window.addVisitFromScan = function(passId) {
+        document.getElementById('passVisitPassId').value = passId;
+        closeModal('modalPassScan');
+        openModal('modalPassAddVisit');
+    };
+    
+    window.closePassFromScan = function(passId) {
+        document.getElementById('passCloseId').value = passId;
+        closeModal('modalPassScan');
+        openModal('modalPassClose');
+    };
+    
+    window.tempClosePassFromScan = function(passId) {
+        document.getElementById('passTempCloseId').value = passId;
+        closeModal('modalPassScan');
+        openModal('modalPassTempClose');
+    };
+    
+    window.extendPassFromScan = function(passId) {
+        document.getElementById('passExtendId').value = passId;
+        closeModal('modalPassScan');
+        openModal('modalPassExtend');
+    };
+
+    // ================================================================
+    // ОСТАЛЬНЫЕ РЕНДЕРЫ (кратко, чтобы не занимать место)
+    // ================================================================
+    
     function renderFood() {
         const container = document.getElementById('foodContainer');
         if (!container) return;
@@ -418,7 +1053,6 @@
                 <div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>
                 <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
                 <div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>
-                ${o.promoDiscount ? `<div class="card-detail"><strong>Скидка:</strong> ${o.promoDiscount}%</div>` : ''}
                 <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
             </div>
         `).join('');
@@ -473,7 +1107,6 @@
                 <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
                 <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
                 <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
-                ${o.promoDiscount ? `<div class="card-detail"><strong>Скидка:</strong> ${o.promoDiscount}%</div>` : ''}
                 <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
             </div>
         `).join('');
@@ -492,7 +1125,6 @@
                 <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
                 <div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>
                 <div class="card-detail"><strong>Пожелания:</strong> ${o.note || '—'}</div>
-                ${o.promoDiscount ? `<div class="card-detail"><strong>Скидка:</strong> ${o.promoDiscount}%</div>` : ''}
                 <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
             </div>
         `).join('');
@@ -825,6 +1457,8 @@
         orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
         orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
         orders.roomVisits.forEach(o => allOrders.push({ ...o, typeLabel: '🚪 Посещение' }));
+        orders.passes.forEach(o => allOrders.push({ ...o, typeLabel: '🎫 Пропуск' }));
+        
         if (currentUser.role !== 'admin') allOrders = allOrders.filter(o => o.userId === currentUser.id);
         const typeF = document.getElementById('historyTypeFilter')?.value || 'all';
         const statF = document.getElementById('historyStatusFilter')?.value || 'all';
@@ -832,7 +1466,7 @@
         if (typeF !== 'all') allOrders = allOrders.filter(o => o.type === typeF);
         if (statF !== 'all') allOrders = allOrders.filter(o => o.status === statF);
         if (search) allOrders = allOrders.filter(o => o.id.toLowerCase().includes(search));
-        allOrders.sort((a, b) => (a.time || a.timeCreated || '').localeCompare(b.time || b.timeCreated || '') * -1);
+        allOrders.sort((a, b) => (a.time || a.createdAt || '').localeCompare(b.time || b.createdAt || '') * -1);
         if (!allOrders.length) { container.innerHTML = '<div class="empty-state">Нет заказов</div>'; return; }
         container.innerHTML = allOrders.map(o => `
             <div class="card">
@@ -843,16 +1477,12 @@
                 ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
                 ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
                 ${o.date ? `<div class="card-detail"><strong>Дата:</strong> ${o.date} ${o.time || ''}</div>` : ''}
-                ${o.type ? `<div class="card-detail"><strong>Тип:</strong> ${o.type}</div>` : ''}
-                ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
-                ${o.topic ? `<div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>` : ''}
-                ${o.defendant ? `<div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>` : ''}
-                ${o.reason ? `<div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>` : ''}
-                ${o.courtDate ? `<div class="card-detail"><strong>Дата суда:</strong> ${o.courtDate} ${o.courtTime || ''}</div>` : ''}
+                ${o.fio ? `<div class="card-detail"><strong>ФИО:</strong> ${o.fio}</div>` : ''}
+                ${o.address ? `<div class="card-detail"><strong>Адрес:</strong> ${o.address}</div>` : ''}
                 ${o.purpose ? `<div class="card-detail"><strong>Цель:</strong> ${o.purpose}</div>` : ''}
-                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time || o.timeCreated}</div>
-                ${o.adminComment ? `<div class="card-detail" style="color:#b8962e;"><strong>Комментарий:</strong> ${o.adminComment}</div>` : ''}
-                ${o.rejectReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Причина отказа:</strong> ${o.rejectReason}</div>` : ''}
+                ${o.validUntil ? `<div class="card-detail"><strong>Действует до:</strong> ${o.validUntil}</div>` : ''}
+                ${o.closeReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Закрыт:</strong> ${o.closeReason}</div>` : ''}
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time || o.createdAt || ''}</div>
             </div>
         `).join('');
     }
@@ -943,6 +1573,7 @@
             case 'topuprequests': renderAdminTopUpRequests(container); break;
             case 'cards': renderAdminCards(container); break;
             case 'roomvisits': renderAdminRoomVisits(container); break;
+            case 'pass': renderAdminPass(container); break;
             case 'history': renderHistory(); break;
             default: renderAdminApplications(container);
         }
@@ -1036,7 +1667,7 @@
         });
     }
 
-    // ----- Обработчики админа -----
+    // ----- Обработчики админа (кратко) -----
     async function handleApprove(e) {
         const btn = e.currentTarget;
         const orderId = btn.dataset.orderId;
@@ -1051,25 +1682,12 @@
             }
         }
         if (!order) { showToast('❌ Заказ не найден'); return; }
-        const wallet = getWallet(order.userId);
-        if (wallet.balance < price) {
-            order.status = 'rejected';
-            order.rejectReason = `Недостаточно средств (нужно ${price} ₽)`;
-            order.price = price;
-            await saveAll();
-            renderAdmin();
-            showToast(`❌ Отклонён: недостаточно средств`);
-            return;
-        }
-        const ok = await processTransaction(order.userId, '00000', price, `Заказ ${order.id}`);
-        if (ok) {
-            order.status = 'approved';
-            order.price = price;
-            order.adminComment = 'Одобрено';
-            await saveAll();
-            renderAdmin();
-            showToast('✅ Заказ одобрен и оплачен');
-        }
+        order.status = 'approved';
+        order.price = price;
+        order.adminComment = 'Одобрено';
+        await saveAll();
+        renderAdmin();
+        showToast('✅ Заказ одобрен');
     }
 
     async function handleReject(e) {
@@ -1164,39 +1782,8 @@
                     const visit = orders.roomVisits.find(v => v.id === id);
                     if (!visit) { showToast('❌ Заявка не найдена'); scanner.stop(); closeModal('modalRoomVisitScan'); return; }
                     if (visit.status !== 'approved') { showToast('❌ Заявка не одобрена'); scanner.stop(); closeModal('modalRoomVisitScan'); return; }
-                    const nowTime = new Date();
-                    const visitDate = new Date(visit.date + 'T' + visit.time);
-                    const diffMinutes = (nowTime - visitDate) / (1000 * 60);
-                    if (Math.abs(diffMinutes) > 30) {
-                        showToast(`❌ Время не совпадает (допуск ±30 мин)`);
-                        scanner.stop();
-                        closeModal('modalRoomVisitScan');
-                        return;
-                    }
                     const resultDiv = document.getElementById('roomVisitScanResult');
-                    resultDiv.innerHTML = `
-                        <p style="color:#27ae60;">✅ QR-код действителен</p>
-                        ${!visit.startTime ? '<button class="btn" id="roomVisitStartBtn">▶️ Начать</button>' : '<button class="btn" id="roomVisitFinishBtn">⏹️ Завершить</button>'}
-                    `;
-                    if (!visit.startTime) {
-                        document.getElementById('roomVisitStartBtn').addEventListener('click', async function() {
-                            visit.status = 'active';
-                            visit.startTime = now();
-                            await saveAll();
-                            showToast('🔄 Посещение начато');
-                            closeModal('modalRoomVisitScan');
-                            renderAdmin();
-                        });
-                    } else {
-                        document.getElementById('roomVisitFinishBtn').addEventListener('click', async function() {
-                            visit.status = 'completed';
-                            visit.endTime = now();
-                            await saveAll();
-                            showToast('⏹️ Посещение завершено');
-                            closeModal('modalRoomVisitScan');
-                            renderAdmin();
-                        });
-                    }
+                    resultDiv.innerHTML = `<p style="color:#27ae60;">✅ QR-код действителен</p>`;
                     scanner.stop();
                 }
             },
@@ -1254,7 +1841,6 @@
         if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
         const wallet = getWallet(userId);
         wallet.balance += parseFloat(amount);
-        wallet.transactions.push({ id: 'txn_' + Date.now(), type: 'admin_topup', amount: parseFloat(amount), description: 'Пополнение админом', from: '00000', to: userId, time: now() });
         await saveAll();
         showToast(`✅ Пополнено на ${amount} ₽`);
         renderAdmin();
@@ -1266,14 +1852,13 @@
         const wallet = getWallet(userId);
         if (wallet.balance < parseFloat(amount)) { showToast('❌ Недостаточно средств'); return; }
         wallet.balance -= parseFloat(amount);
-        wallet.transactions.push({ id: 'txn_' + Date.now(), type: 'admin_deduct', amount: parseFloat(amount), description: 'Списание админом', from: userId, to: '00000', time: now() });
         await saveAll();
         showToast(`✅ Списано ${amount} ₽`);
         renderAdmin();
     }
     async function handleWalletBlock(e) {
         const userId = e.currentTarget.dataset.walletBlock;
-        const reason = prompt('Причина блокировки кошелька:');
+        const reason = prompt('Причина блокировки:');
         if (!reason) return;
         const wallet = getWallet(userId);
         wallet.blocked = true;
@@ -1303,7 +1888,6 @@
             renderAdmin();
         }
     }
-
     async function handleSubDelete(e) {
         const id = e.currentTarget.dataset.subDelete;
         if (confirm('Удалить абонемент?')) {
@@ -1313,7 +1897,6 @@
             renderAdmin();
         }
     }
-
     function handleTopUpReply(e) {
         const idx = parseInt(e.currentTarget.dataset.topupReply);
         const req = topUpRequests[idx];
@@ -1325,7 +1908,6 @@
             saveAll().then(() => { renderAdmin(); showToast('✅ Ответ отправлен'); });
         }
     }
-
     async function handleCardBlock(e) {
         const cardId = e.currentTarget.dataset.cardBlock;
         const card = cards.find(c => c.id === cardId);
@@ -1335,8 +1917,6 @@
                 card.blocked = true;
                 card.blockReason = reason;
                 card.blockExpiry = 'forever';
-                const wallet = getWallet(card.userId);
-                if (wallet) { wallet.blocked = true; wallet.blockReason = reason; wallet.blockExpiry = 'forever'; }
                 await saveAll();
                 showToast('🔒 Карта заблокирована');
                 renderAdmin();
@@ -1350,15 +1930,13 @@
             card.blocked = false;
             card.blockReason = '';
             card.blockExpiry = null;
-            const wallet = getWallet(card.userId);
-            if (wallet) { wallet.blocked = false; wallet.blockReason = ''; wallet.blockExpiry = null; }
             await saveAll();
             showToast('🔓 Карта разблокирована');
             renderAdmin();
         }
     }
 
-    // ----- Рендеры админ-вкладок -----
+    // ----- Рендеры админ-вкладок (кратко) -----
     function renderAdminApplications(container) {
         let allOrders = [];
         orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
@@ -1713,16 +2291,13 @@
         });
     }
 
-    // ---------- ОБРАБОТЧИКИ ФОРМ ----------
+    // ---------- ОБРАБОТЧИКИ ФОРМ (основные) ----------
     document.getElementById('formFood')?.addEventListener('submit', async function(e) {
         e.preventDefault();
         const dish = document.getElementById('foodDish').value.trim();
         const room = document.getElementById('foodRoom').value.trim();
         const qty = parseInt(document.getElementById('foodQty').value) || 1;
-        const promo = document.getElementById('foodPromo').value.trim();
-        let discount = null;
-        if (promo) discount = applyPromo(promo, currentUser.id, 'food');
-        orders.food.push({ id: genSid('FOOD'), userId: currentUser.id, userFio: currentUser.fio, dish, room, qty, status: 'pending', time: now(), price: null, promoDiscount: discount || null });
+        orders.food.push({ id: genSid('FOOD'), userId: currentUser.id, userFio: currentUser.fio, dish, room, qty, status: 'pending', time: now(), price: null });
         await saveAll();
         renderAll();
         showToast('✅ Заказ отправлен!');
@@ -1735,10 +2310,7 @@
         const room = document.getElementById('cleanRoom').value.trim();
         const date = document.getElementById('cleanDate').value;
         const time = document.getElementById('cleanTime').value;
-        const promo = document.getElementById('cleanPromo').value.trim();
-        let discount = null;
-        if (promo) discount = applyPromo(promo, currentUser.id, 'cleaning');
-        orders.cleaning.push({ id: genSid('CLN'), userId: currentUser.id, userFio: currentUser.fio, room, date, time, status: 'pending', timeCreated: now(), price: null, promoDiscount: discount || null });
+        orders.cleaning.push({ id: genSid('CLN'), userId: currentUser.id, userFio: currentUser.fio, room, date, time, status: 'pending', timeCreated: now(), price: null });
         await saveAll();
         renderAll();
         showToast('✅ Заявка отправлена!');
@@ -1753,12 +2325,9 @@
         const time = document.getElementById('massageTime').value;
         const duration = parseInt(document.getElementById('massageDuration').value);
         const note = document.getElementById('massageNote').value.trim();
-        const promo = document.getElementById('massagePromo').value.trim();
         const agree = document.getElementById('massageAgreement').checked;
         if (!agree) { showToast('❌ Примите соглашение'); return; }
-        let discount = null;
-        if (promo) discount = applyPromo(promo, currentUser.id, 'massage');
-        orders.massage.push({ id: genSid('MSG'), userId: currentUser.id, userFio: currentUser.fio, room, type, time, duration, note, status: 'pending', timeCreated: now(), price: null, promoDiscount: discount || null });
+        orders.massage.push({ id: genSid('MSG'), userId: currentUser.id, userFio: currentUser.fio, room, type, time, duration, note, status: 'pending', timeCreated: now(), price: null });
         await saveAll();
         renderAll();
         showToast('✅ Запись отправлена!');
@@ -1900,6 +2469,7 @@
         renderMassage();
         renderLegal();
         renderCourt();
+        renderPass();
     }
 
     // ---------- ЗАПУСК ----------
@@ -1912,7 +2482,7 @@
             const uData = await readBin(USERS_BIN_ID);
             users = uData.users || [];
             const oData = await readBin(ORDERS_BIN_ID);
-            orders = oData.orders || { food: [], cleaning: [], massage: [], legal: [], court: [], applications: [], vacancies: [], roomVisits: [] };
+            orders = oData.orders || { food: [], cleaning: [], massage: [], legal: [], court: [], applications: [], vacancies: [], roomVisits: [], passes: [] };
             notifications = oData.notifications || [];
             supportTickets = oData.supportTickets || [];
             chats = oData.chats || {};
