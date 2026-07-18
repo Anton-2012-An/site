@@ -1,25 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD — Сервисы</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f5f7fb,#e8ecf4,#dce2ec);color:#1a1a1e;min-height:100vh}.container{max-width:1400px;margin:0 auto;padding:1.5rem}.auth-page{display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#1a1a1e,#2d2d35);padding:1.5rem;position:relative;overflow:hidden}.auth-page::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(184,150,46,0.05),transparent 70%);animation:rotateBg 20s linear infinite}@keyframes rotateBg{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.auth-box{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:40px;padding:3rem;max-width:500px;width:100%;box-shadow:0 40px 80px rgba(0,0,0,0.3);position:relative;z-index:1}.auth-box .logo{font-size:2.8rem;font-weight:300;text-align:center;margin-bottom:.5rem}.auth-box .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}.auth-box .subtitle{text-align:center;color:#8b97a8;font-size:.9rem;margin-bottom:2rem}.auth-tabs{display:flex;gap:0;margin-bottom:2rem;border-radius:60px;overflow:hidden;border:1px solid #e2e8f0}.auth-tabs button{flex:1;padding:.7rem;border:none;background:rgba(255,255,255,0.8);cursor:pointer;font-size:.95rem;font-weight:500;transition:all .3s ease;color:#8b97a8}.auth-tabs button.active{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.2)}.auth-tabs button:hover:not(.active){background:#f0f2f5}.auth-form{display:none}.auth-form.active{display:block;animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.form-group{margin-bottom:1rem}.form-group label{display:block;font-size:.85rem;font-weight:500;color:#4b5563;margin-bottom:4px}.form-group input,.form-group textarea,.form-group select{width:100%;padding:.6rem 1rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.9rem;background:rgba(255,255,255,0.8);transition:all .3s ease;font-family:inherit}.form-group textarea{min-height:80px;resize:vertical}.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}.checkbox-group{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}.checkbox-group label{display:flex;align-items:center;gap:5px;font-size:.85rem;font-weight:400;color:#2d3748;cursor:pointer}.checkbox-group input[type=checkbox]{width:16px;height:16px;accent-color:#b8962e;cursor:pointer}.btn-auth{width:100%;padding:.8rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);margin-top:.5rem;box-shadow:0 4px 15px rgba(0,0,0,0.1)}.btn-auth:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px) scale(1.02);box-shadow:0 8px 30px rgba(184,150,46,0.3)}.auth-error{color:#a14f4f;font-size:.9rem;text-align:center;margin-top:.5rem;display:none}.auth-error.show{display:block}.remember-me{display:flex;align-items:center;gap:8px;margin-top:.5rem}.remember-me input[type=checkbox]{width:18px;height:18px;accent-color:#b8962e;cursor:pointer}.remember-me label{font-size:.9rem;color:#4b5563;cursor:pointer}.check-user-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.6);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:9999}.check-user-overlay.active{display:flex}.check-user-box{background:#fff;border-radius:30px;padding:2.5rem 3rem;max-width:450px;width:100%;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.3);animation:fadeIn .3s ease}.check-user-box .avatar-big{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:600;margin:0 auto 1rem;box-shadow:0 8px 30px rgba(184,150,46,0.3)}.check-user-box h2{font-weight:300;color:#1a1a1e;margin-bottom:.3rem}.check-user-box .user-email{color:#8b97a8;font-size:.9rem;margin-bottom:1.5rem}.check-user-box .btn-group{display:flex;gap:1rem;justify-content:center}.check-user-box .btn-group button{padding:.6rem 2rem;border:none;border-radius:60px;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s ease}.check-user-box .btn-yes{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.3)}.check-user-box .btn-yes:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(184,150,46,0.4)}.check-user-box .btn-no{background:#e2e8f0;color:#4b5563}.check-user-box .btn-no:hover{background:#a14f4f;color:#fff}.main-page{display:none}.main-page.active{display:block}.main-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding:1rem 0;border-bottom:2px solid #d4af37;margin-bottom:2rem}.main-header .logo{font-size:2rem;font-weight:300}.main-header .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}.main-header .user-info{display:flex;align-items:center;gap:1rem}.main-header .user-info .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.2rem;box-shadow:0 4px 15px rgba(184,150,46,0.3)}.main-header .user-name{font-weight:500}.main-header .user-role{font-size:.7rem;color:#8b97a8;background:#f0f2f5;padding:.1rem .6rem;border-radius:30px}.btn-logout{padding:.4rem 1.2rem;border:1px solid #e5b3b3;border-radius:60px;background:none;color:#a14f4f;cursor:pointer;transition:.2s;font-size:.8rem}.btn-logout:hover{background:#a14f4f;color:#fff}.sections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem;padding:1rem 0}.section-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.08);cursor:pointer;transition:all .4s cubic-bezier(.34,1.56,.64,1);border:2px solid transparent}.section-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(184,150,46,0.15);border-color:#d4af37}.section-card .section-image{width:100%;height:120px;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,#fef3c7,#fde68a)}.section-card .section-info{padding:.8rem}.section-card .section-info h3{font-size:.95rem;font-weight:500;margin-bottom:.1rem}.section-card .section-info p{color:#8b97a8;font-size:.75rem}.section-card .section-badge{display:inline-block;font-size:.55rem;padding:.05rem .4rem;border-radius:30px;background:#b8962e;color:#fff;margin-top:.2rem}.panels-container{display:none}.panels-container.active{display:block}.service-panel{display:none}.service-panel.active{display:block}.panel-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0}.panel-header h2{font-size:1.3rem;font-weight:300;border-left:4px solid #d4af37;padding-left:1rem}.btn-back{padding:.3rem 1rem;border:1px solid #d0d7e2;border-radius:60px;background:none;cursor:pointer;transition:all .3s ease;font-size:.8rem;color:#4b5563}.btn-back:hover{border-color:#b8962e;color:#b8962e}.btn{padding:.35rem 1.2rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.8rem;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,0.1)}.btn:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(184,150,46,0.3)}.btn-sm{padding:.15rem .7rem;font-size:.65rem;border-radius:40px;border:1px solid #d0d7e2;background:rgba(255,255,255,0.8);cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);color:#4b5563}.btn-sm:hover{border-color:#b8962e;color:#b8962e;transform:translateY(-1px)}.btn-sm.gold{border-color:#d4af37;color:#b8962e}.btn-sm.gold:hover{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff}.btn-sm.danger{border-color:#e5b3b3;color:#a14f4f}.btn-sm.danger:hover{background:#a14f4f;color:#fff}.btn-sm.green{border-color:#27ae60;color:#27ae60}.btn-sm.green:hover{background:#27ae60;color:#fff}.btn-sm.purple{border-color:#8e44ad;color:#8e44ad}.btn-sm.purple:hover{background:#8e44ad;color:#fff}.btn-sm.blue{border-color:#3b82f6;color:#3b82f6}.btn-sm.blue:hover{background:#3b82f6;color:#fff}.card{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-radius:20px;padding:.8rem 1rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);border:1px solid rgba(255,255,255,0.5);transition:all .3s ease}.card:hover{border-color:#d4af37;box-shadow:0 8px 30px rgba(184,150,46,0.12)}.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem;flex-wrap:wrap;gap:4px}.card-id{font-size:.65rem;color:#8b97a8;font-weight:500}.card-status{font-size:.6rem;padding:.05rem .4rem;border-radius:30px;font-weight:500}.card-detail{font-size:.8rem;margin:2px 0}.card-actions{margin-top:.4rem;display:flex;flex-wrap:wrap;gap:4px}.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}.empty-state{color:#8b97a8;text-align:center;padding:1.5rem 0;background:rgba(255,255,255,0.5);border-radius:30px;border:1px dashed #dce2ec;font-size:.85rem}.status-new{background:#e6f0ff;color:#1a4f8b}.status-processing{background:#fff4e0;color:#a86f1a}.status-done{background:#e6f7ed;color:#0f6e4a}.status-cancelled{background:#fde8e8;color:#a14f4f}.status-active{background:#e6f7ed;color:#0f6e4a}.status-closed{background:#f0f0f0;color:#5b5b5b}.status-accepted{background:#e6f7ed;color:#0f6e4a}.status-rejected{background:#fde8e8;color:#a14f4f}.status-pending{background:#fff4e0;color:#a86f1a}.status-approved{background:#d1fae5;color:#065f46}.status-denied{background:#fde8e8;color:#991b1b}.badge{background:#a14f4f;color:#fff;border-radius:30px;padding:.05rem .4rem;font-size:.55rem;margin-left:4px}.badge.gold{background:#b8962e}.modal{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-radius:30px;padding:1.5rem 2rem;box-shadow:0 40px 80px rgba(0,0,0,0.2);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;animation:fadeIn .3s ease}.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.4);backdrop-filter:blur(3px);display:none;justify-content:center;align-items:center;z-index:999;padding:1rem}.modal-overlay.active{display:flex}.modal-close{float:right;font-size:2rem;cursor:pointer;color:#a0aaba;background:none;border:none}.btn-submit{width:100%;padding:.6rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .3s ease;margin-top:.5rem}.btn-submit:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px);box-shadow:0 8px 30px rgba(184,150,46,0.3)}.btn-submit:disabled{opacity:.5;cursor:not-allowed}.btn-submit:disabled:hover{background:linear-gradient(135deg,#1a1a1e,#2d2d35);transform:none;box-shadow:none}.search-box{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}.search-box input{flex:1;min-width:150px;padding:.4rem .8rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.85rem;background:rgba(255,255,255,0.8)}.search-box input:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}.search-box button{padding:.4rem 1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;cursor:pointer;transition:all .3s ease;font-size:.8rem}.search-box button:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-2px)}.user-detail-card{background:rgba(255,255,255,0.9);border-radius:16px;padding:1rem;border:1px solid rgba(212,175,55,0.2);margin-bottom:.5rem}.sort-select{padding:.3rem .8rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.8rem;background:#fff;cursor:pointer}.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(26,26,30,0.95);backdrop-filter:blur(20px);color:#fff;padding:.5rem 1.5rem;border-radius:60px;font-size:.85rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:1000;border:1px solid rgba(212,175,55,0.3)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.history-filter{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}.history-filter select,.history-filter input{padding:.3rem .8rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.8rem;background:#fff}@media(max-width:768px){.auth-box{padding:1.5rem}.modal{padding:1.2rem}.sections-grid{grid-template-columns:1fr 1fr}.check-user-box{padding:1.5rem}}@media(max-width:480px){.sections-grid{grid-template-columns:1fr}}.agreement-scroll{max-height:150px;overflow-y:auto;padding:.3rem .8rem;background:#fafbfc;border-radius:14px;border:1px solid #e2e8f0;font-size:.7rem;line-height:1.6;color:#2d3748;margin-bottom:.8rem}.sticker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}.sticker-item{font-size:1.8rem;cursor:pointer;text-align:center;padding:4px;border-radius:12px;border:2px solid transparent;transition:all .2s}.sticker-item:hover{border-color:#d4af37;background:#fef3c7;transform:scale(1.1)}.chat-item{padding:6px 10px;border-radius:12px;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eef2f7}.chat-item:hover{background:#f0f2f5}.chat-item .chat-name{font-weight:500;font-size:.85rem}.chat-item .chat-last{font-size:.7rem;color:#8b97a8}.message-area{max-height:350px;overflow-y:auto;padding:6px;background:#fafbfc;border-radius:16px;border:1px solid #e2e8f0}.message{display:flex;margin-bottom:4px}.message.own{justify-content:flex-end}.message.other{justify-content:flex-start}.message .bubble{max-width:70%;padding:4px 10px;border-radius:16px;font-size:.8rem;word-wrap:break-word}.message.own .bubble{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff}.message.other .bubble{background:#fff;border:1px solid #e2e8f0}.message .time{font-size:.55rem;color:#8b97a8;margin-left:4px;align-self:flex-end}.file-upload-btn{display:inline-block;padding:4px 10px;border:1px solid #d0d7e2;border-radius:30px;cursor:pointer;font-size:.7rem;transition:all .2s}.file-upload-btn:hover{background:#f0f2f5}.profile-avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #d4af37;margin:0 auto 1rem;display:block}.qr-container{display:flex;justify-content:center;margin:1rem 0}.qr-container canvas{max-width:180px;height:auto}.wallet-balance{font-size:1.8rem;font-weight:300;text-align:center;padding:.8rem;background:#fff;border-radius:20px;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
+    </style>
+</head>
+<body>
+
+<!-- АВТОРИЗАЦИЯ -->
+<div id="authPage" class="auth-page">
+    <div class="auth-box">
+        <div class="logo">ad.<span>сервисы</span></div>
+        <div class="subtitle">Войдите или создайте аккаунт</div>
+        <div class="auth-tabs">
+            <button class="active" data-tab="login">Вход</button>
+            <button data-tab="register">Регистрация</button>
+        </div>
+        <div id="formLogin" class="auth-form active">
+            <form id="loginForm">
+                <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="ivan@mail.ru" required></div>
+                <div class="form-group"><label>Пароль</label><input type="password" id="loginPassword" placeholder="••••••••" required></div>
+                <div class="remember-me"><input type="checkbox" id="rememberMe"><label for="rememberMe">Запомнить меня</label></div>
+                <div id="loginError" class="auth-error"></div>
+                <button type="submit" class="btn-auth">Войти</button>
+            </form>
+        </div>
+        <div id="formRegister" class="auth-form">
+            <form id="registerForm">
+                <div class="form-group"><label>ФИО</label><input type="text" id="regFio" placeholder="Иванов Иван Иванович" required></div>
+                <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="ivan@mail.ru" required></div>
+                <div class="form-group"><label>Пароль (мин. 6)</label><input type="password" id="regPassword" placeholder="••••••••" minlength="6" required></div>
+                <div class="checkbox-group"><input type="checkbox" id="regAgreement" required><label for="regAgreement">Я принимаю <a href="#" id="showAgreement" style="color:#b8962e;">соглашение</a></label></div>
+                <div id="registerError" class="auth-error"></div>
+                <button type="submit" class="btn-auth">Создать аккаунт</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ПРОВЕРКА ПОЛЬЗОВАТЕЛЯ -->
+<div id="checkUserOverlay" class="check-user-overlay">
+    <div class="check-user-box">
+        <div class="avatar-big" id="checkAvatar">A</div>
+        <h2 id="checkUserName">Имя</h2>
+        <div class="user-email" id="checkUserEmail">email@mail.ru</div>
+        <p style="color:#8b97a8;margin-bottom:1.5rem;">Это вы?</p>
+        <div class="btn-group">
+            <button class="btn-yes" id="checkYes">✅ Да</button>
+            <button class="btn-no" id="checkNo">❌ Нет</button>
+        </div>
+    </div>
+</div>
+
+<!-- ГЛАВНАЯ -->
+<div id="mainPage" class="main-page">
+    <div class="container">
+        <div class="main-header">
+            <div class="logo">ad.<span>сервисы</span></div>
+            <div class="user-info">
+                <span class="user-name" id="headerUserName">Имя</span>
+                <span class="user-role" id="headerUserRole">Пользователь</span>
+                <div class="avatar" id="headerAvatar">A</div>
+                <button class="btn-logout" id="logoutBtn">Выйти</button>
+            </div>
+        </div>
+        <div id="sectionsGrid" class="sections-grid"></div>
+    </div>
+</div>
+
+<!-- ПАНЕЛИ -->
+<div id="panelsContainer" class="panels-container">
+    <div class="container">
+        <div id="panel-food" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🍕 Еда</h2><button class="btn" id="btnFoodOrder">➕ Заказать</button></div><div id="foodContainer" class="cards-grid"><div class="empty-state">Нет заказов</div></div></div>
+        <div id="panel-work" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💼 Работа</h2><button class="btn" id="btnWorkVacancy">➕ Создать вакансию</button></div><h3 style="font-weight:300;border-left:4px solid #8e44ad;padding-left:1rem;margin:1rem 0;">Вакансии</h3><div id="workVacancies" class="cards-grid"><div class="empty-state">Нет вакансий</div></div><h3 style="font-weight:300;border-left:4px solid #8e44ad;padding-left:1rem;margin:1rem 0;">Мои отклики</h3><div id="workApplications" class="cards-grid"><div class="empty-state">Нет откликов</div></div></div>
+        <div id="panel-cleaning" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🧹 Уборка</h2><button class="btn" id="btnCleaningOrder">➕ Заказать</button></div><div id="cleaningContainer" class="cards-grid"><div class="empty-state">Нет заявок</div></div></div>
+        <div id="panel-massage" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💆 Массаж</h2><button class="btn" id="btnMassageOrder">➕ Записаться</button></div><div id="massageContainer" class="cards-grid"><div class="empty-state">Нет записей</div></div></div>
+        <div id="panel-legal" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>⚖️ Юрист</h2><button class="btn" id="btnLegalOrder">➕ Записаться</button></div><div id="legalContainer" class="cards-grid"><div class="empty-state">Нет записей</div></div></div>
+        <div id="panel-court" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🏛️ Суд</h2><button class="btn" id="btnCourtOrder">➕ Подать иск</button></div><div id="courtContainer" class="cards-grid"><div class="empty-state">Нет исков</div></div></div>
+        <div id="panel-history" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>📋 История</h2></div><div class="history-filter"><select id="historyTypeFilter"><option value="all">Все типы</option><option value="food">🍕 Еда</option><option value="cleaning">🧹 Уборка</option><option value="work">💼 Работа</option><option value="massage">💆 Массаж</option><option value="legal">⚖️ Консультация</option><option value="court">🏛️ Суд</option><option value="roomvisit">🚪 Посещение</option><option value="pass">🎫 Пропуск</option></select><select id="historyStatusFilter"><option value="all">Все статусы</option><option value="new">Новый</option><option value="processing">В работе</option><option value="done">Выполнено</option><option value="cancelled">Отменён</option><option value="rejected">Отклонён</option><option value="approved">Одобрено</option><option value="denied">Отказано</option><option value="completed">Завершено</option></select><input type="text" id="historySearch" placeholder="Поиск по ID..."><button class="btn-sm" id="historySearchBtn">🔍</button></div><div id="historyContainer" class="cards-grid"><div class="empty-state">Нет заказов</div></div></div>
+        <div id="panel-messenger" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💬 Мессенджер</h2></div><div class="search-box"><input type="text" id="messengerSearch" placeholder="Поиск..."><button id="messengerSearchBtn">🔍</button></div><div id="messengerChats" class="cards-grid"><div class="empty-state">Нет чатов</div></div><div id="messengerChatWindow" style="display:none;margin-top:1rem;border-top:1px solid #e2e8f0;padding-top:1rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;"><h3 id="chatPartnerName">Собеседник</h3><button class="btn-sm" id="chatBackBtn">← Назад</button></div><div id="messageArea" class="message-area"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><input type="text" id="messageInput" placeholder="Сообщение..." style="flex:1;padding:.4rem .8rem;border:1px solid #e2e8f0;border-radius:30px;font-size:.85rem;"><button class="btn-sm" id="sendMessageBtn">📤</button><button class="btn-sm" id="stickerBtn">😺</button><label class="file-upload-btn">📷<input type="file" id="fileInput" accept="image/*,audio/*,video/*" style="display:none"></label></div><div id="stickerPanel" style="display:none;margin-top:8px;border-top:1px solid #e2e8f0;padding-top:8px;"><div class="sticker-grid" id="stickerGrid"></div></div></div></div>
+        <div id="panel-profile" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👤 Профиль</h2></div><div id="profileContainer"><div class="empty-state">Загрузка...</div></div></div>
+        <div id="panel-support" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🆘 Поддержка</h2><button class="btn" id="btnSupportNew">➕ Новое</button></div><div id="supportContainer" class="cards-grid"><div class="empty-state">Нет обращений</div></div></div>
+        <div id="panel-wallet" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💰 Кошелёк</h2></div><div id="walletContainer"><div class="empty-state">Загрузка...</div></div></div>
+        <div id="panel-bank" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💳 Банк</h2></div><div id="bankContainer"><div class="empty-state">Загрузка...</div></div></div>
+        <div id="panel-roomvisit" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🚪 Посещение комнаты</h2><button class="btn" id="btnRoomVisitRequest">➕ Новая заявка</button></div><div id="roomVisitContainer" class="cards-grid"><div class="empty-state">Нет заявок</div></div></div>
+        <div id="panel-pass" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🎫 Пропуска</h2><button class="btn" id="btnPassOrder">➕ Заказать пропуск</button></div><h3 style="font-weight:300;border-left:4px solid #3b82f6;padding-left:1rem;margin:1rem 0;">Мои пропуска</h3><div id="passContainer" class="cards-grid"><div class="empty-state">Нет пропусков</div></div></div>
+        <div id="panel-admin" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👑 Админ-панель</h2></div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;"><button class="btn-sm gold" id="adminTabApplications">📋 Заказы</button><button class="btn-sm purple" id="adminTabUsers">👥 Пользователи</button><button class="btn-sm green" id="adminTabSupport">💬 Поддержка</button><button class="btn-sm blue" id="adminTabWallets">💰 Кошельки</button><button class="btn-sm blue" id="adminTabBusiness">🏢 Бизнесы</button><button class="btn-sm purple" id="adminTabPromoCodes">🎫 Промокоды</button><button class="btn-sm green" id="adminTabSubscriptions">📅 Абонементы</button><button class="btn-sm gold" id="adminTabTopUpRequests">📩 Запросы</button><button class="btn-sm danger" id="adminTabCards">💳 Карты</button><button class="btn-sm gold" id="adminTabRoomVisits">🚪 Посещения</button><button class="btn-sm blue" id="adminTabPass">🎫 Пропуска</button><button class="btn-sm gold" id="adminTabHistory">📋 История</button></div><div id="adminContent"></div></div>
+    </div>
+</div>
+
+<!-- МОДАЛКИ -->
+<div id="modalPassOrder" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassOrder">&times;</button><h2>🎫 Заказ пропуска</h2><form id="formPassOrder"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="passFio" required></div><div class="form-group"><label>Адрес</label><input type="text" id="passAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div><div class="form-group"><label>Цель получения пропуска</label><textarea id="passPurpose" placeholder="Для прохода в офис..." required></textarea></div><div class="form-group"><label>Срок действия</label><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><input type="number" id="passDuration" value="30" min="1" style="flex:2;min-width:100px;"><select id="passDurationUnit" style="flex:1;min-width:100px;"><option value="minutes">Минуты</option><option value="hours">Часы</option><option value="days" selected>Дни</option><option value="months">Месяцы</option><option value="years">Годы</option></select></div></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalPassAddVisit" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassAddVisit">&times;</button><h2>📝 Добавить посещение</h2><form id="formPassAddVisit"><div class="form-group"><label>Дата</label><input type="date" id="passVisitDate" required></div><div class="form-group"><label>Время</label><input type="time" id="passVisitTime" required></div><div class="form-group"><label>Причина посещения</label><textarea id="passVisitReason" required></textarea></div><input type="hidden" id="passVisitPassId"><button type="submit" class="btn-submit">➕ Добавить посещение</button></form></div></div>
+<div id="modalPassClose" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassClose">&times;</button><h2>🔒 Закрыть пропуск</h2><form id="formPassClose"><div class="form-group"><label>Причина закрытия</label><textarea id="passCloseReason" required></textarea></div><input type="hidden" id="passCloseId"><button type="submit" class="btn-submit">🔒 Закрыть пропуск</button></form></div></div>
+<div id="modalPassTempClose" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassTempClose">&times;</button><h2>⏳ Временно закрыть пропуск</h2><form id="formPassTempClose"><div class="form-group"><label>Причина</label><textarea id="passTempCloseReason" required></textarea></div><div class="form-group"><label>Дата окончания</label><input type="date" id="passTempCloseDate" required></div><div class="form-group"><label>Время окончания</label><input type="time" id="passTempCloseTime" required></div><input type="hidden" id="passTempCloseId"><button type="submit" class="btn-submit">⏳ Закрыть на время</button></form></div></div>
+<div id="modalPassExtend" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassExtend">&times;</button><h2>🔄 Продлить пропуск</h2><form id="formPassExtend"><div class="form-group"><label>Причина продления</label><textarea id="passExtendReason" required></textarea></div><div class="form-group"><label>Продлить на</label><div style="display:flex;gap:0.5rem;flex-wrap:wrap;"><input type="number" id="passExtendDays" value="30" min="1" style="flex:2;min-width:100px;"><select id="passExtendUnit" style="flex:1;min-width:100px;"><option value="minutes">Минуты</option><option value="hours">Часы</option><option value="days" selected>Дни</option><option value="months">Месяцы</option><option value="years">Годы</option></select></div></div><input type="hidden" id="passExtendId"><button type="submit" class="btn-submit">🔄 Продлить</button></form></div></div>
+<div id="modalPassVisits" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassVisits">&times;</button><h2>📋 История посещений</h2><div id="passVisitsContent"></div></div></div>
+<div id="modalPassActions" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassActions">&times;</button><h2>📋 Все действия по пропуску</h2><div id="passActionsContent"></div></div></div>
+<div id="modalPassScan" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePassScan">&times;</button><h2>📷 Сканирование QR-кода пропуска</h2><div id="passScanner" style="width:100%;max-width:300px;margin:0 auto;"></div><div id="passScanResult" style="margin-top:1rem;"></div></div></div>
+
+<!-- Остальные модалки -->
+<div id="modalRoomVisitRequest" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeRoomVisitRequest">&times;</button><h2>🚪 Заявка на посещение комнаты</h2><form id="formRoomVisitRequest"><div class="form-group"><label>Цель посещения</label><textarea id="roomVisitPurpose" placeholder="Встреча с администратором, ремонт..." required></textarea></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="roomVisitDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="roomVisitTime" required></div></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalRoomVisitEdit" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeRoomVisitEdit">&times;</button><h2>✏️ Редактирование заявки</h2><form id="formRoomVisitEdit"><div class="form-group"><label>Цель посещения</label><textarea id="roomVisitEditPurpose" required></textarea></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="roomVisitEditDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="roomVisitEditTime" required></div></div><input type="hidden" id="roomVisitEditId"><button type="submit" class="btn-submit">💾 Сохранить изменения</button></form></div></div>
+<div id="modalRoomVisitScan" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeRoomVisitScan">&times;</button><h2>📷 Сканирование QR-кода</h2><div id="roomVisitScanner" style="width:100%;max-width:300px;margin:0 auto;"></div><div id="roomVisitScanResult" style="margin-top:1rem;"></div></div></div>
+<div id="modalFood" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeFood">&times;</button><h2>🍕 Заказ еды</h2><form id="formFood"><div class="form-group"><label>Блюдо</label><input type="text" id="foodDish" placeholder="Пицца..." required></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Комната</label><input type="text" id="foodRoom" required></div><div class="form-group" style="flex:1;"><label>Кол-во</label><input type="number" id="foodQty" value="1" min="1"></div></div><div class="form-group"><label>Промокод</label><input type="text" id="foodPromo" placeholder="Введите промокод"></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalVacancy" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeVacancy">&times;</button><h2>💼 Создание вакансии</h2><form id="formVacancy"><div class="form-group"><label>Название</label><input type="text" id="vacancyTitle" required></div><div class="form-group"><label>Компания</label><input type="text" id="vacancyCompany" required></div><div class="form-group"><label>Кол-во мест</label><input type="number" id="vacancyPlaces" value="1" min="1" required></div><div class="form-group"><label>Описание</label><textarea id="vacancyDesc" required></textarea></div><div class="form-group"><label>Требования</label><textarea id="vacancyRequirements" required></textarea></div><button type="submit" class="btn-submit">📤 Отправить</button></form></div></div>
+<div id="modalApplication" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeApplication">&times;</button><h2>📋 Отклик</h2><form id="formApplication"><div class="form-group"><label>Вакансия</label><input type="text" id="appVacancy" readonly></div><div class="form-group"><label>О себе</label><textarea id="appInfo" required></textarea></div><div class="form-group"><label>Дополнительно</label><div class="checkbox-group"><label><input type="checkbox" value="Командировки"> Командировки</label><label><input type="checkbox" value="Переработки"> Переработки</label><label><input type="checkbox" value="Права"> Права</label><label><input type="checkbox" value="Автомобиль"> Автомобиль</label><label><input type="checkbox" value="Удалёнка"> Удалёнка</label><label><input type="checkbox" value="Сменный"> Сменный</label><label><input type="checkbox" value="Английский"> Английский</label><label><input type="checkbox" value="Опыт >1 года"> Опыт >1 года</label></div></div><button type="submit" class="btn-submit">📤 Отправить</button></form></div></div>
+<div id="modalCleaning" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeCleaning">&times;</button><h2>🧹 Уборка</h2><form id="formCleaning"><div class="form-group"><label>Комната</label><input type="text" id="cleanRoom" required></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="cleanDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="cleanTime" required></div></div><div class="form-group"><label>Промокод</label><input type="text" id="cleanPromo" placeholder="Введите промокод"></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalMassage" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeMassage">&times;</button><h2>💆 Массаж</h2><form id="formMassage"><div class="form-group"><label>Комната</label><input type="text" id="massageRoom" placeholder="304" required></div><div class="form-group"><label>Тип</label><select id="massageType" required><option value="">Выберите...</option><option value="Классический">Классический</option><option value="Спортивный">Спортивный</option><option value="Расслабляющий">Расслабляющий</option><option value="Точечный">Точечный</option><option value="Тайский">Тайский</option><option value="Шведский">Шведский</option><option value="Антицеллюлитный">Антицеллюлитный</option><option value="Лимфодренажный">Лимфодренажный</option></select></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="massageTime" required></div><div class="form-group" style="flex:1;"><label>Длительность</label><select id="massageDuration" required><option value="30">30 мин</option><option value="45">45 мин</option><option value="60" selected>60 мин</option><option value="90">90 мин</option><option value="120">120 мин</option></select></div></div><div class="form-group"><label>Пожелания</label><textarea id="massageNote"></textarea></div><div class="form-group"><label>Промокод</label><input type="text" id="massagePromo" placeholder="Введите промокод"></div><div style="background:#fef3c7;padding:.8rem;border-radius:12px;margin-bottom:1rem;font-size:.8rem;color:#92400e;">⚡ Срочная запись — доплата 500 ₽</div><div class="agreement-scroll"><p><strong>1.</strong> Уважительное поведение.</p><p><strong>2.</strong> Запрещены скандалы.</p><p><strong>3.</strong> При агрессии — без возврата.</p><p><strong>4.</strong> Не мешать.</p><p><strong>5.</strong> Не требовать лишнего.</p><p><strong>6.</strong> Сообщить о болезнях.</p><p><strong>7.</strong> Ответственность за утаивание.</p><p><strong>8.</strong> Отказ при противопоказаниях.</p><p><strong>9.</strong> Опоздание >15 мин — неявка.</p><p><strong>10.</strong> Телефон запрещён.</p></div><div class="checkbox-group"><input type="checkbox" id="massageAgreement" required><label>Я согласен</label></div><button type="submit" class="btn-submit" id="massageSubmitBtn" disabled>📤 Отправить заявку</button></form></div></div>
+<div id="modalLegal" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeLegal">&times;</button><h2>⚖️ Юрист</h2><form id="formLegal"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="legalFio" required></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="legalDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="legalTime" required></div></div><div class="form-group"><label>Тема</label><textarea id="legalTopic" placeholder="Опишите вопрос..." required></textarea></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalCourt" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeCourt">&times;</button><h2>🏛️ Суд</h2><form id="formCourt"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="courtFio" required></div><div class="form-group"><label>ФИО ответчика</label><input type="text" id="courtDefendant" required></div><div class="form-group"><label>Ваш адрес</label><input type="text" id="courtAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div><div class="form-group"><label>Адрес ответчика</label><input type="text" id="courtDefendantAddress" placeholder="г. Москва, ул. Примерная, д.2" required></div><div class="form-group"><label>Причина иска</label><textarea id="courtReason" required></textarea></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
+<div id="modalSupportNew" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeSupportNew">&times;</button><h2>🆘 Новое обращение</h2><form id="formSupportNew"><div class="form-group"><label>Проблема</label><textarea id="supportProblem" placeholder="Опишите..." required></textarea></div><div class="form-group"><label>Срочность</label><select id="supportUrgency" required><option value="не срочно">Не срочно</option><option value="срочно">Срочно</option></select></div><button type="submit" class="btn-submit">📤 Отправить</button></form></div></div>
+<div id="modalSupportReply" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeSupportReply">&times;</button><h2>💬 Ответ</h2><form id="formSupportReply"><div class="form-group"><label>Ответ</label><textarea id="supportReplyText" required></textarea></div><button type="submit" class="btn-submit">📤 Отправить</button></form></div></div>
+<div id="modalTopUpRequest" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeTopUpRequest">&times;</button><h2>💰 Получить инструкцию</h2><form id="formTopUpRequest"><p style="color:#8b97a8;margin-bottom:1rem;">Напишите сообщение админу, чтобы получить инструкцию по пополнению.</p><div class="form-group"><label>Сообщение</label><textarea id="topUpMessage" placeholder="Хочу пополнить баланс..." required></textarea></div><button type="submit" class="btn-submit">📤 Отправить</button></form></div></div>
+<div id="modalPromoCreate" class="modal-overlay"><div class="modal"><button class="modal-close" id="closePromoCreate">&times;</button><h2>🎫 Создать промокод</h2><form id="formPromoCreate"><div class="form-group"><label>Код</label><input type="text" id="promoCode" placeholder="SUMMER2026" required></div><div class="form-group"><label>Скидка (%)</label><input type="number" id="promoDiscount" placeholder="20" required min="1" max="100"></div><div class="form-group"><label>Действует до</label><input type="date" id="promoValidUntil" required></div><div class="form-group"><label>Макс. активаций</label><input type="number" id="promoMaxActivations" placeholder="100" required min="1"></div><div class="form-group"><label>Для услуги</label><select id="promoService"><option value="all">Все услуги</option><option value="food">Еда</option><option value="cleaning">Уборка</option><option value="massage">Массаж</option><option value="legal">Юрист</option><option value="court">Суд</option></select></div><button type="submit" class="btn-submit">🎫 Создать</button></form></div></div>
+<div id="modalSubscriptionIssue" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeSubscriptionIssue">&times;</button><h2>📅 Выдать абонемент</h2><form id="formSubscriptionIssue"><div class="form-group"><label>ID пользователя</label><input type="text" id="subUserId" placeholder="52678" required></div><div class="form-group"><label>Услуга</label><select id="subService" required><option value="massage">Массаж</option><option value="food">Еда</option><option value="cleaning">Уборка</option></select></div><div class="form-group"><label>Кол-во сеансов</label><input type="number" id="subSessions" placeholder="10" required min="1"></div><div class="form-group"><label>Действует до</label><input type="date" id="subValidUntil" required></div><button type="submit" class="btn-submit">📤 Выдать</button></form></div></div>
+<div id="modalAgreement" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeAgreement">&times;</button><h2>📄 Соглашение</h2><div style="max-height:400px;overflow-y:auto;font-size:.9rem;line-height:1.6;color:#2d3748;"><h3>1. Общие положения</h3><p>Настоящее соглашение регулирует отношения между AD.Сервисы и Пользователем.</p><h3>2. Права и обязанности</h3><p>Пользователь обязуется предоставлять достоверные данные.</p><h3>3. Ответственность</h3><p>AD.Сервисы не несёт ответственности за действия пользователей.</p><h3>4. Разрешение споров</h3><p>Все споры решаются через поддержку AD.Сервисы.</p><h3>5. Блокировка</h3><p>Администрация оставляет за собой право блокировать пользователей.</p><p style="margin-top:1rem;color:#b8962e;">© 2026 AD.Сервисы</p></div><button class="btn-submit" id="agreementCloseBtn" style="margin-top:1rem;">Закрыть</button></div></div>
+
+<div id="toast" class="toast"></div>
+
 <script>
 (function() {
     'use strict';
 
+    // ===== КОНФИГУРАЦИЯ JSONBin =====
     const JSONBIN_MASTER_KEY = '$2a$10$Xtc.g/ovT7T19MVv9xu8f.URPVCegAY7Atr4bUfHjd96e7vgTXVd6';
     const USERS_BIN_ID = '6a57a81bf5f4af5e29933029';
     const ORDERS_BIN_ID = '6a57a8b9f5f4af5e29933361';
 
-    let users = [], currentUser = null;
+    let users = [];
+    let currentUser = null;
     let orders = { food: [], cleaning: [], massage: [], legal: [], court: [], applications: [], vacancies: [], roomVisits: [], passes: [] };
-    let notifications = [], supportTickets = [], chats = {}, messages = {}, stickers = [], roles = [], statuses = [];
-    let wallets = {}, businessAccounts = {}, promoCodes = [], subscriptions = [], debts = [], cards = [], topUpRequests = [];
+    let notifications = [];
+    let supportTickets = [];
+    let chats = {};
+    let messages = {};
+    let stickers = [];
+    let roles = [];
+    let statuses = [];
+    let wallets = {};
+    let businessAccounts = {};
+    let promoCodes = [];
+    let subscriptions = [];
+    let debts = [];
+    let cards = [];
+    let topUpRequests = [];
     let adminCurrentTab = 'applications';
     let currentChatId = null;
     let supportReplyTarget = null;
 
+    // ===== API ФУНКЦИИ =====
     async function readBin(id) {
         try {
-            const r = await fetch(`https://api.jsonbin.io/v3/b/${id}/latest`, { 
-                headers: { 'X-Master-Key': JSONBIN_MASTER_KEY } 
+            const r = await fetch(`https://api.jsonbin.io/v3/b/${id}/latest`, {
+                headers: { 'X-Master-Key': JSONBIN_MASTER_KEY }
             });
-            if (!r.ok) throw new Error('Ошибка чтения');
+            if (!r.ok) throw new Error('Ошибка чтения: ' + r.status);
             return (await r.json()).record || {};
         } catch(e) {
             console.error('Ошибка загрузки:', e);
@@ -31,10 +172,13 @@
         try {
             const r = await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_MASTER_KEY },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': JSONBIN_MASTER_KEY
+                },
                 body: JSON.stringify(data)
             });
-            if (!r.ok) throw new Error('Ошибка записи');
+            if (!r.ok) throw new Error('Ошибка записи: ' + r.status);
             return await r.json();
         } catch(e) {
             console.error('Ошибка сохранения:', e);
@@ -42,17 +186,115 @@
         }
     }
 
-    function generateId() { let id; do { id = String(Math.floor(10000 + Math.random() * 90000)); } while (users.some(u => u.id === id)); return id; }
-    function genSid(p) { return p + '-' + String(Math.floor(1000 + Math.random() * 9000)); }
-    function statusText(s) { const map = { 'new': 'Новый', 'cooking': 'Готовится', 'delivering': 'В пути', 'done': 'Выполнено', 'active': 'Активен', 'closed': 'Закрыт', 'accepted': 'Принят', 'rejected': 'Отклонён', 'processing': 'В работе', 'pending': 'На модерации', 'cancelled': 'Отменён', 'approved': 'Одобрено', 'denied': 'Отказано', 'completed': 'Завершено', 'temp_closed': 'Временно закрыт' }; return map[s] || s; }
-    function statusClass(s) { const map = { 'new': 'new', 'cooking': 'processing', 'delivering': 'processing', 'done': 'done', 'active': 'active', 'closed': 'closed', 'accepted': 'accepted', 'rejected': 'rejected', 'processing': 'processing', 'pending': 'pending', 'cancelled': 'cancelled', 'approved': 'approved', 'denied': 'denied', 'completed': 'done', 'temp_closed': 'processing' }; return map[s] || 'new'; }
-    function now() { return new Date().toLocaleString('ru-RU', { hour12: false }); }
-    function showToast(msg) { const e = document.getElementById('toast'); if (!e) return; e.innerHTML = msg; e.classList.add('show'); clearTimeout(window.tt); window.tt = setTimeout(() => e.classList.remove('show'), 3000); }
-    function openModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'flex'; }
-    function closeModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
-    function isBanned(u) { if (!u || !u.banned) return false; if (u.banExpiry && u.banExpiry !== 'forever') { if (new Date(u.banExpiry) > new Date()) return true; u.banned = false; u.banReason = ''; u.banExpiry = null; saveAll(); return false; } return u.banExpiry === 'forever' || u.banned === true; }
-    function getUser(id) { return users.find(u => u.id === id); }
-    function getWallet(userId) { if (!wallets[userId]) wallets[userId] = { balance: 0, cardNumber: '0000 0000 0000 0000', qrCode: '', blocked: false, blockReason: '', blockExpiry: null, transactions: [] }; return wallets[userId]; }
+    // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+    function generateId() {
+        let id;
+        do {
+            id = String(Math.floor(10000 + Math.random() * 90000));
+        } while (users.some(u => u.id === id));
+        return id;
+    }
+
+    function genSid(p) {
+        return p + '-' + String(Math.floor(1000 + Math.random() * 9000));
+    }
+
+    function statusText(s) {
+        const map = {
+            'new': 'Новый',
+            'cooking': 'Готовится',
+            'delivering': 'В пути',
+            'done': 'Выполнено',
+            'active': 'Активен',
+            'closed': 'Закрыт',
+            'accepted': 'Принят',
+            'rejected': 'Отклонён',
+            'processing': 'В работе',
+            'pending': 'На модерации',
+            'cancelled': 'Отменён',
+            'approved': 'Одобрено',
+            'denied': 'Отказано',
+            'completed': 'Завершено',
+            'temp_closed': 'Временно закрыт'
+        };
+        return map[s] || s;
+    }
+
+    function statusClass(s) {
+        const map = {
+            'new': 'new',
+            'cooking': 'processing',
+            'delivering': 'processing',
+            'done': 'done',
+            'active': 'active',
+            'closed': 'closed',
+            'accepted': 'accepted',
+            'rejected': 'rejected',
+            'processing': 'processing',
+            'pending': 'pending',
+            'cancelled': 'cancelled',
+            'approved': 'approved',
+            'denied': 'denied',
+            'completed': 'done',
+            'temp_closed': 'processing'
+        };
+        return map[s] || 'new';
+    }
+
+    function now() {
+        return new Date().toLocaleString('ru-RU', { hour12: false });
+    }
+
+    function showToast(msg) {
+        const e = document.getElementById('toast');
+        if (!e) return;
+        e.innerHTML = msg;
+        e.classList.add('show');
+        clearTimeout(window.tt);
+        window.tt = setTimeout(() => e.classList.remove('show'), 3000);
+    }
+
+    function openModal(id) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'flex';
+    }
+
+    function closeModal(id) {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    }
+
+    function isBanned(u) {
+        if (!u || !u.banned) return false;
+        if (u.banExpiry && u.banExpiry !== 'forever') {
+            if (new Date(u.banExpiry) > new Date()) return true;
+            u.banned = false;
+            u.banReason = '';
+            u.banExpiry = null;
+            saveAll();
+            return false;
+        }
+        return u.banExpiry === 'forever' || u.banned === true;
+    }
+
+    function getUser(id) {
+        return users.find(u => u.id === id);
+    }
+
+    function getWallet(userId) {
+        if (!wallets[userId]) {
+            wallets[userId] = {
+                balance: 0,
+                cardNumber: '0000 0000 0000 0000',
+                qrCode: '',
+                blocked: false,
+                blockReason: '',
+                blockExpiry: null,
+                transactions: []
+            };
+        }
+        return wallets[userId];
+    }
 
     async function saveAll() {
         await writeBin(USERS_BIN_ID, { users });
@@ -103,8 +345,14 @@
             const rem = document.getElementById('rememberMe')?.checked || false;
             const err = document.getElementById('loginError');
             const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === pass);
-            if (!user) { if (err) { err.textContent = '❌ Неверный email или пароль'; err.classList.add('show'); } return; }
-            if (isBanned(user)) { if (err) { err.textContent = '🚫 Аккаунт забанен'; err.classList.add('show'); } return; }
+            if (!user) {
+                if (err) { err.textContent = '❌ Неверный email или пароль'; err.classList.add('show'); }
+                return;
+            }
+            if (isBanned(user)) {
+                if (err) { err.textContent = '🚫 Аккаунт забанен'; err.classList.add('show'); }
+                return;
+            }
             if (err) err.classList.remove('show');
             currentUser = user;
             if (rem) localStorage.setItem('ad_remember', JSON.stringify({ id: user.id }));
@@ -123,12 +371,44 @@
             const pass = document.getElementById('regPassword')?.value?.trim() || '';
             const agree = document.getElementById('regAgreement')?.checked || false;
             const err = document.getElementById('registerError');
-            if (!agree) { if (err) { err.textContent = '❌ Примите соглашение'; err.classList.add('show'); } return; }
-            if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) { if (err) { err.textContent = '❌ Email уже зарегистрирован'; err.classList.add('show'); } return; }
-            if (pass.length < 6) { if (err) { err.textContent = '❌ Пароль минимум 6 символов'; err.classList.add('show'); } return; }
-            const nu = { id: generateId(), fio, email, password: pass, role: 'user', status: 'Пользователь', roles: [], avatar: '', bio: '', phone: '', banned: false, banReason: '', banExpiry: null, cardId: '' };
+            if (!agree) {
+                if (err) { err.textContent = '❌ Примите соглашение'; err.classList.add('show'); }
+                return;
+            }
+            if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+                if (err) { err.textContent = '❌ Email уже зарегистрирован'; err.classList.add('show'); }
+                return;
+            }
+            if (pass.length < 6) {
+                if (err) { err.textContent = '❌ Пароль минимум 6 символов'; err.classList.add('show'); }
+                return;
+            }
+            const nu = {
+                id: generateId(),
+                fio,
+                email,
+                password: pass,
+                role: 'user',
+                status: 'Пользователь',
+                roles: [],
+                avatar: '',
+                bio: '',
+                phone: '',
+                banned: false,
+                banReason: '',
+                banExpiry: null,
+                cardId: ''
+            };
             users.push(nu);
-            wallets[nu.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', qrCode: '', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
+            wallets[nu.id] = {
+                balance: 0,
+                cardNumber: '0000 0000 0000 0000',
+                qrCode: '',
+                blocked: false,
+                blockReason: '',
+                blockExpiry: null,
+                transactions: []
+            };
             await saveAll();
             if (err) err.classList.remove('show');
             showToast('✅ Аккаунт создан! Войдите.');
@@ -196,16 +476,16 @@
         const headerUserName = document.getElementById('headerUserName');
         const headerUserRole = document.getElementById('headerUserRole');
         const headerAvatar = document.getElementById('headerAvatar');
-        
+
         if (authPage) authPage.style.display = 'none';
         if (mainPage) mainPage.classList.add('active');
         if (panelsContainer) panelsContainer.classList.remove('active');
         document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
-        
+
         if (headerUserName && currentUser) headerUserName.textContent = currentUser.fio;
         if (headerUserRole && currentUser) headerUserRole.textContent = currentUser.role === 'admin' ? '👑 Админ' : 'Пользователь';
         if (headerAvatar && currentUser) headerAvatar.textContent = currentUser.fio.charAt(0).toUpperCase();
-        
+
         generateSections();
         renderAll();
         initButtons();
@@ -282,7 +562,10 @@
             `;
             card.addEventListener('click', function() {
                 const secId = this.dataset.section;
-                if (secId === 'admin' && currentUser.role !== 'admin') { showToast('⛔ Доступ только админу'); return; }
+                if (secId === 'admin' && currentUser.role !== 'admin') {
+                    showToast('⛔ Доступ только админу');
+                    return;
+                }
                 showPanel(secId);
             });
             grid.appendChild(card);
@@ -331,7 +614,7 @@
     });
 
     // ===== РАЗДЕЛ ПРОПУСКОВ =====
-    
+
     const formPassOrder = document.getElementById('formPassOrder');
     if (formPassOrder) {
         formPassOrder.addEventListener('submit', async function(e) {
@@ -341,15 +624,15 @@
             const purpose = document.getElementById('passPurpose')?.value?.trim() || '';
             const duration = parseInt(document.getElementById('passDuration')?.value) || 1;
             const unit = document.getElementById('passDurationUnit')?.value || 'days';
-            
+
             if (!fio || !address || !purpose) {
                 showToast('❌ Заполните все поля');
                 return;
             }
-            
+
             const passId = genSid('PASS');
             const validUntil = calculateExpiry(duration, unit);
-            
+
             const newPass = {
                 id: passId,
                 userId: currentUser.id,
@@ -369,7 +652,7 @@
                 tempCloseReason: '',
                 tempCloseUntil: ''
             };
-            
+
             if (!orders.passes) orders.passes = [];
             orders.passes.push(newPass);
             await saveAll();
@@ -383,28 +666,28 @@
     function renderPass() {
         const container = document.getElementById('passContainer');
         if (!container) return;
-        
+
         if (!orders.passes) orders.passes = [];
         const items = orders.passes.filter(p => p.userId === currentUser.id);
         if (!items.length) {
             container.innerHTML = '<div class="empty-state">Нет пропусков</div>';
             return;
         }
-        
+
         container.innerHTML = items.map(p => {
             let statusHtml = '';
             if (p.status === 'pending') statusHtml = '<span class="card-status status-pending">⏳ На модерации</span>';
             else if (p.status === 'active') statusHtml = '<span class="card-status status-active">✅ Активен</span>';
             else if (p.status === 'temp_closed') statusHtml = '<span class="card-status status-processing">⏸️ Временно закрыт</span>';
             else if (p.status === 'closed') statusHtml = '<span class="card-status status-closed">🔒 Закрыт</span>';
-            
+
             const now = new Date();
             const expiryDate = new Date(p.validUntil);
             let expiryWarning = '';
             if (p.status === 'active' && expiryDate < now) {
                 expiryWarning = '<div style="color:#a14f4f;font-size:0.8rem;margin-top:4px;">⚠️ Срок действия истёк</div>';
             }
-            
+
             return `
                 <div class="card">
                     <div class="card-header">
@@ -435,7 +718,7 @@
                 </div>
             `;
         }).join('');
-        
+
         items.filter(p => p.status === 'active' || p.status === 'temp_closed').forEach(p => {
             setTimeout(() => {
                 const container = document.getElementById('qrContainerPass_' + p.id);
@@ -465,26 +748,26 @@
             container.innerHTML = '<div class="empty-state">Нет пропусков</div>';
             return;
         }
-        
+
         let html = `<div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
             <button class="btn-sm blue" id="adminPassScanBtn">📷 Сканировать QR</button>
             <button class="btn-sm green" id="adminPassRefreshBtn">🔄 Обновить</button>
         </div><div class="cards-grid">`;
-        
+
         passes.forEach(p => {
             let statusText = '', statusClass = '';
             if (p.status === 'pending') { statusText = '⏳ Ожидает'; statusClass = 'pending'; }
             else if (p.status === 'active') { statusText = '✅ Активен'; statusClass = 'active'; }
             else if (p.status === 'temp_closed') { statusText = '⏸️ Временно закрыт'; statusClass = 'processing'; }
             else if (p.status === 'closed') { statusText = '🔒 Закрыт'; statusClass = 'closed'; }
-            
+
             const now = new Date();
             const expiryDate = new Date(p.validUntil);
             let expiryWarning = '';
             if (p.status === 'active' && expiryDate < now) {
                 expiryWarning = '<span style="color:#a14f4f;font-size:0.7rem;">⚠️ Истёк</span>';
             }
-            
+
             html += `
                 <div class="card">
                     <div class="card-header">
@@ -518,7 +801,7 @@
         });
         html += '</div>';
         container.innerHTML = html;
-        
+
         container.querySelectorAll('[data-pass-addvisit]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -529,7 +812,7 @@
                 });
             }
         });
-        
+
         container.querySelectorAll('[data-pass-close]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -540,7 +823,7 @@
                 });
             }
         });
-        
+
         container.querySelectorAll('[data-pass-tempclose]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -551,7 +834,7 @@
                 });
             }
         });
-        
+
         container.querySelectorAll('[data-pass-extend]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -562,7 +845,7 @@
                 });
             }
         });
-        
+
         container.querySelectorAll('[data-pass-visits]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -571,7 +854,7 @@
                 });
             }
         });
-        
+
         container.querySelectorAll('[data-pass-actions]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -580,7 +863,7 @@
                 });
             }
         });
-        
+
         container.querySelectorAll('[data-pass-scan]').forEach(btn => {
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -590,7 +873,7 @@
                 });
             }
         });
-        
+
         const adminPassScanBtn = document.getElementById('adminPassScanBtn');
         if (adminPassScanBtn) {
             adminPassScanBtn.addEventListener('click', function() {
@@ -598,7 +881,7 @@
                 startPassScanner(null);
             });
         }
-        
+
         const adminPassRefreshBtn = document.getElementById('adminPassRefreshBtn');
         if (adminPassRefreshBtn) {
             adminPassRefreshBtn.addEventListener('click', function() {
@@ -609,7 +892,7 @@
     }
 
     // ===== ОБРАБОТЧИКИ АДМИН-ДЕЙСТВИЙ С ПРОПУСКАМИ =====
-    
+
     const formPassAddVisit = document.getElementById('formPassAddVisit');
     if (formPassAddVisit) {
         formPassAddVisit.addEventListener('submit', async function(e) {
@@ -618,16 +901,16 @@
             const date = document.getElementById('passVisitDate')?.value || '';
             const time = document.getElementById('passVisitTime')?.value || '';
             const reason = document.getElementById('passVisitReason')?.value?.trim() || '';
-            
+
             if (!date || !time || !reason) {
                 showToast('❌ Заполните все поля');
                 return;
             }
-            
+
             if (!orders.passes) orders.passes = [];
             const pass = orders.passes.find(p => p.id === passId);
             if (!pass) { showToast('❌ Пропуск не найден'); return; }
-            
+
             const visit = {
                 id: 'visit_' + Date.now(),
                 date: date,
@@ -639,7 +922,7 @@
             pass.visits.push(visit);
             if (!pass.actions) pass.actions = [];
             pass.actions.push({ action: 'Добавлено посещение', time: now(), details: `${date} ${time} - ${reason}` });
-            
+
             await saveAll();
             renderAll();
             showToast('✅ Посещение добавлено!');
@@ -654,18 +937,18 @@
             e.preventDefault();
             const passId = document.getElementById('passCloseId')?.value || '';
             const reason = document.getElementById('passCloseReason')?.value?.trim() || '';
-            
+
             if (!reason) { showToast('❌ Укажите причину'); return; }
-            
+
             if (!orders.passes) orders.passes = [];
             const pass = orders.passes.find(p => p.id === passId);
             if (!pass) { showToast('❌ Пропуск не найден'); return; }
-            
+
             pass.status = 'closed';
             pass.closeReason = reason;
             if (!pass.actions) pass.actions = [];
             pass.actions.push({ action: 'Закрыт', time: now(), details: `Причина: ${reason}` });
-            
+
             await saveAll();
             renderAll();
             showToast('🔒 Пропуск закрыт. Карточку с кодом верните туда, где выпускали.');
@@ -682,22 +965,22 @@
             const reason = document.getElementById('passTempCloseReason')?.value?.trim() || '';
             const date = document.getElementById('passTempCloseDate')?.value || '';
             const time = document.getElementById('passTempCloseTime')?.value || '';
-            
+
             if (!reason || !date || !time) {
                 showToast('❌ Заполните все поля');
                 return;
             }
-            
+
             if (!orders.passes) orders.passes = [];
             const pass = orders.passes.find(p => p.id === passId);
             if (!pass) { showToast('❌ Пропуск не найден'); return; }
-            
+
             pass.status = 'temp_closed';
             pass.tempCloseReason = reason;
             pass.tempCloseUntil = `${date} ${time}`;
             if (!pass.actions) pass.actions = [];
             pass.actions.push({ action: 'Временно закрыт', time: now(), details: `Причина: ${reason}, до ${date} ${time}` });
-            
+
             await saveAll();
             renderAll();
             showToast(`⏸️ Пропуск временно закрыт до ${date} ${time}`);
@@ -714,21 +997,21 @@
             const reason = document.getElementById('passExtendReason')?.value?.trim() || '';
             const days = parseInt(document.getElementById('passExtendDays')?.value) || 30;
             const unit = document.getElementById('passExtendUnit')?.value || 'days';
-            
+
             if (!reason || days < 1) {
                 showToast('❌ Заполните все поля');
                 return;
             }
-            
+
             if (!orders.passes) orders.passes = [];
             const pass = orders.passes.find(p => p.id === passId);
             if (!pass) { showToast('❌ Пропуск не найден'); return; }
-            
+
             if (pass.status === 'closed') {
                 pass.status = 'active';
                 pass.closeReason = '';
             }
-            
+
             const currentDate = new Date(pass.validUntil);
             switch(unit) {
                 case 'minutes': currentDate.setMinutes(currentDate.getMinutes() + days); break;
@@ -743,7 +1026,7 @@
             pass.durationUnit = unit;
             if (!pass.actions) pass.actions = [];
             pass.actions.push({ action: 'Продлён', time: now(), details: `Причина: ${reason}, продлён на ${days} ${getUnitLabel(unit)}` });
-            
+
             await saveAll();
             renderAll();
             showToast(`🔄 Пропуск продлён на ${days} ${getUnitLabel(unit)}`);
@@ -756,7 +1039,7 @@
         if (!orders.passes) orders.passes = [];
         const pass = orders.passes.find(p => p.id === passId);
         if (!pass) { showToast('❌ Пропуск не найден'); return; }
-        
+
         const container = document.getElementById('passVisitsContent');
         if (!container) return;
         if (!pass.visits || !pass.visits.length) {
@@ -784,7 +1067,7 @@
         if (!orders.passes) orders.passes = [];
         const pass = orders.passes.find(p => p.id === passId);
         if (!pass) { showToast('❌ Пропуск не найден'); return; }
-        
+
         const container = document.getElementById('passActionsContent');
         if (!container) return;
         if (!pass.actions || !pass.actions.length) {
@@ -816,7 +1099,7 @@
         const readerDiv = document.getElementById('passScanner');
         if (!readerDiv) return;
         readerDiv.innerHTML = '';
-        
+
         if (passId) {
             if (!orders.passes) orders.passes = [];
             const pass = orders.passes.find(p => p.id === passId);
@@ -825,7 +1108,7 @@
                 return;
             }
         }
-        
+
         try {
             const scanner = new Html5Qrcode("passScanner");
             scanner.start(
@@ -855,13 +1138,13 @@
     function showPassScanResult(pass) {
         const resultDiv = document.getElementById('passScanResult');
         if (!resultDiv) return;
-        
+
         let statusText = '';
         if (pass.status === 'pending') statusText = '⏳ На модерации';
         else if (pass.status === 'active') statusText = '✅ Активен';
         else if (pass.status === 'temp_closed') statusText = '⏸️ Временно закрыт';
         else if (pass.status === 'closed') statusText = '🔒 Закрыт';
-        
+
         let actionsHtml = '';
         if (currentUser.role === 'admin') {
             actionsHtml = `
@@ -875,7 +1158,7 @@
                 </div>
             `;
         }
-        
+
         resultDiv.innerHTML = `
             <div class="card">
                 <div class="card-header">
@@ -903,21 +1186,21 @@
         closeModal('modalPassScan');
         openModal('modalPassAddVisit');
     };
-    
+
     window.closePassFromScan = function(passId) {
         const input = document.getElementById('passCloseId');
         if (input) input.value = passId;
         closeModal('modalPassScan');
         openModal('modalPassClose');
     };
-    
+
     window.tempClosePassFromScan = function(passId) {
         const input = document.getElementById('passTempCloseId');
         if (input) input.value = passId;
         closeModal('modalPassScan');
         openModal('modalPassTempClose');
     };
-    
+
     window.extendPassFromScan = function(passId) {
         const input = document.getElementById('passExtendId');
         if (input) input.value = passId;
@@ -926,12 +1209,16 @@
     };
 
     // ===== РЕНДЕРЫ РАЗДЕЛОВ =====
-    
+
     function renderFood() {
         const container = document.getElementById('foodContainer');
         if (!container) return;
+        if (!orders.food) orders.food = [];
         const items = orders.food.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет заказов</div>'; return; }
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет заказов</div>';
+            return;
+        }
         container.innerHTML = items.map(o => `
             <div class="card">
                 <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span></div>
@@ -946,8 +1233,12 @@
     function renderVacancies() {
         const container = document.getElementById('workVacancies');
         if (!container) return;
-        const items = orders.vacancies || [];
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет вакансий</div>'; return; }
+        if (!orders.vacancies) orders.vacancies = [];
+        const items = orders.vacancies;
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет вакансий</div>';
+            return;
+        }
         container.innerHTML = items.map(v => `
             <div class="card">
                 <div class="card-header"><span class="card-id">${v.id}</span><span class="card-status status-${statusClass(v.status)}">${statusText(v.status)}</span></div>
@@ -970,8 +1261,12 @@
     function renderApplications() {
         const container = document.getElementById('workApplications');
         if (!container) return;
+        if (!orders.applications) orders.applications = [];
         const items = orders.applications.filter(a => a.userId === currentUser.id || currentUser.role === 'admin');
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет откликов</div>'; return; }
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет откликов</div>';
+            return;
+        }
         container.innerHTML = items.map(a => `
             <div class="card">
                 <div class="card-header"><span class="card-id">${a.id}</span><span class="card-status status-${statusClass(a.status)}">${statusText(a.status)}</span></div>
@@ -985,8 +1280,12 @@
     function renderCleaning() {
         const container = document.getElementById('cleaningContainer');
         if (!container) return;
+        if (!orders.cleaning) orders.cleaning = [];
         const items = orders.cleaning.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет заявок</div>'; return; }
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет заявок</div>';
+            return;
+        }
         container.innerHTML = items.map(o => `
             <div class="card">
                 <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span></div>
@@ -1001,8 +1300,12 @@
     function renderMassage() {
         const container = document.getElementById('massageContainer');
         if (!container) return;
+        if (!orders.massage) orders.massage = [];
         const items = orders.massage.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет записей</div>'; return; }
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет записей</div>';
+            return;
+        }
         container.innerHTML = items.map(o => `
             <div class="card">
                 <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span></div>
@@ -1019,15 +1322,12 @@
     function renderLegal() {
         const container = document.getElementById('legalContainer');
         if (!container) return;
-        
         if (!orders.legal) orders.legal = [];
         const items = orders.legal.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
-        
         if (!items.length) {
             container.innerHTML = '<div class="empty-state">Нет записей</div>';
             return;
         }
-        
         container.innerHTML = items.map(o => `
             <div class="card">
                 <div class="card-header">
@@ -1048,15 +1348,12 @@
     function renderCourt() {
         const container = document.getElementById('courtContainer');
         if (!container) return;
-        
         if (!orders.court) orders.court = [];
         const items = orders.court.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
-        
         if (!items.length) {
             container.innerHTML = '<div class="empty-state">Нет исков</div>';
             return;
         }
-        
         container.innerHTML = items.map(o => `
             <div class="card">
                 <div class="card-header">
@@ -1174,8 +1471,12 @@
     function renderSupport() {
         const container = document.getElementById('supportContainer');
         if (!container) return;
+        if (!supportTickets) supportTickets = [];
         const items = supportTickets.filter(t => t.userId === currentUser.id || currentUser.role === 'admin');
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет обращений</div>'; return; }
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">Нет обращений</div>';
+            return;
+        }
         container.innerHTML = items.map(t => `
             <div class="card">
                 <div class="card-header"><span class="card-id">${t.id}</span><span class="card-status status-${t.status === 'resolved' ? 'done' : 'new'}">${t.status === 'resolved' ? '✅' : '🆕'}</span></div>
@@ -1306,15 +1607,15 @@
         const container = document.getElementById('historyContainer');
         if (!container) return;
         let allOrders = [];
-        orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
-        orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
-        orders.applications.forEach(o => allOrders.push({ ...o, typeLabel: '💼 Работа' }));
-        orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
-        orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
-        orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
-        orders.roomVisits.forEach(o => allOrders.push({ ...o, typeLabel: '🚪 Посещение' }));
+        if (orders.food) orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
+        if (orders.cleaning) orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
+        if (orders.applications) orders.applications.forEach(o => allOrders.push({ ...o, typeLabel: '💼 Работа' }));
+        if (orders.massage) orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
+        if (orders.legal) orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
+        if (orders.court) orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
+        if (orders.roomVisits) orders.roomVisits.forEach(o => allOrders.push({ ...o, typeLabel: '🚪 Посещение' }));
         if (orders.passes) orders.passes.forEach(o => allOrders.push({ ...o, typeLabel: '🎫 Пропуск' }));
-        
+
         if (currentUser.role !== 'admin') allOrders = allOrders.filter(o => o.userId === currentUser.id);
         const typeF = document.getElementById('historyTypeFilter')?.value || 'all';
         const statF = document.getElementById('historyStatusFilter')?.value || 'all';
@@ -1374,6 +1675,7 @@
             const date = document.getElementById('roomVisitDate')?.value || '';
             const time = document.getElementById('roomVisitTime')?.value || '';
             if (!purpose || !date || !time) return alert('Заполните все поля');
+            if (!orders.roomVisits) orders.roomVisits = [];
             orders.roomVisits.push({
                 id: genSid('RV'), userId: currentUser.id, userFio: currentUser.fio,
                 purpose, date, time, status: 'pending', adminComment: '', rejectReason: '', timeCreated: now()
@@ -1841,11 +2143,11 @@
     // ----- Рендеры админ-вкладок -----
     function renderAdminApplications(container) {
         let allOrders = [];
-        orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
-        orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
-        orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
-        orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
-        orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
+        if (orders.food) orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
+        if (orders.cleaning) orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
+        if (orders.massage) orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
+        if (orders.legal) orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
+        if (orders.court) orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
 
         const pending = allOrders.filter(o => o.status === 'pending');
         const processed = allOrders.filter(o => o.status !== 'pending');
@@ -1958,6 +2260,7 @@
     }
 
     function renderAdminSupport(container) {
+        if (!supportTickets) supportTickets = [];
         const tickets = supportTickets.filter(t => t.status !== 'resolved' || t.adminReply);
         if (!tickets.length) { container.innerHTML = '<div class="empty-state">Нет обращений</div>'; return; }
         container.innerHTML = tickets.map((t, idx) => `
@@ -2217,6 +2520,7 @@
             const dish = document.getElementById('foodDish')?.value?.trim() || '';
             const room = document.getElementById('foodRoom')?.value?.trim() || '';
             const qty = parseInt(document.getElementById('foodQty')?.value) || 1;
+            if (!orders.food) orders.food = [];
             orders.food.push({ id: genSid('FOOD'), userId: currentUser.id, userFio: currentUser.fio, dish, room, qty, status: 'pending', time: now(), price: null });
             await saveAll();
             renderAll();
@@ -2233,6 +2537,7 @@
             const room = document.getElementById('cleanRoom')?.value?.trim() || '';
             const date = document.getElementById('cleanDate')?.value || '';
             const time = document.getElementById('cleanTime')?.value || '';
+            if (!orders.cleaning) orders.cleaning = [];
             orders.cleaning.push({ id: genSid('CLN'), userId: currentUser.id, userFio: currentUser.fio, room, date, time, status: 'pending', timeCreated: now(), price: null });
             await saveAll();
             renderAll();
@@ -2253,6 +2558,7 @@
             const note = document.getElementById('massageNote')?.value?.trim() || '';
             const agree = document.getElementById('massageAgreement')?.checked || false;
             if (!agree) { showToast('❌ Примите соглашение'); return; }
+            if (!orders.massage) orders.massage = [];
             orders.massage.push({ id: genSid('MSG'), userId: currentUser.id, userFio: currentUser.fio, room, type, time, duration, note, status: 'pending', timeCreated: now(), price: null });
             await saveAll();
             renderAll();
@@ -2272,6 +2578,7 @@
             const date = document.getElementById('legalDate')?.value || '';
             const time = document.getElementById('legalTime')?.value || '';
             const topic = document.getElementById('legalTopic')?.value?.trim() || '';
+            if (!orders.legal) orders.legal = [];
             orders.legal.push({ id: genSid('LEG'), userId: currentUser.id, userFio: currentUser.fio, fio, date, time, topic, status: 'pending', timeCreated: now(), price: null });
             await saveAll();
             renderAll();
@@ -2290,6 +2597,7 @@
             const address = document.getElementById('courtAddress')?.value?.trim() || '';
             const defendantAddress = document.getElementById('courtDefendantAddress')?.value?.trim() || '';
             const reason = document.getElementById('courtReason')?.value?.trim() || '';
+            if (!orders.court) orders.court = [];
             orders.court.push({ id: genSid('CRT'), userId: currentUser.id, userFio: currentUser.fio, fio, defendant, address, defendantAddress, reason, status: 'pending', timeCreated: now(), price: null });
             await saveAll();
             renderAll();
@@ -2308,6 +2616,7 @@
             const places = parseInt(document.getElementById('vacancyPlaces')?.value) || 1;
             const desc = document.getElementById('vacancyDesc')?.value?.trim() || '';
             const requirements = document.getElementById('vacancyRequirements')?.value?.trim() || '';
+            if (!orders.vacancies) orders.vacancies = [];
             orders.vacancies.push({ id: genSid('VAC'), userId: currentUser.id, userFio: currentUser.fio, title, company, places, desc, requirements, status: 'active', time: now() });
             await saveAll();
             renderAll();
@@ -2324,6 +2633,7 @@
             const vacancyId = document.getElementById('appVacancy')?.value?.trim() || '';
             const info = document.getElementById('appInfo')?.value?.trim() || '';
             const extras = Array.from(document.querySelectorAll('#formApplication .checkbox-group input:checked')).map(cb => cb.value);
+            if (!orders.applications) orders.applications = [];
             orders.applications.push({ id: genSid('APP'), userId: currentUser.id, userFio: currentUser.fio, vacancyId, info, extras, status: 'pending', time: now() });
             await saveAll();
             renderAll();
@@ -2339,6 +2649,7 @@
             e.preventDefault();
             const problem = document.getElementById('supportProblem')?.value?.trim() || '';
             const urgency = document.getElementById('supportUrgency')?.value || '';
+            if (!supportTickets) supportTickets = [];
             supportTickets.push({ id: genSid('SPT'), userId: currentUser.id, userFio: currentUser.fio, problem, urgency, status: 'open', time: now(), adminReply: '' });
             await saveAll();
             renderAll();
@@ -2370,6 +2681,7 @@
             e.preventDefault();
             const message = document.getElementById('topUpMessage')?.value?.trim() || '';
             if (!message) { showToast('❌ Напишите сообщение'); return; }
+            if (!topUpRequests) topUpRequests = [];
             topUpRequests.push({ id: genSid('TUR'), userId: currentUser.id, userFio: currentUser.fio, message, status: 'pending', time: now(), adminReply: '' });
             await saveAll();
             showToast('✅ Запрос отправлен');
@@ -2453,16 +2765,58 @@
             cards = oData.cards || [];
             topUpRequests = oData.topUpRequests || [];
 
+            // Инициализация всех массивов
+            if (!orders.food) orders.food = [];
+            if (!orders.cleaning) orders.cleaning = [];
+            if (!orders.massage) orders.massage = [];
+            if (!orders.legal) orders.legal = [];
+            if (!orders.court) orders.court = [];
+            if (!orders.applications) orders.applications = [];
+            if (!orders.vacancies) orders.vacancies = [];
+            if (!orders.roomVisits) orders.roomVisits = [];
             if (!orders.passes) orders.passes = [];
 
             users.forEach(u => {
-                if (!wallets[u.id]) wallets[u.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', qrCode: '', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
+                if (!wallets[u.id]) {
+                    wallets[u.id] = {
+                        balance: 0,
+                        cardNumber: '0000 0000 0000 0000',
+                        qrCode: '',
+                        blocked: false,
+                        blockReason: '',
+                        blockExpiry: null,
+                        transactions: []
+                    };
+                }
             });
             if (wallets['00000']) wallets['00000'].balance = 999999999;
 
             if (!users.some(u => u.id === '00000')) {
-                users.push({ id: '00000', fio: 'Администратор', email: 'admin@ad.systems', password: '31441537a', role: 'admin', status: 'Администратор', roles: [], avatar: '', bio: '', phone: '', banned: false, banReason: '', banExpiry: null, cardId: '' });
-                wallets['00000'] = { balance: 999999999, cardNumber: '0000 0000 0000 0000', qrCode: '', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
+                users.push({
+                    id: '00000',
+                    fio: 'Администратор',
+                    email: 'admin@ad.systems',
+                    password: '31441537a',
+                    role: 'admin',
+                    status: 'Администратор',
+                    roles: [],
+                    avatar: '',
+                    bio: '',
+                    phone: '',
+                    banned: false,
+                    banReason: '',
+                    banExpiry: null,
+                    cardId: ''
+                });
+                wallets['00000'] = {
+                    balance: 999999999,
+                    cardNumber: '0000 0000 0000 0000',
+                    qrCode: '',
+                    blocked: false,
+                    blockReason: '',
+                    blockExpiry: null,
+                    transactions: []
+                };
                 await saveAll();
             }
 
@@ -2473,12 +2827,14 @@
                 if (u && !isBanned(u)) { currentUser = u; showMain(); return; }
             }
             if (!checkRemember()) showAuth();
-        } catch (e) { 
-            console.error('Ошибка загрузки:', e); 
+        } catch (e) {
+            console.error('Ошибка загрузки:', e);
             showToast('❌ Ошибка загрузки данных');
-            showAuth(); 
+            showAuth();
         }
     }
 
 })();
 </script>
+</body>
+</html>
