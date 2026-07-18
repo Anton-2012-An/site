@@ -128,11 +128,14 @@
 (function() {
     'use strict';
 
-    // ===== КОНФИГУРАЦИЯ JSONBin =====
-    // ⚠️ ЗАМЕНИТЕ ЭТИ ЗНАЧЕНИЯ НА СВОИ!
-    const JSONBIN_MASTER_KEY = '$2a$10$Xtc.g/ovT7T19MVv9xu8f.URPVCegAY7Atr4bUfHjd96e7vgTXVd6';
-    const USERS_BIN_ID = '6a56964dda38895dfe5da6b4';
+    // ===== ВАШИ КЛЮЧИ (вставлены) =====
+    const JSONBIN_MASTER_KEY = '$2a$10$/lKNp2cCj9lOUJxhWQ0uI./vRHpINQt.MWizWPJOnRinj62u0JIgO';
+    const USERS_BIN_ID = '6a56624dda38895dfe5cb6ef';
     const ORDERS_BIN_ID = '6a569af5f5f4af5e298f4479';
+    const DATA_BIN_ID = '6a56964dda38895dfe5da6b4';
+
+    console.log('✅ Ключи загружены!');
+    console.log('Master Key:', JSONBIN_MASTER_KEY.substring(0, 20) + '...');
 
     let users = [];
     let currentUser = null;
@@ -165,6 +168,7 @@
             return (await r.json()).record || {};
         } catch(e) {
             console.error('Ошибка загрузки:', e);
+            showToast('❌ Ошибка загрузки данных. Проверьте ключи JSONBin.');
             return {};
         }
     }
@@ -179,10 +183,14 @@
                 },
                 body: JSON.stringify(data)
             });
-            if (!r.ok) throw new Error('Ошибка записи: ' + r.status);
+            if (!r.ok) {
+                const errorText = await r.text();
+                throw new Error(`Ошибка записи: ${r.status} - ${errorText}`);
+            }
             return await r.json();
         } catch(e) {
             console.error('Ошибка сохранения:', e);
+            showToast('❌ Ошибка сохранения. Проверьте ключи JSONBin.');
             return {};
         }
     }
