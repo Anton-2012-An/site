@@ -155,6 +155,7 @@
     let adminCurrentTab = 'applications';
     let currentChatId = null;
     let supportReplyTarget = null;
+    let refreshInterval = null;
 
     // ===== API =====
     async function readBin(id) {
@@ -365,6 +366,11 @@
         if (mainPage) mainPage.classList.remove('active');
         if (panelsContainer) panelsContainer.classList.remove('active');
         document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+            console.log('🔄 Автообновление остановлено');
+        }
     }
 
     function showMain() {
@@ -387,6 +393,69 @@
         generateSections();
         renderAll();
         initButtons();
+        startAutoRefresh();
+    }
+
+    // ===== АВТООБНОВЛЕНИЕ КАЖДУЮ СЕКУНДУ =====
+    function startAutoRefresh() {
+        if (refreshInterval) {
+            clearInterval(refreshInterval);
+        }
+        refreshInterval = setInterval(async function() {
+            try {
+                const oData = await readBin(ORDERS_BIN_ID);
+                
+                if (oData.orders) {
+                    orders = oData.orders;
+                    if (!orders.food) orders.food = [];
+                    if (!orders.cleaning) orders.cleaning = [];
+                    if (!orders.massage) orders.massage = [];
+                    if (!orders.legal) orders.legal = [];
+                    if (!orders.court) orders.court = [];
+                    if (!orders.applications) orders.applications = [];
+                    if (!orders.vacancies) orders.vacancies = [];
+                    if (!orders.roomVisits) orders.roomVisits = [];
+                    if (!orders.passes) orders.passes = [];
+                }
+                
+                if (oData.notifications) notifications = oData.notifications;
+                if (oData.supportTickets) supportTickets = oData.supportTickets;
+                if (oData.chats) chats = oData.chats;
+                if (oData.messages) messages = oData.messages;
+                if (oData.stickers) stickers = oData.stickers;
+                if (oData.roles) roles = oData.roles;
+                if (oData.statuses) statuses = oData.statuses;
+                if (oData.wallets) wallets = oData.wallets;
+                if (oData.businessAccounts) businessAccounts = oData.businessAccounts;
+                if (oData.promoCodes) promoCodes = oData.promoCodes;
+                if (oData.subscriptions) subscriptions = oData.subscriptions;
+                if (oData.debts) debts = oData.debts;
+                if (oData.cards) cards = oData.cards;
+                if (oData.topUpRequests) topUpRequests = oData.topUpRequests;
+
+                renderAll();
+                
+                const panelsContainer = document.getElementById('panelsContainer');
+                if (panelsContainer && panelsContainer.classList.contains('active')) {
+                    const activePanel = document.querySelector('.service-panel.active');
+                    if (activePanel) {
+                        const panelId = activePanel.id.replace('panel-', '');
+                        if (panelId === 'admin') renderAdmin();
+                        if (panelId === 'history') renderHistory();
+                        if (panelId === 'messenger') renderMessenger();
+                        if (panelId === 'profile') renderProfile();
+                        if (panelId === 'support') renderSupport();
+                        if (panelId === 'wallet') renderWallet();
+                        if (panelId === 'bank') renderBank();
+                        if (panelId === 'roomvisit') renderRoomVisit();
+                        if (panelId === 'pass') renderPass();
+                    }
+                }
+            } catch(e) {
+                console.error('❌ Ошибка автообновления:', e);
+            }
+        }, 1000);
+        console.log('🔄 Автообновление запущено (каждую секунду)');
     }
 
     function initButtons() {
@@ -504,11 +573,16 @@
             sessionStorage.removeItem('ad_session');
             localStorage.removeItem('ad_remember');
             currentUser = null;
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+                console.log('🔄 Автообновление остановлено');
+            }
             showAuth();
         }
     });
 
-    // ===== РАЗДЕЛ ПРОПУСКОВ (QR-код выдаётся сразу) =====
+    // ===== РАЗДЕЛ ПРОПУСКОВ =====
 
     const formPassOrder = document.getElementById('formPassOrder');
     if (formPassOrder) {
@@ -537,7 +611,7 @@
                 purpose: purpose,
                 duration: duration,
                 durationUnit: unit,
-                status: 'active',  // ← СРАЗУ АКТИВЕН, QR-КОД ВЫДАЁТСЯ СРАЗУ
+                status: 'active',
                 createdAt: now(),
                 validUntil: validUntil,
                 code: passId,
@@ -1108,8 +1182,7 @@
         openModal('modalPassExtend');
     };
 
-    // ===== ОСТАЛЬНЫЕ РЕНДЕРЫ (кратко) =====
-    
+    // ===== ОСТАЛЬНЫЕ РЕНДЕРЫ =====
     function renderFood() {
         const container = document.getElementById('foodContainer');
         if (!container) return;
