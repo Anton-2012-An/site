@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <style>
-        /* ... ваш существующий CSS ... */
+        /* ... ВЕСЬ ВАШ CSS (без изменений) ... */
         *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f5f7fb,#e8ecf4,#dce2ec);color:#1a1a1e;min-height:100vh}.container{max-width:1400px;margin:0 auto;padding:1.5rem}.auth-page{display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#1a1a1e,#2d2d35);padding:1.5rem;position:relative;overflow:hidden}.auth-page::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(184,150,46,0.05),transparent 70%);animation:rotateBg 20s linear infinite}@keyframes rotateBg{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.auth-box{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:40px;padding:3rem;max-width:500px;width:100%;box-shadow:0 40px 80px rgba(0,0,0,0.3);position:relative;z-index:1}.auth-box .logo{font-size:2.8rem;font-weight:300;text-align:center;margin-bottom:.5rem}.auth-box .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}.auth-box .subtitle{text-align:center;color:#8b97a8;font-size:.9rem;margin-bottom:2rem}.auth-tabs{display:flex;gap:0;margin-bottom:2rem;border-radius:60px;overflow:hidden;border:1px solid #e2e8f0}.auth-tabs button{flex:1;padding:.7rem;border:none;background:rgba(255,255,255,0.8);cursor:pointer;font-size:.95rem;font-weight:500;transition:all .3s ease;color:#8b97a8}.auth-tabs button.active{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.2)}.auth-tabs button:hover:not(.active){background:#f0f2f5}.auth-form{display:none}.auth-form.active{display:block;animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.form-group{margin-bottom:1rem}.form-group label{display:block;font-size:.85rem;font-weight:500;color:#4b5563;margin-bottom:4px}.form-group input,.form-group textarea,.form-group select{width:100%;padding:.6rem 1rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.9rem;background:rgba(255,255,255,0.8);transition:all .3s ease;font-family:inherit}.form-group textarea{min-height:80px;resize:vertical}.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}.checkbox-group{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}.checkbox-group label{display:flex;align-items:center;gap:5px;font-size:.85rem;font-weight:400;color:#2d3748;cursor:pointer}.checkbox-group input[type=checkbox]{width:16px;height:16px;accent-color:#b8962e;cursor:pointer}.btn-auth{width:100%;padding:.8rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);margin-top:.5rem;box-shadow:0 4px 15px rgba(0,0,0,0.1)}.btn-auth:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px) scale(1.02);box-shadow:0 8px 30px rgba(184,150,46,0.3)}.auth-error{color:#a14f4f;font-size:.9rem;text-align:center;margin-top:.5rem;display:none}.auth-error.show{display:block}.remember-me{display:flex;align-items:center;gap:8px;margin-top:.5rem}.remember-me input[type=checkbox]{width:18px;height:18px;accent-color:#b8962e;cursor:pointer}.remember-me label{font-size:.9rem;color:#4b5563;cursor:pointer}.check-user-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.6);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:9999}.check-user-overlay.active{display:flex}.check-user-box{background:#fff;border-radius:30px;padding:2.5rem 3rem;max-width:450px;width:100%;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.3);animation:fadeIn .3s ease}.check-user-box .avatar-big{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:600;margin:0 auto 1rem;box-shadow:0 8px 30px rgba(184,150,46,0.3)}.check-user-box h2{font-weight:300;color:#1a1a1e;margin-bottom:.3rem}.check-user-box .user-email{color:#8b97a8;font-size:.9rem;margin-bottom:1.5rem}.check-user-box .btn-group{display:flex;gap:1rem;justify-content:center}.check-user-box .btn-group button{padding:.6rem 2rem;border:none;border-radius:60px;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s ease}.check-user-box .btn-yes{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.3)}.check-user-box .btn-yes:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(184,150,46,0.4)}.check-user-box .btn-no{background:#e2e8f0;color:#4b5563}.check-user-box .btn-no:hover{background:#a14f4f;color:#fff}.main-page{display:none}.main-page.active{display:block}.main-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding:1rem 0;border-bottom:2px solid #d4af37;margin-bottom:2rem}.main-header .logo{font-size:2rem;font-weight:300}.main-header .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}.main-header .user-info{display:flex;align-items:center;gap:1rem}.main-header .user-info .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.2rem;box-shadow:0 4px 15px rgba(184,150,46,0.3)}.main-header .user-name{font-weight:500}.main-header .user-role{font-size:.7rem;color:#8b97a8;background:#f0f2f5;padding:.1rem .6rem;border-radius:30px}.btn-logout{padding:.4rem 1.2rem;border:1px solid #e5b3b3;border-radius:60px;background:none;color:#a14f4f;cursor:pointer;transition:.2s;font-size:.8rem}.btn-logout:hover{background:#a14f4f;color:#fff}.sections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem;padding:1rem 0}.section-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.08);cursor:pointer;transition:all .4s cubic-bezier(.34,1.56,.64,1);border:2px solid transparent}.section-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(184,150,46,0.15);border-color:#d4af37}.section-card .section-image{width:100%;height:120px;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,#fef3c7,#fde68a)}.section-card .section-info{padding:.8rem}.section-card .section-info h3{font-size:.95rem;font-weight:500;margin-bottom:.1rem}.section-card .section-info p{color:#8b97a8;font-size:.75rem}.section-card .section-badge{display:inline-block;font-size:.55rem;padding:.05rem .4rem;border-radius:30px;background:#b8962e;color:#fff;margin-top:.2rem}.panels-container{display:none}.panels-container.active{display:block}.service-panel{display:none}.service-panel.active{display:block}.panel-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0}.panel-header h2{font-size:1.3rem;font-weight:300;border-left:4px solid #d4af37;padding-left:1rem}.btn-back{padding:.3rem 1rem;border:1px solid #d0d7e2;border-radius:60px;background:none;cursor:pointer;transition:all .3s ease;font-size:.8rem;color:#4b5563}.btn-back:hover{border-color:#b8962e;color:#b8962e}.btn{padding:.35rem 1.2rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.8rem;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,0.1)}.btn:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(184,150,46,0.3)}.btn-sm{padding:.15rem .7rem;font-size:.65rem;border-radius:40px;border:1px solid #d0d7e2;background:rgba(255,255,255,0.8);cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);color:#4b5563}.btn-sm:hover{border-color:#b8962e;color:#b8962e;transform:translateY(-1px)}.btn-sm.gold{border-color:#d4af37;color:#b8962e}.btn-sm.gold:hover{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff}.btn-sm.danger{border-color:#e5b3b3;color:#a14f4f}.btn-sm.danger:hover{background:#a14f4f;color:#fff}.btn-sm.green{border-color:#27ae60;color:#27ae60}.btn-sm.green:hover{background:#27ae60;color:#fff}.btn-sm.purple{border-color:#8e44ad;color:#8e44ad}.btn-sm.purple:hover{background:#8e44ad;color:#fff}.btn-sm.blue{border-color:#3b82f6;color:#3b82f6}.btn-sm.blue:hover{background:#3b82f6;color:#fff}.card{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-radius:20px;padding:.8rem 1rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);border:1px solid rgba(255,255,255,0.5);transition:all .3s ease}.card:hover{border-color:#d4af37;box-shadow:0 8px 30px rgba(184,150,46,0.12)}.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem;flex-wrap:wrap;gap:4px}.card-id{font-size:.65rem;color:#8b97a8;font-weight:500}.card-status{font-size:.6rem;padding:.05rem .4rem;border-radius:30px;font-weight:500}.card-detail{font-size:.8rem;margin:2px 0}.card-actions{margin-top:.4rem;display:flex;flex-wrap:wrap;gap:4px}.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}.empty-state{color:#8b97a8;text-align:center;padding:1.5rem 0;background:rgba(255,255,255,0.5);border-radius:30px;border:1px dashed #dce2ec;font-size:.85rem}.status-new{background:#e6f0ff;color:#1a4f8b}.status-processing{background:#fff4e0;color:#a86f1a}.status-done{background:#e6f7ed;color:#0f6e4a}.status-cancelled{background:#fde8e8;color:#a14f4f}.status-active{background:#e6f7ed;color:#0f6e4a}.status-closed{background:#f0f0f0;color:#5b5b5b}.status-accepted{background:#e6f7ed;color:#0f6e4a}.status-rejected{background:#fde8e8;color:#a14f4f}.status-pending{background:#fff4e0;color:#a86f1a}.status-approved{background:#d1fae5;color:#065f46}.status-denied{background:#fde8e8;color:#991b1b}.badge{background:#a14f4f;color:#fff;border-radius:30px;padding:.05rem .4rem;font-size:.55rem;margin-left:4px}.badge.gold{background:#b8962e}.modal{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-radius:30px;padding:1.5rem 2rem;box-shadow:0 40px 80px rgba(0,0,0,0.2);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;animation:fadeIn .3s ease}.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.4);backdrop-filter:blur(3px);display:none;justify-content:center;align-items:center;z-index:999;padding:1rem}.modal-overlay.active{display:flex}.modal-close{float:right;font-size:2rem;cursor:pointer;color:#a0aaba;background:none;border:none}.btn-submit{width:100%;padding:.6rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .3s ease;margin-top:.5rem}.btn-submit:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px);box-shadow:0 8px 30px rgba(184,150,46,0.3)}.btn-submit:disabled{opacity:.5;cursor:not-allowed}.btn-submit:disabled:hover{background:linear-gradient(135deg,#1a1a1e,#2d2d35);transform:none;box-shadow:none}.search-box{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}.search-box input{flex:1;min-width:150px;padding:.4rem .8rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.85rem;background:rgba(255,255,255,0.8)}.search-box input:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}.search-box button{padding:.4rem 1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;cursor:pointer;transition:all .3s ease;font-size:.8rem}.search-box button:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-2px)}.user-detail-card{background:rgba(255,255,255,0.9);border-radius:16px;padding:1rem;border:1px solid rgba(212,175,55,0.2);margin-bottom:.5rem}.sort-select{padding:.3rem .8rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.8rem;background:#fff;cursor:pointer}.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(26,26,30,0.95);backdrop-filter:blur(20px);color:#fff;padding:.5rem 1.5rem;border-radius:60px;font-size:.85rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:1000;border:1px solid rgba(212,175,55,0.3)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.history-filter{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}.history-filter select,.history-filter input{padding:.3rem .8rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.8rem;background:#fff}@media(max-width:768px){.auth-box{padding:1.5rem}.modal{padding:1.2rem}.sections-grid{grid-template-columns:1fr 1fr}.check-user-box{padding:1.5rem}}@media(max-width:480px){.sections-grid{grid-template-columns:1fr}}.agreement-scroll{max-height:150px;overflow-y:auto;padding:.3rem .8rem;background:#fafbfc;border-radius:14px;border:1px solid #e2e8f0;font-size:.7rem;line-height:1.6;color:#2d3748;margin-bottom:.8rem}.sticker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}.sticker-item{font-size:1.8rem;cursor:pointer;text-align:center;padding:4px;border-radius:12px;border:2px solid transparent;transition:all .2s}.sticker-item:hover{border-color:#d4af37;background:#fef3c7;transform:scale(1.1)}.chat-item{padding:6px 10px;border-radius:12px;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eef2f7}.chat-item:hover{background:#f0f2f5}.chat-item .chat-name{font-weight:500;font-size:.85rem}.chat-item .chat-last{font-size:.7rem;color:#8b97a8}.message-area{max-height:350px;overflow-y:auto;padding:6px;background:#fafbfc;border-radius:16px;border:1px solid #e2e8f0}.message{display:flex;margin-bottom:4px}.message.own{justify-content:flex-end}.message.other{justify-content:flex-start}.message .bubble{max-width:70%;padding:4px 10px;border-radius:16px;font-size:.8rem;word-wrap:break-word}.message.own .bubble{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff}.message.other .bubble{background:#fff;border:1px solid #e2e8f0}.message .time{font-size:.55rem;color:#8b97a8;margin-left:4px;align-self:flex-end}.file-upload-btn{display:inline-block;padding:4px 10px;border:1px solid #d0d7e2;border-radius:30px;cursor:pointer;font-size:.7rem;transition:all .2s}.file-upload-btn:hover{background:#f0f2f5}.profile-avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #d4af37;margin:0 auto 1rem;display:block}.qr-container{display:flex;justify-content:center;margin:1rem 0}.qr-container canvas{max-width:180px;height:auto}.wallet-balance{font-size:1.8rem;font-weight:300;text-align:center;padding:.8rem;background:#fff;border-radius:20px;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
         .subscription-info{background:linear-gradient(135deg,#fef3c7,#fde68a);padding:1rem;border-radius:16px;border:1px solid #d4af37;margin-bottom:1rem}
         .subscription-info .balance-item{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(212,175,55,0.2)}
@@ -18,6 +18,12 @@
         .admin-code-section .code-display:hover{background:#e8ecf4}
         .admin-code-section .code-label{color:#8b97a8;font-size:.9rem}
         .scan-badge{background:#d4af37;color:#fff;padding:.2rem .6rem;border-radius:30px;font-size:.7rem;margin-left:8px}
+        .scan-container{background:#1a1a1e;border-radius:20px;padding:1.5rem;text-align:center;color:#fff;position:relative}
+        .scan-container .scan-hint{color:#8b97a8;font-size:.9rem;margin-bottom:1rem}
+        .scan-container .scan-status{color:#d4af37;font-size:.8rem;margin-top:0.5rem}
+        .brightness-toggle{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:.3rem .8rem;border-radius:30px;cursor:pointer;font-size:.7rem;margin-top:0.5rem;transition:all .3s ease}
+        .brightness-toggle:hover{background:rgba(212,175,55,0.3);border-color:#d4af37}
+        .ban-timer{color:#a14f4f;font-size:.8rem;margin-top:0.5rem}
     </style>
 </head>
 <body>
@@ -64,6 +70,25 @@
             <button class="btn-yes" id="checkYes">✅ Да</button>
             <button class="btn-no" id="checkNo">❌ Нет</button>
         </div>
+    </div>
+</div>
+
+<!-- СКАНЕР ПРИ ВХОДЕ -->
+<div id="modalEntryScan" class="modal-overlay">
+    <div class="modal" style="max-width:500px;">
+        <button class="modal-close" id="closeEntryScan">&times;</button>
+        <h2>📷 Сканирование при входе</h2>
+        <p style="color:#8b97a8;margin-bottom:1rem;">Отсканируйте QR-код вашего абонемента</p>
+        <div class="scan-container">
+            <div id="entryScanner" style="width:100%;max-width:300px;margin:0 auto;"></div>
+            <div id="entryScanStatus" class="scan-status">Наведите камеру на QR-код</div>
+            <button class="brightness-toggle" id="brightnessToggle">☀️ Увеличить яркость</button>
+            <div id="entryScanResult" style="margin-top:1rem;"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:1rem;justify-content:center;">
+            <button class="btn-sm" id="skipEntryScan">⏭️ Пропустить</button>
+        </div>
+        <div id="entryScanError" class="auth-error" style="margin-top:0.5rem;"></div>
     </div>
 </div>
 
@@ -136,7 +161,6 @@
 
 <div id="modalTopUpRequest" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeTopUpRequest">&times;</button><h2>💰 Пополнить баланс</h2><form id="formTopUpRequest"><p style="color:#8b97a8;margin-bottom:1rem;">Напишите сообщение админу для пополнения баланса.</p><div class="form-group"><label>Сумма</label><input type="number" id="topUpAmount" placeholder="Сумма пополнения" required min="1"></div><div class="form-group"><label>Сообщение</label><textarea id="topUpMessage" placeholder="Напишите сообщение..."></textarea></div><button type="submit" class="btn-submit">📤 Отправить запрос</button></form></div></div>
 
-<!-- НОВАЯ МОДАЛКА ДЛЯ СКАНА АБОНЕМЕНТА -->
 <div id="modalScanSubscription" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeScanSubscription">&times;</button><h2>📷 Отсканируйте абонемент</h2><p style="color:#8b97a8;margin-bottom:1rem;">Наведите камеру на QR-код вашего абонемента</p><div id="subScanner" style="width:100%;max-width:300px;margin:0 auto;"></div><div id="subScanResult" style="margin-top:1rem;"></div><button class="btn-sm" id="skipSubScanBtn">Пропустить сканирование</button></div></div>
 
 <div id="modalScanQR" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeScanQR">&times;</button><h2>📷 Сканирование QR-кода</h2><div id="qrScanner" style="width:100%;max-width:300px;margin:0 auto;"></div><div id="qrScanResult" style="margin-top:1rem;"></div><button class="btn-sm" id="skipScanBtn">Пропустить сканирование</button></div></div>
@@ -158,14 +182,17 @@
     const JSONBIN_MASTER_KEY = '$2a$10$/lKNp2cCj9lOUJxhWQ0uI./vRHpINQt.MWizWPJOnRinj62u0JIgO';
     const USERS_BIN_ID = '6a56624dda38895dfe5cb6ef';
     const ORDERS_BIN_ID = '6a569af5f5f4af5e298f4479';
+    // НОВЫЙ БИН ДЛЯ АБОНЕМЕНТОВ
+    const SUBSCRIPTIONS_BIN_ID = '6a986eeaf5f4af5e29624c81'; // Замените на ваш ID
 
     let users = [], currentUser = null;
     let orders = { food: [], cleaning: [], massage: [], legal: [], court: [], applications: [], vacancies: [], roomVisits: [], passes: [], subscriptions: [], supportTickets: [] };
     let wallets = {}, cards = [], promoCodes = [], chats = {}, messages = {};
     let adminCurrentTab = 'subscriptions';
     let refreshInterval = null, supportReplyTarget = null, currentChatId = null;
-    let subScanner = null;
-    let pendingOrderData = null; // Для временного хранения данных заказа при сканировании
+    let subScanner = null, entryScanner = null;
+    let pendingOrderData = null;
+    let isEntryScanCompleted = false;
 
     // ===== API =====
     async function readBin(id) {
@@ -174,7 +201,8 @@
                 headers: { 'X-Master-Key': JSONBIN_MASTER_KEY }
             });
             if (!r.ok) throw new Error('Ошибка чтения: ' + r.status);
-            return (await r.json()).record || {};
+            const data = await r.json();
+            return data.record || {};
         } catch(e) {
             console.error('Ошибка загрузки:', e);
             return {};
@@ -224,12 +252,141 @@
         return false;
     }
 
+    // ===== НОВОЕ СОХРАНЕНИЕ С ДВУМЯ БИНАМИ =====
     async function saveAll() {
         try {
+            // Сохраняем пользователей
             await writeBin(USERS_BIN_ID, { users });
-            await writeBin(ORDERS_BIN_ID, { orders, wallets, cards, promoCodes, chats, messages });
-        } catch(e) { console.error('❌ Ошибка сохранения в JSONBin:', e); }
+            
+            // Сохраняем все заказы в ORDERS_BIN_ID
+            await writeBin(ORDERS_BIN_ID, { 
+                orders, 
+                wallets, 
+                cards, 
+                promoCodes, 
+                chats, 
+                messages 
+            });
+            
+            // Дополнительно сохраняем подписки в отдельный бин
+            if (orders.subscriptions && orders.subscriptions.length) {
+                await writeBin(SUBSCRIPTIONS_BIN_ID, { subscriptions: orders.subscriptions });
+                console.log('✅ Абонементы сохранены в отдельный бин:', orders.subscriptions.length);
+            }
+        } catch(e) { 
+            console.error('❌ Ошибка сохранения в JSONBin:', e); 
+        }
         saveLocal();
+    }
+
+    // ===== НОВАЯ ЗАГРУЗКА С ДВУМЯ БИНАМИ =====
+    async function loadAll() {
+        try {
+            let uData = {}, oData = {}, sData = {};
+            
+            try {
+                uData = await readBin(USERS_BIN_ID);
+                oData = await readBin(ORDERS_BIN_ID);
+                // Загружаем подписки из отдельного бина
+                sData = await readBin(SUBSCRIPTIONS_BIN_ID);
+                console.log('📥 Загружены данные из JSONBin');
+            } catch(e) {
+                console.warn('⚠️ Ошибка загрузки из JSONBin:', e);
+                loadLocal();
+            }
+            
+            // Пользователи
+            if (uData.users) users = uData.users;
+            
+            // Заказы и всё остальное
+            if (oData.orders) orders = oData.orders;
+            if (oData.wallets) wallets = oData.wallets;
+            if (oData.cards) cards = oData.cards;
+            if (oData.promoCodes) promoCodes = oData.promoCodes;
+            if (oData.chats) chats = oData.chats;
+            if (oData.messages) messages = oData.messages;
+            
+            // Если есть отдельный бин с подписками - используем его (приоритет)
+            if (sData.subscriptions && sData.subscriptions.length > 0) {
+                orders.subscriptions = sData.subscriptions;
+                console.log('📥 Загружены абонементы из отдельного бина:', orders.subscriptions.length);
+            } else if (oData.orders && oData.orders.subscriptions && oData.orders.subscriptions.length > 0) {
+                // Если в основном бине есть подписки - используем их
+                orders.subscriptions = oData.orders.subscriptions;
+                console.log('📥 Загружены абонементы из основного бина:', orders.subscriptions.length);
+            }
+            
+            // Инициализация пустых массивов
+            if (!orders.food) orders.food = [];
+            if (!orders.cleaning) orders.cleaning = [];
+            if (!orders.massage) orders.massage = [];
+            if (!orders.legal) orders.legal = [];
+            if (!orders.court) orders.court = [];
+            if (!orders.applications) orders.applications = [];
+            if (!orders.vacancies) orders.vacancies = [];
+            if (!orders.roomVisits) orders.roomVisits = [];
+            if (!orders.passes) orders.passes = [];
+            if (!orders.subscriptions) orders.subscriptions = [];
+            if (!orders.supportTickets) orders.supportTickets = [];
+            
+            // Создаём кошельки для всех пользователей
+            users.forEach(u => {
+                if (!wallets[u.id]) {
+                    wallets[u.id] = { 
+                        balance: 0, 
+                        cardNumber: '0000 0000 0000 0000', 
+                        blocked: false, 
+                        blockReason: '', 
+                        blockExpiry: null, 
+                        transactions: [] 
+                    };
+                }
+            });
+            
+            // Админ по умолчанию
+            if (!users.some(u => u.id === '00000')) {
+                users.push({ 
+                    id: '00000', 
+                    fio: 'Администратор', 
+                    email: 'admin@ad.systems', 
+                    password: '31441537a', 
+                    role: 'admin', 
+                    status: 'Администратор', 
+                    banned: false, 
+                    banReason: '', 
+                    banExpiry: null 
+                });
+                wallets['00000'] = { 
+                    balance: 999999999, 
+                    cardNumber: '0000 0000 0000 0000', 
+                    blocked: false, 
+                    blockReason: '', 
+                    blockExpiry: null, 
+                    transactions: [] 
+                };
+                await saveAll();
+            }
+            
+            // Проверяем сессию
+            const session = sessionStorage.getItem('ad_session');
+            if (session) {
+                const p = JSON.parse(session);
+                const u = users.find(x => x.id === p.id);
+                if (u && !isBanned(u)) { 
+                    currentUser = u; 
+                    showEntryScan();
+                    return; 
+                }
+            }
+            
+            // Проверяем "Запомнить меня"
+            if (!checkRemember()) showAuth();
+            
+        } catch (e) {
+            console.error('Ошибка загрузки:', e);
+            showToast('❌ Ошибка загрузки данных');
+            showAuth();
+        }
     }
 
     // ===== ВСПОМОГАТЕЛЬНЫЕ =====
@@ -241,7 +398,27 @@
     function closeModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
     function getUser(id) { return users.find(u => u.id === id); }
     function getWallet(userId) { if (!wallets[userId]) wallets[userId] = { balance: 0, cardNumber: '0000 0000 0000 0000', blocked: false, blockReason: '', blockExpiry: null, transactions: [] }; return wallets[userId]; }
-    function isBanned(u) { if (!u || !u.banned) return false; if (u.banExpiry && u.banExpiry !== 'forever') { if (new Date(u.banExpiry) > new Date()) return true; u.banned = false; u.banReason = ''; u.banExpiry = null; saveAll(); return false; } return u.banExpiry === 'forever' || u.banned === true; }
+    function isBanned(u) { 
+        if (!u || !u.banned) return false; 
+        if (u.banExpiry && u.banExpiry !== 'forever') { 
+            if (new Date(u.banExpiry) > new Date()) return true; 
+            u.banned = false; 
+            u.banReason = ''; 
+            u.banExpiry = null; 
+            saveAll(); 
+            return false; 
+        } 
+        return u.banExpiry === 'forever' || u.banned === true; 
+    }
+    function getBanTimeLeft(u) {
+        if (!u || !u.banned || !u.banExpiry || u.banExpiry === 'forever') return null;
+        const diff = new Date(u.banExpiry) - new Date();
+        if (diff <= 0) return null;
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        return { days, hours, minutes };
+    }
     function statusText(s) { const map = { 'pending': 'На модерации', 'approved': 'Одобрен', 'rejected': 'Отклонён', 'active': 'Активен', 'expired': 'Истёк', 'closed': 'Закрыт', 'new': 'Новый', 'cooking': 'Готовится', 'delivering': 'В пути', 'done': 'Выполнено', 'accepted': 'Принят', 'processing': 'В работе', 'cancelled': 'Отменён', 'denied': 'Отказано', 'completed': 'Завершено' }; return map[s] || s; }
     function statusClass(s) { const map = { 'pending': 'pending', 'approved': 'approved', 'rejected': 'rejected', 'active': 'active', 'expired': 'cancelled', 'closed': 'closed', 'new': 'new', 'cooking': 'processing', 'delivering': 'processing', 'done': 'done', 'accepted': 'accepted', 'processing': 'processing', 'cancelled': 'cancelled', 'denied': 'denied', 'completed': 'done' }; return map[s] || 'new'; }
     function applyPromo(code, userId, service) {
@@ -259,7 +436,36 @@
     function calculateExpiry(value, unit) { const now = new Date(); switch(unit) { case 'minutes': now.setMinutes(now.getMinutes() + parseInt(value)); break; case 'hours': now.setHours(now.getHours() + parseInt(value)); break; case 'days': now.setDate(now.getDate() + parseInt(value)); break; case 'months': now.setMonth(now.getMonth() + parseInt(value)); break; case 'years': now.setFullYear(now.getFullYear() + parseInt(value)); break; default: now.setDate(now.getDate() + parseInt(value)); } return now.toLocaleString('ru-RU'); }
     function getUnitLabel(unit) { const map = { 'minutes': 'мин', 'hours': 'ч', 'days': 'дн', 'months': 'мес', 'years': 'лет' }; return map[unit] || 'дн'; }
 
-    // ===== НОВАЯ ФУНКЦИЯ: ПРОВЕРКА АБОНЕМЕНТА =====
+    // ===== ФУНКЦИЯ ДЛЯ ВКЛЮЧЕНИЯ ЯРКОСТИ =====
+    function increaseBrightness() {
+        try {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(stream => {
+                        const track = stream.getVideoTracks()[0];
+                        if (track && track.applyConstraints) {
+                            track.applyConstraints({ advanced: [{ brightness: 2.0 }] })
+                                .then(() => showToast('☀️ Яркость увеличена'))
+                                .catch(() => {});
+                        }
+                        stream.getTracks().forEach(t => t.stop());
+                    })
+                    .catch(() => {});
+            }
+        } catch(e) {}
+        
+        // Визуальный эффект
+        const overlay = document.createElement('div');
+        overlay.id = 'brightnessOverlay';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.15);pointer-events:none;z-index:9998;transition:all 0.5s ease;';
+        document.body.appendChild(overlay);
+        setTimeout(() => {
+            const el = document.getElementById('brightnessOverlay');
+            if (el) el.remove();
+        }, 3000);
+    }
+
+    // ===== ПРОВЕРКА АБОНЕМЕНТА =====
     function checkSubscription(userId, serviceType) {
         const activeSubs = orders.subscriptions.filter(s => 
             s.userId === userId && 
@@ -292,7 +498,7 @@
         return null;
     }
 
-    // ===== НОВАЯ ФУНКЦИЯ: ПРИМЕНЕНИЕ АБОНЕМЕНТА =====
+    // ===== ПРИМЕНЕНИЕ АБОНЕМЕНТА =====
     async function applySubscription(sub, serviceType, orderData) {
         if (!sub || !sub.remaining || !sub.remaining[serviceType]) return false;
         const rem = sub.remaining[serviceType];
@@ -309,14 +515,12 @@
             rem.usedTime = (rem.usedTime || 0) + (orderData.duration || 0);
         }
         
-        // Проверяем, не исчерпан ли абонемент
         let isExhausted = false;
         if (serviceType === 'food' && rem.usedOrders >= rem.maxOrders) isExhausted = true;
         if (serviceType === 'cleaning' && rem.usedCount >= rem.count) isExhausted = true;
         if (serviceType === 'massage' && rem.usedCount >= rem.count) isExhausted = true;
         
         if (isExhausted) {
-            // Проверяем, есть ли ещё доступные услуги в абонементе
             let hasAnyRemaining = false;
             for (const key of ['food', 'cleaning', 'massage']) {
                 if (sub.remaining[key]) {
@@ -337,7 +541,7 @@
         return true;
     }
 
-    // ===== ФУНКЦИЯ ДЛЯ ПОЛУЧЕНИЯ ИНФОРМАЦИИ ОБ АБОНЕМЕНТЕ =====
+    // ===== ИНФОРМАЦИЯ ОБ АБОНЕМЕНТЕ =====
     function getSubscriptionInfo(sub) {
         if (!sub) return '<div class="empty-state">Абонемент не найден</div>';
         
@@ -363,28 +567,34 @@
         if (sub.remaining) {
             if (sub.remaining.food) {
                 const r = sub.remaining.food;
+                const percent = Math.round(((r.maxOrders - r.usedOrders) / r.maxOrders) * 100);
                 html += `
                     <div class="balance-item">
                         <span>🍕 Еда</span>
                         <span>${r.usedOrders || 0}/${r.maxOrders} заказов | ${r.usedSum || 0}/${r.maxSum} ₽</span>
+                        <span style="font-size:0.7rem;color:${percent < 20 ? '#a14f4f' : '#27ae60'};">${percent}%</span>
                     </div>
                 `;
             }
             if (sub.remaining.cleaning) {
                 const r = sub.remaining.cleaning;
+                const percent = Math.round(((r.count - r.usedCount) / r.count) * 100);
                 html += `
                     <div class="balance-item">
                         <span>🧹 Уборка</span>
                         <span>${r.usedCount || 0}/${r.count} раз | ${r.usedTime || 0}/${r.freeTime} мин</span>
+                        <span style="font-size:0.7rem;color:${percent < 20 ? '#a14f4f' : '#27ae60'};">${percent}%</span>
                     </div>
                 `;
             }
             if (sub.remaining.massage) {
                 const r = sub.remaining.massage;
+                const percent = Math.round(((r.count - r.usedCount) / r.count) * 100);
                 html += `
                     <div class="balance-item">
                         <span>💆 Массаж</span>
                         <span>${r.usedCount || 0}/${r.count} сеансов | ${r.usedTime || 0}/${r.freeTime} мин</span>
+                        <span style="font-size:0.7rem;color:${percent < 20 ? '#a14f4f' : '#27ae60'};">${percent}%</span>
                     </div>
                 `;
             }
@@ -410,36 +620,108 @@
         return html;
     }
 
-    // ===== СКАНЕР ДЛЯ АБОНЕМЕНТОВ =====
-    function startSubScanner(callback) {
-        const readerDiv = document.getElementById('subScanner');
+    // ===== СКАНЕР ДЛЯ ВХОДА =====
+    function startEntryScanner() {
+        const readerDiv = document.getElementById('entryScanner');
         if (!readerDiv) return;
         readerDiv.innerHTML = '';
+        document.getElementById('entryScanStatus').textContent = '📷 Наведите камеру на QR-код';
+        document.getElementById('entryScanResult').innerHTML = '';
+        
         try {
-            subScanner = new Html5Qrcode("subScanner");
-            subScanner.start(
+            entryScanner = new Html5Qrcode("entryScanner");
+            entryScanner.start(
                 { facingMode: "environment" },
-                { fps: 10, qrbox: { width: 250, height: 250 } },
+                { fps: 15, qrbox: { width: 250, height: 250 } },
                 async function(decodedText) {
+                    document.getElementById('entryScanStatus').textContent = '✅ Код найден! Обработка...';
+                    
                     if (decodedText.startsWith('sub:')) {
                         const code = decodedText.replace('sub:', '');
                         const sub = orders.subscriptions.find(s => s.code === code);
-                        subScanner.stop();
+                        
                         if (sub) {
-                            if (callback) callback(sub);
-                            showToast('✅ Абонемент найден!');
-                            closeModal('modalScanSubscription');
+                            if (sub.userId === currentUser.id) {
+                                entryScanner.stop();
+                                isEntryScanCompleted = true;
+                                const resultDiv = document.getElementById('entryScanResult');
+                                resultDiv.innerHTML = `
+                                    <div style="background:#27ae60;color:#fff;padding:0.5rem;border-radius:12px;margin-top:0.5rem;">
+                                        ✅ Абонемент подтверждён!
+                                    </div>
+                                    ${getSubscriptionInfo(sub)}
+                                    <button class="btn-sm green" id="entryScanContinueBtn" style="margin-top:0.5rem;">✅ Продолжить</button>
+                                `;
+                                document.getElementById('entryScanContinueBtn')?.addEventListener('click', function() {
+                                    closeModal('modalEntryScan');
+                                    showMainAfterEntryScan();
+                                });
+                                showToast('✅ Абонемент найден!');
+                            } else {
+                                entryScanner.stop();
+                                const banDate = new Date();
+                                banDate.setDate(banDate.getDate() + 7);
+                                currentUser.banned = true;
+                                currentUser.banReason = 'Использование чужого абонемента при входе';
+                                currentUser.banExpiry = banDate.toISOString();
+                                await saveAll();
+                                
+                                document.getElementById('entryScanResult').innerHTML = `
+                                    <div style="background:#a14f4f;color:#fff;padding:0.5rem;border-radius:12px;margin-top:0.5rem;">
+                                        🚫 Аккаунт заблокирован на 7 дней за использование чужого абонемента!
+                                    </div>
+                                    <div class="ban-timer">До разблокировки: 7 дней</div>
+                                `;
+                                showToast('🚫 Аккаунт заблокирован на 7 дней!');
+                                setTimeout(() => {
+                                    sessionStorage.removeItem('ad_session');
+                                    localStorage.removeItem('ad_remember');
+                                    currentUser = null;
+                                    showAuth();
+                                }, 3000);
+                            }
                         } else {
+                            document.getElementById('entryScanStatus').textContent = '❌ Абонемент не найден';
                             showToast('❌ Абонемент не найден');
-                            document.getElementById('subScanResult').innerHTML = '<div class="empty-state">❌ Абонемент не найден</div>';
                         }
+                    } else if (decodedText === 'ADMIN_MASTER') {
+                        entryScanner.stop();
+                        closeModal('modalEntryScan');
+                        openModal('modalAdminCode');
                     } else {
-                        showToast('❌ Неверный QR-код абонемента');
+                        document.getElementById('entryScanStatus').textContent = '❌ Неверный QR-код';
+                        showToast('❌ Неверный QR-код');
                     }
                 },
                 function(err) {}
             );
-        } catch(e) { showToast('❌ Ошибка запуска сканера'); }
+        } catch(e) {
+            showToast('❌ Ошибка запуска сканера');
+            document.getElementById('entryScanStatus').textContent = '❌ Ошибка камеры';
+        }
+    }
+
+    function showMainAfterEntryScan() {
+        const authPage = document.getElementById('authPage');
+        const mainPage = document.getElementById('mainPage');
+        const panelsContainer = document.getElementById('panelsContainer');
+        const headerUserName = document.getElementById('headerUserName');
+        const headerUserRole = document.getElementById('headerUserRole');
+        const headerAvatar = document.getElementById('headerAvatar');
+
+        if (authPage) authPage.style.display = 'none';
+        if (mainPage) mainPage.classList.add('active');
+        if (panelsContainer) panelsContainer.classList.remove('active');
+        document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+
+        if (headerUserName && currentUser) headerUserName.textContent = currentUser.fio;
+        if (headerUserRole && currentUser) headerUserRole.textContent = currentUser.role === 'admin' ? '👑 Админ' : 'Пользователь';
+        if (headerAvatar && currentUser) headerAvatar.textContent = currentUser.fio.charAt(0).toUpperCase();
+
+        generateSections();
+        renderAll();
+        initButtons();
+        startAutoRefresh();
     }
 
     // ===== АВТОРИЗАЦИЯ =====
@@ -466,13 +748,24 @@
             const err = document.getElementById('loginError');
             const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === pass);
             if (!user) { if (err) { err.textContent = '❌ Неверный email или пароль'; err.classList.add('show'); } return; }
-            if (isBanned(user)) { if (err) { err.textContent = '🚫 Аккаунт забанен. Причина: ' + (user.banReason || '—'); err.classList.add('show'); } return; }
+            
+            if (isBanned(user)) {
+                const timeLeft = getBanTimeLeft(user);
+                let msg = '🚫 Аккаунт забанен. Причина: ' + (user.banReason || '—');
+                if (timeLeft) {
+                    msg += `\nОсталось: ${timeLeft.days} дн ${timeLeft.hours} ч ${timeLeft.minutes} мин`;
+                }
+                if (err) { err.textContent = msg; err.classList.add('show'); }
+                return;
+            }
+            
             if (err) err.classList.remove('show');
             currentUser = user;
             if (rem) localStorage.setItem('ad_remember', JSON.stringify({ id: user.id }));
             else localStorage.removeItem('ad_remember');
             sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
-            showMain();
+            
+            showEntryScan();
         });
     }
 
@@ -501,6 +794,29 @@
         });
     }
 
+    function showEntryScan() {
+        isEntryScanCompleted = false;
+        openModal('modalEntryScan');
+        setTimeout(() => {
+            startEntryScanner();
+            setTimeout(increaseBrightness, 500);
+        }, 500);
+    }
+
+    document.getElementById('skipEntryScan')?.addEventListener('click', function() {
+        if (entryScanner) { try { entryScanner.stop(); } catch(e) {} }
+        closeModal('modalEntryScan');
+        showMainAfterEntryScan();
+    });
+
+    document.getElementById('closeEntryScan')?.addEventListener('click', function() {
+        if (entryScanner) { try { entryScanner.stop(); } catch(e) {} }
+        closeModal('modalEntryScan');
+        showMainAfterEntryScan();
+    });
+
+    document.getElementById('brightnessToggle')?.addEventListener('click', increaseBrightness);
+
     function checkRemember() {
         const d = localStorage.getItem('ad_remember');
         if (!d) return false;
@@ -523,7 +839,7 @@
                         if (overlay) overlay.classList.remove('active');
                         currentUser = user;
                         sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
-                        showMain();
+                        showEntryScan();
                     };
                 }
                 const checkNo = document.getElementById('checkNo');
@@ -552,42 +868,14 @@
         if (refreshInterval) { clearInterval(refreshInterval); refreshInterval = null; }
     }
 
-    function showMain() {
-        const authPage = document.getElementById('authPage');
-        const mainPage = document.getElementById('mainPage');
-        const panelsContainer = document.getElementById('panelsContainer');
-        const headerUserName = document.getElementById('headerUserName');
-        const headerUserRole = document.getElementById('headerUserRole');
-        const headerAvatar = document.getElementById('headerAvatar');
-
-        if (authPage) authPage.style.display = 'none';
-        if (mainPage) mainPage.classList.add('active');
-        if (panelsContainer) panelsContainer.classList.remove('active');
-        document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
-
-        if (headerUserName && currentUser) headerUserName.textContent = currentUser.fio;
-        if (headerUserRole && currentUser) headerUserRole.textContent = currentUser.role === 'admin' ? '👑 Админ' : 'Пользователь';
-        if (headerAvatar && currentUser) headerAvatar.textContent = currentUser.fio.charAt(0).toUpperCase();
-
-        generateSections();
-        renderAll();
-        initButtons();
-        startAutoRefresh();
-
-        if (currentUser.role !== 'admin') {
-            setTimeout(() => {
-                openModal('modalScanQR');
-                startQRScanner();
-            }, 500);
-        }
-    }
-
     // ===== АВТООБНОВЛЕНИЕ =====
     function startAutoRefresh() {
         if (refreshInterval) clearInterval(refreshInterval);
         refreshInterval = setInterval(async function() {
             try {
                 const oData = await readBin(ORDERS_BIN_ID);
+                const sData = await readBin(SUBSCRIPTIONS_BIN_ID);
+                
                 if (oData.orders) {
                     orders = oData.orders;
                     if (!orders.food) orders.food = [];
@@ -599,14 +887,20 @@
                     if (!orders.vacancies) orders.vacancies = [];
                     if (!orders.roomVisits) orders.roomVisits = [];
                     if (!orders.passes) orders.passes = [];
-                    if (!orders.subscriptions) orders.subscriptions = [];
                     if (!orders.supportTickets) orders.supportTickets = [];
                 }
+                
+                // Обновляем подписки из отдельного бина
+                if (sData.subscriptions) {
+                    orders.subscriptions = sData.subscriptions;
+                }
+                
                 if (oData.wallets) wallets = oData.wallets;
                 if (oData.cards) cards = oData.cards;
                 if (oData.promoCodes) promoCodes = oData.promoCodes;
                 if (oData.chats) chats = oData.chats;
                 if (oData.messages) messages = oData.messages;
+                
                 renderAll();
                 const panelsContainer = document.getElementById('panelsContainer');
                 if (panelsContainer && panelsContainer.classList.contains('active')) {
@@ -621,7 +915,7 @@
                     }
                 }
             } catch(e) { console.error('❌ Ошибка автообновления:', e); }
-        }, 1000);
+        }, 2000);
     }
 
     // ===== НАВИГАЦИЯ =====
@@ -741,6 +1035,9 @@
                     if (this.id === 'closeScanSubscription' && subScanner) {
                         try { subScanner.stop(); } catch(e) {}
                     }
+                    if (this.id === 'closeEntryScan' && entryScanner) {
+                        try { entryScanner.stop(); } catch(e) {}
+                    }
                 });
             }
         });
@@ -751,6 +1048,9 @@
                         this.style.display = 'none';
                         if (this.id === 'modalScanSubscription' && subScanner) {
                             try { subScanner.stop(); } catch(e) {}
+                        }
+                        if (this.id === 'modalEntryScan' && entryScanner) {
+                            try { entryScanner.stop(); } catch(e) {}
                         }
                     }
                 });
@@ -784,7 +1084,6 @@
             closeModal('modalAgreement');
         });
 
-        // Мессенджер
         document.getElementById('sendMessageBtn')?.addEventListener('click', sendMessage);
         document.getElementById('messageInput')?.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') sendMessage();
@@ -830,12 +1129,10 @@
             this.value = '';
         });
 
-        // Пропуск сканирования абонемента
         document.getElementById('skipSubScanBtn')?.addEventListener('click', function() {
             closeModal('modalScanSubscription');
             if (subScanner) { try { subScanner.stop(); } catch(e) {} }
             if (pendingOrderData) {
-                // Отправляем заказ без абонемента
                 finalizeOrder(pendingOrderData);
                 pendingOrderData = null;
             }
@@ -852,7 +1149,7 @@
         saveAll().then(() => renderMessages());
     }
 
-    // ===== ФУНКЦИЯ ДЛЯ ФИНАЛИЗАЦИИ ЗАКАЗА ПОСЛЕ СКАНА =====
+    // ===== ФИНАЛИЗАЦИЯ ЗАКАЗА =====
     async function finalizeOrder(orderData) {
         const { type, formData, sub } = orderData;
         
@@ -980,13 +1277,13 @@
             showPanel('admin');
             showToast('✅ Доступ разрешён');
         } else if (currentUser) {
-            currentUser.banned = true;
-            currentUser.banReason = 'Попытка взлома админа';
             const banDate = new Date();
-            banDate.setMonth(banDate.getMonth() + 1);
+            banDate.setDate(banDate.getDate() + 7);
+            currentUser.banned = true;
+            currentUser.banReason = 'Попытка взлома админки (неправильный код)';
             currentUser.banExpiry = banDate.toISOString();
             saveAll();
-            showToast('🚫 Аккаунт заблокирован на месяц за попытку взлома');
+            showToast('🚫 Аккаунт заблокирован на 7 дней за попытку взлома');
             setTimeout(() => {
                 sessionStorage.removeItem('ad_session');
                 localStorage.removeItem('ad_remember');
@@ -998,7 +1295,7 @@
     });
 
     // ================================================================
-    // ОБНОВЛЕННЫЕ ОБРАБОТЧИКИ ФОРМ С ИНТЕГРАЦИЕЙ АБОНЕМЕНТОВ
+    // ОБРАБОТЧИКИ ФОРМ
     // ================================================================
     
     // ЕДА
@@ -1012,11 +1309,9 @@
         
         if (!dish || !room || !sum) { showToast('❌ Заполните все поля'); return; }
         
-        // Проверяем, есть ли у пользователя активный абонемент на еду
         const sub = checkSubscription(currentUser.id, 'food');
         
         if (sub) {
-            // Есть абонемент - запрашиваем сканирование
             pendingOrderData = {
                 type: 'food',
                 formData: { dish, room, qty, sum, promo },
@@ -1040,10 +1335,8 @@
                 }
             }), 500);
         } else {
-            // Нет абонемента - отправляем обычный заказ
             if (promo) {
                 const discount = applyPromo(promo, currentUser.id, 'food');
-                // ... обработка промокода
             }
             const newOrder = {
                 id: genSid('FOOD'),
@@ -1197,7 +1490,42 @@
         }
     });
 
-    // Остальные формы (без изменений)...
+    // ===== СКАНЕР ДЛЯ АБОНЕМЕНТОВ =====
+    function startSubScanner(callback) {
+        const readerDiv = document.getElementById('subScanner');
+        if (!readerDiv) return;
+        readerDiv.innerHTML = '';
+        try {
+            subScanner = new Html5Qrcode("subScanner");
+            subScanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 250, height: 250 } },
+                async function(decodedText) {
+                    if (decodedText.startsWith('sub:')) {
+                        const code = decodedText.replace('sub:', '');
+                        const sub = orders.subscriptions.find(s => s.code === code);
+                        subScanner.stop();
+                        if (sub) {
+                            if (callback) callback(sub);
+                            showToast('✅ Абонемент найден!');
+                            closeModal('modalScanSubscription');
+                        } else {
+                            showToast('❌ Абонемент не найден');
+                            document.getElementById('subScanResult').innerHTML = '<div class="empty-state">❌ Абонемент не найден</div>';
+                        }
+                    } else {
+                        showToast('❌ Неверный QR-код абонемента');
+                    }
+                },
+                function(err) {}
+            );
+        } catch(e) { showToast('❌ Ошибка запуска сканера'); }
+    }
+
+    // ================================================================
+    // ОСТАЛЬНЫЕ ОБРАБОТЧИКИ
+    // ================================================================
+    
     // Вакансия
     document.getElementById('formVacancy')?.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -1339,8 +1667,103 @@
         this.reset();
     });
 
+    // Пропуска
+    document.getElementById('formPassOrder')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const fio = document.getElementById('passFio').value.trim();
+        const address = document.getElementById('passAddress').value.trim();
+        const purpose = document.getElementById('passPurpose').value.trim();
+        const duration = parseInt(document.getElementById('passDuration').value) || 1;
+        const unit = document.getElementById('passDurationUnit').value || 'days';
+        if (!fio || !address || !purpose) { showToast('❌ Заполните все поля'); return; }
+        const passId = genSid('PASS');
+        const newPass = {
+            id: passId, code: passId, userId: currentUser.id, userFio: currentUser.fio,
+            fio, address, purpose, duration, durationUnit: unit,
+            status: 'active', createdAt: now(),
+            validUntil: calculateExpiry(duration, unit),
+            visits: [], actions: [{ action: 'Создан', time: now(), details: `Срок ${duration} ${getUnitLabel(unit)}` }],
+            closeReason: '', tempCloseReason: '', tempCloseUntil: ''
+        };
+        if (!orders.passes) orders.passes = [];
+        orders.passes.push(newPass);
+        await saveAll();
+        renderAll();
+        showToast('✅ Пропуск создан! QR-код готов.');
+        closeModal('modalPassOrder');
+        this.reset();
+    });
+
+    // Абонементы
+    document.getElementById('formSubscriptionOrder')?.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const duration = parseInt(document.getElementById('subDuration').value) || 30;
+        const services = Array.from(document.querySelectorAll('[data-sub-service]:checked')).map(cb => cb.value);
+        if (!services.length) { showToast('❌ Выберите хотя бы одну услугу'); return; }
+        let extraInfo = '', params = {};
+        if (services.includes('food')) {
+            const maxOrders = document.getElementById('foodMaxOrders').value;
+            const maxSum = document.getElementById('foodMaxSum').value;
+            params.food = { maxOrders: parseInt(maxOrders) || 0, maxSum: parseInt(maxSum) || 0, usedOrders: 0, usedSum: 0 };
+            extraInfo += `🍕 Еда: ${maxOrders || '—'} заказов, ${maxSum || '—'} ₽; `;
+        }
+        if (services.includes('work')) {
+            const time = document.getElementById('workTimeFirst').value;
+            params.work = { timeFirst: parseInt(time) || 0 };
+            extraInfo += `💼 Работа: ${time || '—'} ч; `;
+        }
+        if (services.includes('cleaning')) {
+            const freeTime = document.getElementById('cleanFreeTime').value;
+            const count = document.getElementById('cleanCount').value;
+            params.cleaning = { freeTime: parseInt(freeTime) || 0, count: parseInt(count) || 0, usedCount: 0, usedTime: 0 };
+            extraInfo += `🧹 Уборка: ${freeTime || '—'} мин, ${count || '—'} раз; `;
+        }
+        if (services.includes('massage')) {
+            const freeTime = document.getElementById('massageFreeTime').value;
+            const sessionTime = document.getElementById('massageSessionTime').value;
+            const count = document.getElementById('massageCount').value;
+            params.massage = { freeTime: parseInt(freeTime) || 0, sessionTime: parseInt(sessionTime) || 0, count: parseInt(count) || 0, usedCount: 0, usedTime: 0 };
+            extraInfo += `💆 Массаж: ${freeTime || '—'} мин, сеанс ${sessionTime || '—'} мин, ${count || '—'} раз; `;
+        }
+        const subId = genSid('SUB');
+        const newSub = {
+            id: subId, 
+            code: subId, 
+            userId: currentUser.id, 
+            userFio: currentUser.fio,
+            services, 
+            duration, 
+            params, 
+            remaining: JSON.parse(JSON.stringify(params)),
+            extraInfo, 
+            status: 'pending', 
+            createdAt: now(),
+            validUntil: new Date(Date.now() + duration * 86400000).toLocaleString('ru-RU'),
+            price: null, 
+            adminComment: '', 
+            replyHours: 24, 
+            closeReason: '', 
+            closedAt: null
+        };
+        
+        console.log('📝 Создаём новый абонемент:', newSub);
+        
+        if (!orders.subscriptions) orders.subscriptions = [];
+        orders.subscriptions.push(newSub);
+        
+        console.log('📊 Всего абонементов:', orders.subscriptions.length);
+        
+        await saveAll();
+        renderAll();
+        showToast('✅ Заявка на абонемент отправлена!');
+        closeModal('modalSubscriptionOrder');
+        this.reset();
+        document.getElementById('subServiceParams').style.display = 'none';
+        document.querySelectorAll('[data-sub-service]').forEach(cb => cb.checked = false);
+    });
+
     // ================================================================
-    // ОСТАЛЬНЫЕ РЕНДЕРЫ (без изменений)
+    // РЕНДЕРЫ
     // ================================================================
     function renderFood() {
         const container = document.getElementById('foodContainer');
@@ -1355,8 +1778,7 @@
                 <div class="card-detail"><strong>Комната:</strong> ${o.room}</div>
                 <div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>
                 <div class="card-detail"><strong>Сумма:</strong> ${o.sum || '—'} ₽</div>
-                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу</strong></div>` : ''}
-                ${o.subscriptionCode ? `<div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">Абонемент: ${o.subscriptionCode}</div>` : ''}
+                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу ${o.subscriptionCode}</strong></div>` : ''}
                 <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time}</div>
             </div>
         `).join('');
@@ -1376,8 +1798,7 @@
                 <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
                 <div class="card-detail"><strong>Время уборки:</strong> ${o.minutes} мин</div>
                 <div class="card-detail"><strong>Количество:</strong> ${o.count} раз</div>
-                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу</strong></div>` : ''}
-                ${o.subscriptionCode ? `<div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">Абонемент: ${o.subscriptionCode}</div>` : ''}
+                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу ${o.subscriptionCode}</strong></div>` : ''}
                 <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
             </div>
         `).join('');
@@ -1398,8 +1819,7 @@
                 <div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>
                 <div class="card-detail"><strong>Сеансов:</strong> ${o.count}</div>
                 <div class="card-detail"><strong>Пожелания:</strong> ${o.note || '—'}</div>
-                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу</strong></div>` : ''}
-                ${o.subscriptionCode ? `<div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">Абонемент: ${o.subscriptionCode}</div>` : ''}
+                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу ${o.subscriptionCode}</strong></div>` : ''}
                 <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
             </div>
         `).join('');
@@ -1617,33 +2037,6 @@
         `).join('');
     }
 
-    // ===== ПРОПУСКА =====
-    document.getElementById('formPassOrder')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fio = document.getElementById('passFio').value.trim();
-        const address = document.getElementById('passAddress').value.trim();
-        const purpose = document.getElementById('passPurpose').value.trim();
-        const duration = parseInt(document.getElementById('passDuration').value) || 1;
-        const unit = document.getElementById('passDurationUnit').value || 'days';
-        if (!fio || !address || !purpose) { showToast('❌ Заполните все поля'); return; }
-        const passId = genSid('PASS');
-        const newPass = {
-            id: passId, code: passId, userId: currentUser.id, userFio: currentUser.fio,
-            fio, address, purpose, duration, durationUnit: unit,
-            status: 'active', createdAt: now(),
-            validUntil: calculateExpiry(duration, unit),
-            visits: [], actions: [{ action: 'Создан', time: now(), details: `Срок ${duration} ${getUnitLabel(unit)}` }],
-            closeReason: '', tempCloseReason: '', tempCloseUntil: ''
-        };
-        if (!orders.passes) orders.passes = [];
-        orders.passes.push(newPass);
-        await saveAll();
-        renderAll();
-        showToast('✅ Пропуск создан! QR-код готов.');
-        closeModal('modalPassOrder');
-        this.reset();
-    });
-
     function renderPass() {
         const container = document.getElementById('passContainer');
         if (!container) return;
@@ -1706,56 +2099,6 @@
         });
     }
 
-    // ===== АБОНЕМЕНТЫ =====
-    document.getElementById('formSubscriptionOrder')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const duration = parseInt(document.getElementById('subDuration').value) || 30;
-        const services = Array.from(document.querySelectorAll('[data-sub-service]:checked')).map(cb => cb.value);
-        if (!services.length) { showToast('❌ Выберите хотя бы одну услугу'); return; }
-        let extraInfo = '', params = {};
-        if (services.includes('food')) {
-            const maxOrders = document.getElementById('foodMaxOrders').value;
-            const maxSum = document.getElementById('foodMaxSum').value;
-            params.food = { maxOrders: parseInt(maxOrders) || 0, maxSum: parseInt(maxSum) || 0, usedOrders: 0, usedSum: 0 };
-            extraInfo += `🍕 Еда: ${maxOrders || '—'} заказов, ${maxSum || '—'} ₽; `;
-        }
-        if (services.includes('work')) {
-            const time = document.getElementById('workTimeFirst').value;
-            params.work = { timeFirst: parseInt(time) || 0 };
-            extraInfo += `💼 Работа: ${time || '—'} ч; `;
-        }
-        if (services.includes('cleaning')) {
-            const freeTime = document.getElementById('cleanFreeTime').value;
-            const count = document.getElementById('cleanCount').value;
-            params.cleaning = { freeTime: parseInt(freeTime) || 0, count: parseInt(count) || 0, usedCount: 0, usedTime: 0 };
-            extraInfo += `🧹 Уборка: ${freeTime || '—'} мин, ${count || '—'} раз; `;
-        }
-        if (services.includes('massage')) {
-            const freeTime = document.getElementById('massageFreeTime').value;
-            const sessionTime = document.getElementById('massageSessionTime').value;
-            const count = document.getElementById('massageCount').value;
-            params.massage = { freeTime: parseInt(freeTime) || 0, sessionTime: parseInt(sessionTime) || 0, count: parseInt(count) || 0, usedCount: 0, usedTime: 0 };
-            extraInfo += `💆 Массаж: ${freeTime || '—'} мин, сеанс ${sessionTime || '—'} мин, ${count || '—'} раз; `;
-        }
-        const subId = genSid('SUB');
-        const newSub = {
-            id: subId, code: subId, userId: currentUser.id, userFio: currentUser.fio,
-            services, duration, params, remaining: JSON.parse(JSON.stringify(params)),
-            extraInfo, status: 'pending', createdAt: now(),
-            validUntil: new Date(Date.now() + duration * 86400000).toLocaleString('ru-RU'),
-            price: null, adminComment: '', replyHours: 24, closeReason: '', closedAt: null
-        };
-        if (!orders.subscriptions) orders.subscriptions = [];
-        orders.subscriptions.push(newSub);
-        await saveAll();
-        renderAll();
-        showToast('✅ Заявка на абонемент отправлена!');
-        closeModal('modalSubscriptionOrder');
-        this.reset();
-        document.getElementById('subServiceParams').style.display = 'none';
-        document.querySelectorAll('[data-sub-service]').forEach(cb => cb.checked = false);
-    });
-
     function renderSubscriptions() {
         const container = document.getElementById('subscriptionContainer');
         if (!container) return;
@@ -1774,9 +2117,21 @@
             else if (s.status === 'rejected') statusHtml = '<span class="card-status status-rejected">❌ Отклонён</span>';
             let remainingHtml = '';
             if (s.remaining) {
-                if (s.remaining.food) remainingHtml += `<div class="card-detail">🍕 Еда: ${s.remaining.food.usedOrders||0}/${s.remaining.food.maxOrders} заказов, ${s.remaining.food.usedSum||0}/${s.remaining.food.maxSum} ₽</div>`;
-                if (s.remaining.cleaning) remainingHtml += `<div class="card-detail">🧹 Уборка: ${s.remaining.cleaning.usedCount||0}/${s.remaining.cleaning.count}, время ${s.remaining.cleaning.usedTime||0}/${s.remaining.cleaning.freeTime} мин</div>`;
-                if (s.remaining.massage) remainingHtml += `<div class="card-detail">💆 Массаж: ${s.remaining.massage.usedCount||0}/${s.remaining.massage.count} сеансов, время ${s.remaining.massage.usedTime||0}/${s.remaining.massage.freeTime} мин</div>`;
+                if (s.remaining.food) {
+                    const r = s.remaining.food;
+                    const pct = r.maxOrders > 0 ? Math.round(((r.maxOrders - r.usedOrders) / r.maxOrders) * 100) : 0;
+                    remainingHtml += `<div class="card-detail">🍕 Еда: ${r.usedOrders||0}/${r.maxOrders} заказов | ${r.usedSum||0}/${r.maxSum} ₽ <span style="color:${pct < 20 ? '#a14f4f' : '#27ae60'};">(${pct}%)</span></div>`;
+                }
+                if (s.remaining.cleaning) {
+                    const r = s.remaining.cleaning;
+                    const pct = r.count > 0 ? Math.round(((r.count - r.usedCount) / r.count) * 100) : 0;
+                    remainingHtml += `<div class="card-detail">🧹 Уборка: ${r.usedCount||0}/${r.count} раз | ${r.usedTime||0}/${r.freeTime} мин <span style="color:${pct < 20 ? '#a14f4f' : '#27ae60'};">(${pct}%)</span></div>`;
+                }
+                if (s.remaining.massage) {
+                    const r = s.remaining.massage;
+                    const pct = r.count > 0 ? Math.round(((r.count - r.usedCount) / r.count) * 100) : 0;
+                    remainingHtml += `<div class="card-detail">💆 Массаж: ${r.usedCount||0}/${r.count} сеансов | ${r.usedTime||0}/${r.freeTime} мин <span style="color:${pct < 20 ? '#a14f4f' : '#27ae60'};">(${pct}%)</span></div>`;
+                }
             }
             return `
                 <div class="card">
@@ -1818,7 +2173,6 @@
         });
     }
 
-    // ===== ФУНКЦИЯ ДЛЯ ПРОСМОТРА АБОНЕМЕНТА =====
     window.viewSubscriptionInfo = function(code) {
         const sub = orders.subscriptions.find(s => s.code === code);
         if (!sub) { showToast('❌ Абонемент не найден'); return; }
@@ -1826,6 +2180,141 @@
         if (content) content.innerHTML = getSubscriptionInfo(sub);
         openModal('modalViewSubscription');
     };
+
+    // ===== МЕССЕНДЖЕР =====
+    function renderMessenger() {
+        const container = document.getElementById('messengerChats');
+        if (!container) return;
+        const chatIds = Object.keys(chats).filter(id => chats[id].includes(currentUser.id));
+        const otherUsers = users.filter(u => u.id !== currentUser.id && u.id !== '00000');
+        let html = '<h3>Мои чаты</h3><div class="cards-grid">';
+        if (chatIds.length === 0) { html += '<div class="empty-state">Нет чатов</div>'; }
+        else {
+            chatIds.forEach(chatId => {
+                const partnerId = chats[chatId].find(id => id !== currentUser.id);
+                const partner = getUser(partnerId);
+                const lastMsg = messages[chatId] && messages[chatId].length ? messages[chatId][messages[chatId].length - 1] : null;
+                html += `
+                    <div class="card" data-chat="${chatId}">
+                        <div class="card-header"><span class="card-id">${partner ? partner.fio : 'Неизвестный'}</span><span style="font-size:.7rem;color:#8b97a8;">${lastMsg ? lastMsg.time : ''}</span></div>
+                        <div class="card-detail" style="font-size:.8rem;">${lastMsg ? lastMsg.text : 'Нет сообщений'}</div>
+                    </div>
+                `;
+            });
+        }
+        html += '</div><h3>Начать новый чат</h3><div class="cards-grid">';
+        otherUsers.forEach(u => {
+            html += `
+                <div class="card" data-newchat="${u.id}">
+                    <div class="card-header"><span class="card-id">${u.fio}</span></div>
+                    <div class="card-detail">${u.email}</div>
+                    <button class="btn-sm gold">💬 Написать</button>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+        container.querySelectorAll('[data-chat]').forEach(el => {
+            if (el) {
+                el.addEventListener('click', function() { openChat(this.dataset.chat); });
+            }
+        });
+        container.querySelectorAll('[data-newchat]').forEach(el => {
+            if (el) {
+                el.addEventListener('click', function() {
+                    const userId = this.dataset.newchat;
+                    let existing = null;
+                    for (const [cid, participants] of Object.entries(chats)) {
+                        if (participants.includes(currentUser.id) && participants.includes(userId)) { existing = cid; break; }
+                    }
+                    if (existing) openChat(existing);
+                    else {
+                        const newId = 'chat_' + Date.now();
+                        chats[newId] = [currentUser.id, userId];
+                        messages[newId] = [];
+                        saveAll().then(() => openChat(newId));
+                    }
+                });
+            }
+        });
+    }
+
+    function openChat(chatId) {
+        currentChatId = chatId;
+        document.getElementById('messengerChats').style.display = 'none';
+        document.getElementById('messengerChatWindow').style.display = 'block';
+        renderMessages();
+    }
+
+    function renderMessages() {
+        if (!currentChatId) return;
+        const msgs = messages[currentChatId] || [];
+        const participants = chats[currentChatId] || [];
+        const partnerId = participants.find(id => id !== currentUser.id);
+        const partner = getUser(partnerId);
+        document.getElementById('chatPartnerName').textContent = partner ? partner.fio : 'Собеседник';
+        const area = document.getElementById('messageArea');
+        if (!area) return;
+        area.innerHTML = msgs.map(m => `
+            <div class="message ${m.userId === currentUser.id ? 'own' : 'other'}">
+                <div class="bubble">${m.text}${m.file ? ` <a href="${m.file}" target="_blank">📎</a>` : ''}
+                    <span class="time">${m.time}</span>
+                </div>
+            </div>
+        `).join('');
+        area.scrollTop = area.scrollHeight;
+    }
+
+    // ===== ИСТОРИЯ =====
+    function renderHistory() {
+        const container = document.getElementById('historyContainer');
+        if (!container) return;
+        let allOrders = [];
+        if (orders.food) orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
+        if (orders.cleaning) orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
+        if (orders.applications) orders.applications.forEach(o => allOrders.push({ ...o, typeLabel: '💼 Работа' }));
+        if (orders.massage) orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
+        if (orders.legal) orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
+        if (orders.court) orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
+        if (orders.roomVisits) orders.roomVisits.forEach(o => allOrders.push({ ...o, typeLabel: '🚪 Посещение' }));
+        if (orders.passes) orders.passes.forEach(o => allOrders.push({ ...o, typeLabel: '🎫 Пропуск' }));
+        if (orders.subscriptions) orders.subscriptions.forEach(o => allOrders.push({ ...o, typeLabel: '📅 Абонемент' }));
+        if (currentUser.role !== 'admin') allOrders = allOrders.filter(o => o.userId === currentUser.id);
+        const typeF = document.getElementById('historyTypeFilter')?.value || 'all';
+        const statF = document.getElementById('historyStatusFilter')?.value || 'all';
+        const search = document.getElementById('historySearch')?.value?.trim()?.toLowerCase() || '';
+        if (typeF !== 'all') allOrders = allOrders.filter(o => o.type === typeF);
+        if (statF !== 'all') allOrders = allOrders.filter(o => o.status === statF);
+        if (search) allOrders = allOrders.filter(o => o.id?.toLowerCase().includes(search));
+        allOrders.sort((a, b) => (a.time || a.timeCreated || a.createdAt || '').localeCompare(b.time || b.timeCreated || b.createdAt || '') * -1);
+        if (!allOrders.length) { container.innerHTML = '<div class="empty-state">Нет заказов</div>'; return; }
+        container.innerHTML = allOrders.map(o => `
+            <div class="card">
+                <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span></div>
+                <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
+                ${currentUser.role === 'admin' ? `<div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (${o.userId})</div>` : ''}
+                ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
+                ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
+                ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
+                ${o.sum ? `<div class="card-detail"><strong>Сумма:</strong> ${o.sum} ₽</div>` : ''}
+                ${o.minutes ? `<div class="card-detail"><strong>Время уборки:</strong> ${o.minutes} мин</div>` : ''}
+                ${o.count ? `<div class="card-detail"><strong>Количество:</strong> ${o.count}</div>` : ''}
+                ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
+                ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
+                ${o.services ? `<div class="card-detail"><strong>Услуги:</strong> ${o.services.join(', ')}</div>` : ''}
+                ${o.validUntil ? `<div class="card-detail"><strong>Действует до:</strong> ${o.validUntil}</div>` : ''}
+                ${o.price ? `<div class="card-detail"><strong>Цена:</strong> ${o.price} ₽</div>` : ''}
+                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу ${o.subscriptionCode}</strong></div>` : ''}
+                ${o.closeReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Закрыт:</strong> ${o.closeReason}</div>` : ''}
+                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time || o.timeCreated || o.createdAt || ''}</div>
+            </div>
+        `).join('');
+    }
+
+    document.getElementById('historyTypeFilter')?.addEventListener('change', renderHistory);
+    document.getElementById('historyStatusFilter')?.addEventListener('change', renderHistory);
+    document.getElementById('historySearchBtn')?.addEventListener('click', renderHistory);
+    document.getElementById('historySearch')?.addEventListener('keyup', function(e) { if (e.key === 'Enter') renderHistory(); });
 
     // ================================================================
     // АДМИН-ПАНЕЛЬ
@@ -1846,7 +2335,6 @@
         
         let content = '';
         
-        // Если вкладка "Мой код" - показываем только код
         if (adminCurrentTab === 'mycode') {
             content = `
                 <div class="admin-code-section">
@@ -1876,7 +2364,6 @@
             return;
         }
         
-        // Стандартный рендер для остальных вкладок
         let masterCodeHtml = `
             <div style="background:#fef3c7;padding:1rem;border-radius:16px;margin-bottom:1rem;border:1px solid #d4af37;">
                 <p><strong>👑 Ваш личный код:</strong> 
@@ -1902,13 +2389,11 @@
         bindAdminEvents(container);
     }
 
-    // Функция копирования кода
     window.copyCode = function(code) {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(code).then(() => {
                 showToast('✅ Код скопирован!');
             }).catch(() => {
-                // Fallback
                 const textArea = document.createElement('textarea');
                 textArea.value = code;
                 document.body.appendChild(textArea);
@@ -1928,6 +2413,7 @@
         }
     };
 
+    // ===== АДМИН-РЕНДЕРЫ =====
     function renderAdminSubscriptions() {
         if (!orders.subscriptions) orders.subscriptions = [];
         const subs = orders.subscriptions;
@@ -2068,16 +2554,24 @@
         let html = '<h3>👥 Все пользователи</h3><div class="cards-grid">';
         users.forEach(u => {
             const wallet = getWallet(u.id);
+            const timeLeft = getBanTimeLeft(u);
+            let banInfo = '';
+            if (isBanned(u)) {
+                banInfo = `🚫 Забанен: ${u.banReason}`;
+                if (timeLeft) {
+                    banInfo += ` (${timeLeft.days}д ${timeLeft.hours}ч ${timeLeft.minutes}м)`;
+                }
+            }
             html += `
                 <div class="card">
                     <div class="card-header"><span class="card-id">${u.id}</span><span style="font-size:0.7rem;color:${u.role === 'admin' ? '#b8962e' : '#8b97a8'};">${u.role || 'user'}</span></div>
                     <div class="card-detail"><strong>${u.fio}</strong></div>
                     <div class="card-detail">${u.email}</div>
                     <div class="card-detail"><strong>Баланс:</strong> ${wallet.balance} ₽</div>
-                    ${isBanned(u) ? `<div class="card-detail" style="color:#a14f4f;">🚫 Забанен: ${u.banReason}</div>` : ''}
+                    ${banInfo ? `<div class="card-detail" style="color:#a14f4f;">${banInfo}</div>` : ''}
                     <div class="card-actions">
                         ${u.id !== '00000' && u.role !== 'admin' ? `
-                            <button class="btn-sm danger" data-user-ban="${u.id}">🚫 Забанить</button>
+                            ${!isBanned(u) ? `<button class="btn-sm danger" data-user-ban="${u.id}">🚫 Забанить</button>` : ''}
                             ${isBanned(u) ? `<button class="btn-sm green" data-user-unban="${u.id}">🔓 Разбанить</button>` : ''}
                         ` : ''}
                     </div>
@@ -2350,141 +2844,6 @@
         }
     });
 
-    // ===== МЕССЕНДЖЕР =====
-    function renderMessenger() {
-        const container = document.getElementById('messengerChats');
-        if (!container) return;
-        const chatIds = Object.keys(chats).filter(id => chats[id].includes(currentUser.id));
-        const otherUsers = users.filter(u => u.id !== currentUser.id && u.id !== '00000');
-        let html = '<h3>Мои чаты</h3><div class="cards-grid">';
-        if (chatIds.length === 0) { html += '<div class="empty-state">Нет чатов</div>'; }
-        else {
-            chatIds.forEach(chatId => {
-                const partnerId = chats[chatId].find(id => id !== currentUser.id);
-                const partner = getUser(partnerId);
-                const lastMsg = messages[chatId] && messages[chatId].length ? messages[chatId][messages[chatId].length - 1] : null;
-                html += `
-                    <div class="card" data-chat="${chatId}">
-                        <div class="card-header"><span class="card-id">${partner ? partner.fio : 'Неизвестный'}</span><span style="font-size:.7rem;color:#8b97a8;">${lastMsg ? lastMsg.time : ''}</span></div>
-                        <div class="card-detail" style="font-size:.8rem;">${lastMsg ? lastMsg.text : 'Нет сообщений'}</div>
-                    </div>
-                `;
-            });
-        }
-        html += '</div><h3>Начать новый чат</h3><div class="cards-grid">';
-        otherUsers.forEach(u => {
-            html += `
-                <div class="card" data-newchat="${u.id}">
-                    <div class="card-header"><span class="card-id">${u.fio}</span></div>
-                    <div class="card-detail">${u.email}</div>
-                    <button class="btn-sm gold">💬 Написать</button>
-                </div>
-            `;
-        });
-        html += '</div>';
-        container.innerHTML = html;
-        container.querySelectorAll('[data-chat]').forEach(el => {
-            if (el) {
-                el.addEventListener('click', function() { openChat(this.dataset.chat); });
-            }
-        });
-        container.querySelectorAll('[data-newchat]').forEach(el => {
-            if (el) {
-                el.addEventListener('click', function() {
-                    const userId = this.dataset.newchat;
-                    let existing = null;
-                    for (const [cid, participants] of Object.entries(chats)) {
-                        if (participants.includes(currentUser.id) && participants.includes(userId)) { existing = cid; break; }
-                    }
-                    if (existing) openChat(existing);
-                    else {
-                        const newId = 'chat_' + Date.now();
-                        chats[newId] = [currentUser.id, userId];
-                        messages[newId] = [];
-                        saveAll().then(() => openChat(newId));
-                    }
-                });
-            }
-        });
-    }
-
-    function openChat(chatId) {
-        currentChatId = chatId;
-        document.getElementById('messengerChats').style.display = 'none';
-        document.getElementById('messengerChatWindow').style.display = 'block';
-        renderMessages();
-    }
-
-    function renderMessages() {
-        if (!currentChatId) return;
-        const msgs = messages[currentChatId] || [];
-        const participants = chats[currentChatId] || [];
-        const partnerId = participants.find(id => id !== currentUser.id);
-        const partner = getUser(partnerId);
-        document.getElementById('chatPartnerName').textContent = partner ? partner.fio : 'Собеседник';
-        const area = document.getElementById('messageArea');
-        if (!area) return;
-        area.innerHTML = msgs.map(m => `
-            <div class="message ${m.userId === currentUser.id ? 'own' : 'other'}">
-                <div class="bubble">${m.text}${m.file ? ` <a href="${m.file}" target="_blank">📎</a>` : ''}
-                    <span class="time">${m.time}</span>
-                </div>
-            </div>
-        `).join('');
-        area.scrollTop = area.scrollHeight;
-    }
-
-    // ===== ИСТОРИЯ =====
-    function renderHistory() {
-        const container = document.getElementById('historyContainer');
-        if (!container) return;
-        let allOrders = [];
-        if (orders.food) orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
-        if (orders.cleaning) orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
-        if (orders.applications) orders.applications.forEach(o => allOrders.push({ ...o, typeLabel: '💼 Работа' }));
-        if (orders.massage) orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
-        if (orders.legal) orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
-        if (orders.court) orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
-        if (orders.roomVisits) orders.roomVisits.forEach(o => allOrders.push({ ...o, typeLabel: '🚪 Посещение' }));
-        if (orders.passes) orders.passes.forEach(o => allOrders.push({ ...o, typeLabel: '🎫 Пропуск' }));
-        if (orders.subscriptions) orders.subscriptions.forEach(o => allOrders.push({ ...o, typeLabel: '📅 Абонемент' }));
-        if (currentUser.role !== 'admin') allOrders = allOrders.filter(o => o.userId === currentUser.id);
-        const typeF = document.getElementById('historyTypeFilter')?.value || 'all';
-        const statF = document.getElementById('historyStatusFilter')?.value || 'all';
-        const search = document.getElementById('historySearch')?.value?.trim()?.toLowerCase() || '';
-        if (typeF !== 'all') allOrders = allOrders.filter(o => o.type === typeF);
-        if (statF !== 'all') allOrders = allOrders.filter(o => o.status === statF);
-        if (search) allOrders = allOrders.filter(o => o.id?.toLowerCase().includes(search));
-        allOrders.sort((a, b) => (a.time || a.timeCreated || a.createdAt || '').localeCompare(b.time || b.timeCreated || b.createdAt || '') * -1);
-        if (!allOrders.length) { container.innerHTML = '<div class="empty-state">Нет заказов</div>'; return; }
-        container.innerHTML = allOrders.map(o => `
-            <div class="card">
-                <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span></div>
-                <div class="card-detail"><strong>Тип:</strong> ${o.typeLabel}</div>
-                ${currentUser.role === 'admin' ? `<div class="card-detail"><strong>Пользователь:</strong> ${o.userFio || 'Неизвестный'} (${o.userId})</div>` : ''}
-                ${o.dish ? `<div class="card-detail"><strong>Блюдо:</strong> ${o.dish}</div>` : ''}
-                ${o.room ? `<div class="card-detail"><strong>Комната:</strong> ${o.room}</div>` : ''}
-                ${o.qty ? `<div class="card-detail"><strong>Кол-во:</strong> ${o.qty}</div>` : ''}
-                ${o.sum ? `<div class="card-detail"><strong>Сумма:</strong> ${o.sum} ₽</div>` : ''}
-                ${o.minutes ? `<div class="card-detail"><strong>Время уборки:</strong> ${o.minutes} мин</div>` : ''}
-                ${o.count ? `<div class="card-detail"><strong>Количество:</strong> ${o.count}</div>` : ''}
-                ${o.type ? `<div class="card-detail"><strong>Тип массажа:</strong> ${o.type}</div>` : ''}
-                ${o.duration ? `<div class="card-detail"><strong>Длительность:</strong> ${o.duration} мин</div>` : ''}
-                ${o.services ? `<div class="card-detail"><strong>Услуги:</strong> ${o.services.join(', ')}</div>` : ''}
-                ${o.validUntil ? `<div class="card-detail"><strong>Действует до:</strong> ${o.validUntil}</div>` : ''}
-                ${o.price ? `<div class="card-detail"><strong>Цена:</strong> ${o.price} ₽</div>` : ''}
-                ${o.subscriptionUsed ? `<div class="card-detail" style="color:#27ae60;"><strong>✅ По абонементу ${o.subscriptionCode}</strong></div>` : ''}
-                ${o.closeReason ? `<div class="card-detail" style="color:#a14f4f;"><strong>Закрыт:</strong> ${o.closeReason}</div>` : ''}
-                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.time || o.timeCreated || o.createdAt || ''}</div>
-            </div>
-        `).join('');
-    }
-
-    document.getElementById('historyTypeFilter')?.addEventListener('change', renderHistory);
-    document.getElementById('historyStatusFilter')?.addEventListener('change', renderHistory);
-    document.getElementById('historySearchBtn')?.addEventListener('click', renderHistory);
-    document.getElementById('historySearch')?.addEventListener('keyup', function(e) { if (e.key === 'Enter') renderHistory(); });
-
     // ===== ОБЩИЙ РЕНДЕР =====
     function renderAll() {
         renderFood();
@@ -2501,64 +2860,13 @@
         renderWallet();
         renderBank();
         renderRoomVisit();
+        renderHistory();
     }
 
     // ===== ЗАПУСК =====
     document.addEventListener('DOMContentLoaded', function() {
         loadAll();
     });
-
-    async function loadAll() {
-        try {
-            let uData = {}, oData = {};
-            try {
-                uData = await readBin(USERS_BIN_ID);
-                oData = await readBin(ORDERS_BIN_ID);
-            } catch(e) {
-                console.warn('⚠️ Ошибка загрузки из JSONBin:', e);
-                loadLocal();
-            }
-            if (uData.users) users = uData.users;
-            if (oData.orders) orders = oData.orders;
-            if (oData.wallets) wallets = oData.wallets;
-            if (oData.cards) cards = oData.cards;
-            if (oData.promoCodes) promoCodes = oData.promoCodes;
-            if (oData.chats) chats = oData.chats;
-            if (oData.messages) messages = oData.messages;
-            if (!orders.food) orders.food = [];
-            if (!orders.cleaning) orders.cleaning = [];
-            if (!orders.massage) orders.massage = [];
-            if (!orders.legal) orders.legal = [];
-            if (!orders.court) orders.court = [];
-            if (!orders.applications) orders.applications = [];
-            if (!orders.vacancies) orders.vacancies = [];
-            if (!orders.roomVisits) orders.roomVisits = [];
-            if (!orders.passes) orders.passes = [];
-            if (!orders.subscriptions) orders.subscriptions = [];
-            if (!orders.supportTickets) orders.supportTickets = [];
-            users.forEach(u => {
-                if (!wallets[u.id]) {
-                    wallets[u.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
-                }
-            });
-            if (!users.some(u => u.id === '00000')) {
-                users.push({ id: '00000', fio: 'Администратор', email: 'admin@ad.systems', password: '31441537a', role: 'admin', status: 'Администратор', banned: false, banReason: '', banExpiry: null });
-                wallets['00000'] = { balance: 999999999, cardNumber: '0000 0000 0000 0000', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
-                await saveAll();
-            }
-            const session = sessionStorage.getItem('ad_session');
-            if (session) {
-                const p = JSON.parse(session);
-                const u = users.find(x => x.id === p.id);
-                if (u && !isBanned(u)) { currentUser = u; showMain(); return; }
-            }
-            if (!checkRemember()) showAuth();
-        } catch (e) {
-            console.error('Ошибка загрузки:', e);
-            showToast('❌ Ошибка загрузки данных');
-            showAuth();
-        }
-    }
 
 })();
 </script>
