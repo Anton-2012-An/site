@@ -90,9 +90,7 @@
         <div id="panel-work" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💼 Работа</h2><button class="btn" id="btnWorkVacancy">➕ Создать вакансию</button></div><h3 style="font-weight:300;border-left:4px solid #8e44ad;padding-left:1rem;margin:1rem 0;">Вакансии</h3><div id="workVacancies" class="cards-grid"><div class="empty-state">Нет вакансий</div></div><h3 style="font-weight:300;border-left:4px solid #8e44ad;padding-left:1rem;margin:1rem 0;">Мои отклики</h3><div id="workApplications" class="cards-grid"><div class="empty-state">Нет откликов</div></div></div>
         <div id="panel-cleaning" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🧹 Уборка</h2><button class="btn" id="btnCleaningOrder">➕ Заказать</button></div><div id="cleaningContainer" class="cards-grid"><div class="empty-state">Нет заявок</div></div></div>
         <div id="panel-massage" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💆 Массаж</h2><button class="btn" id="btnMassageOrder">➕ Записаться</button></div><div id="massageContainer" class="cards-grid"><div class="empty-state">Нет записей</div></div></div>
-        <div id="panel-legal" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>⚖️ Юрист</h2><button class="btn" id="btnLegalOrder">➕ Записаться</button></div><div id="legalContainer" class="cards-grid"><div class="empty-state">Нет записей</div></div></div>
-        <div id="panel-court" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🏛️ Суд</h2><button class="btn" id="btnCourtOrder">➕ Подать иск</button></div><div id="courtContainer" class="cards-grid"><div class="empty-state">Нет исков</div></div></div>
-        <div id="panel-history" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>📋 История</h2></div><div class="history-filter"><select id="historyTypeFilter"><option value="all">Все типы</option><option value="food">🍕 Еда</option><option value="cleaning">🧹 Уборка</option><option value="work">💼 Работа</option><option value="massage">💆 Массаж</option><option value="legal">⚖️ Консультация</option><option value="court">🏛️ Суд</option><option value="roomvisit">🚪 Посещение</option><option value="pass">🎫 Пропуск</option><option value="subscription">📅 Абонемент</option></select><select id="historyStatusFilter"><option value="all">Все статусы</option><option value="new">Новый</option><option value="processing">В работе</option><option value="done">Выполнено</option><option value="cancelled">Отменён</option><option value="rejected">Отклонён</option><option value="approved">Одобрено</option><option value="denied">Отказано</option><option value="completed">Завершено</option></select><input type="text" id="historySearch" placeholder="Поиск по ID..."><button class="btn-sm" id="historySearchBtn">🔍</button></div><div id="historyContainer" class="cards-grid"><div class="empty-state">Нет заказов</div></div></div>
+        <div id="panel-history" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>📋 История</h2></div><div class="history-filter"><select id="historyTypeFilter"><option value="all">Все типы</option><option value="food">🍕 Еда</option><option value="cleaning">🧹 Уборка</option><option value="work">💼 Работа</option><option value="massage">💆 Массаж</option><option value="roomvisit">🚪 Посещение</option><option value="pass">🎫 Пропуск</option><option value="subscription">📅 Абонемент</option></select><select id="historyStatusFilter"><option value="all">Все статусы</option><option value="new">Новый</option><option value="processing">В работе</option><option value="done">Выполнено</option><option value="cancelled">Отменён</option><option value="rejected">Отклонён</option><option value="approved">Одобрено</option><option value="denied">Отказано</option><option value="completed">Завершено</option></select><input type="text" id="historySearch" placeholder="Поиск по ID..."><button class="btn-sm" id="historySearchBtn">🔍</button></div><div id="historyContainer" class="cards-grid"><div class="empty-state">Нет заказов</div></div></div>
         <div id="panel-messenger" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>💬 Мессенджер</h2></div><div class="search-box"><input type="text" id="messengerSearch" placeholder="Поиск..."><button id="messengerSearchBtn">🔍</button></div><div id="messengerChats" class="cards-grid"><div class="empty-state">Нет чатов</div></div><div id="messengerChatWindow" style="display:none;margin-top:1rem;border-top:1px solid #e2e8f0;padding-top:1rem;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;"><h3 id="chatPartnerName">Собеседник</h3><button class="btn-sm" id="chatBackBtn">← Назад</button></div><div id="messageArea" class="message-area"></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><input type="text" id="messageInput" placeholder="Сообщение..." style="flex:1;padding:.4rem .8rem;border:1px solid #e2e8f0;border-radius:30px;font-size:.85rem;"><button class="btn-sm" id="sendMessageBtn">📤</button><button class="btn-sm" id="stickerBtn">😺</button><label class="file-upload-btn">📷<input type="file" id="fileInput" accept="image/*,audio/*,video/*" style="display:none"></label></div><div id="stickerPanel" style="display:none;margin-top:8px;border-top:1px solid #e2e8f0;padding-top:8px;"><div class="sticker-grid" id="stickerGrid"></div></div></div></div>
         <div id="panel-profile" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👤 Профиль</h2></div><div id="profileContainer"><div class="empty-state">Загрузка...</div></div></div>
         <div id="panel-support" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🆘 Поддержка</h2><button class="btn" id="btnSupportNew">➕ Новое</button></div><div id="supportContainer" class="cards-grid"><div class="empty-state">Нет обращений</div></div></div>
@@ -102,7 +100,7 @@
         <div id="panel-pass" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🎫 Пропуска</h2><button class="btn" id="btnPassOrder">➕ Заказать пропуск</button></div><h3 style="font-weight:300;border-left:4px solid #3b82f6;padding-left:1rem;margin:1rem 0;">Мои пропуска</h3><div id="passContainer" class="cards-grid"><div class="empty-state">Нет пропусков</div></div></div>
         <div id="panel-subscription" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>📅 Абонементы</h2><button class="btn" id="btnSubscriptionOrder">➕ Заказать абонемент</button></div><h3 style="font-weight:300;border-left:4px solid #3b82f6;padding-left:1rem;margin:1rem 0;">Мои абонементы</h3><div id="subscriptionContainer" class="cards-grid"><div class="empty-state">Нет абонементов</div></div></div>
         <div id="panel-admin" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👑 Админ-панель</h2></div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;"><button class="btn-sm gold" id="adminTabSubscriptions">📅 Абонементы</button><button class="btn-sm green" id="adminTabApplications">📋 Заказы</button><button class="btn-sm purple" id="adminTabUsers">👥 Пользователи</button><button class="btn-sm blue" id="adminTabSupport">💬 Поддержка</button><button class="btn-sm gold" id="adminTabHistory">📋 История</button></div><div id="adminContent"></div></div>
-        <!-- === НОВАЯ ПАНЕЛЬ: АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ === -->
+        <!-- === ПАНЕЛЬ: АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ === -->
         <div id="panel-vera" class="service-panel">
             <div class="panel-header">
                 <button class="btn-back" data-back>← Назад</button>
@@ -125,10 +123,6 @@
 <div id="modalCleaning" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeCleaning">&times;</button><h2>🧹 Уборка</h2><form id="formCleaning"><div class="form-group"><label>Комната</label><input type="text" id="cleanRoom" required></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="cleanDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="cleanTime" required></div></div><div class="form-group"><label>Время уборки (минуты)</label><input type="number" id="cleanMinutes" placeholder="Сколько минут убирать" min="1" required></div><div class="form-group"><label>Количество уборок</label><input type="number" id="cleanCount" placeholder="Количество" min="1" required></div><div class="form-group"><label>Промокод</label><input type="text" id="cleanPromo" placeholder="Введите промокод"></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
 
 <div id="modalMassage" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeMassage">&times;</button><h2>💆 Массаж</h2><form id="formMassage"><div class="form-group"><label>Комната</label><input type="text" id="massageRoom" placeholder="304" required></div><div class="form-group"><label>Тип</label><select id="massageType" required><option value="">Выберите...</option><option value="Классический">Классический</option><option value="Спортивный">Спортивный</option><option value="Расслабляющий">Расслабляющий</option><option value="Точечный">Точечный</option><option value="Тайский">Тайский</option><option value="Шведский">Шведский</option><option value="Антицеллюлитный">Антицеллюлитный</option><option value="Лимфодренажный">Лимфодренажный</option></select></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="massageTime" required></div><div class="form-group" style="flex:1;"><label>Длительность</label><select id="massageDuration" required><option value="30">30 мин</option><option value="45">45 мин</option><option value="60" selected>60 мин</option><option value="90">90 мин</option><option value="120">120 мин</option></select></div></div><div class="form-group"><label>Количество сеансов</label><input type="number" id="massageCount" placeholder="Количество" min="1" required></div><div class="form-group"><label>Пожелания</label><textarea id="massageNote"></textarea></div><div class="form-group"><label>Промокод</label><input type="text" id="massagePromo" placeholder="Введите промокод"></div><div class="agreement-scroll"><p><strong>1.</strong> Уважительное поведение.</p><p><strong>2.</strong> Запрещены скандалы.</p><p><strong>3.</strong> При агрессии — без возврата.</p><p><strong>4.</strong> Не мешать.</p><p><strong>5.</strong> Не требовать лишнего.</p><p><strong>6.</strong> Сообщить о болезнях.</p><p><strong>7.</strong> Ответственность за утаивание.</p><p><strong>8.</strong> Отказ при противопоказаниях.</p><p><strong>9.</strong> Опоздание >15 мин — неявка.</p><p><strong>10.</strong> Телефон запрещён.</p></div><div class="checkbox-group"><input type="checkbox" id="massageAgreement" required><label>Я согласен</label></div><button type="submit" class="btn-submit" id="massageSubmitBtn" disabled>📤 Отправить заявку</button></form></div></div>
-
-<div id="modalLegal" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeLegal">&times;</button><h2>⚖️ Юрист</h2><form id="formLegal"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="legalFio" required></div><div style="display:flex;gap:1rem;flex-wrap:wrap;"><div class="form-group" style="flex:1;"><label>Дата</label><input type="date" id="legalDate" required></div><div class="form-group" style="flex:1;"><label>Время</label><input type="time" id="legalTime" required></div></div><div class="form-group"><label>Тема</label><textarea id="legalTopic" placeholder="Опишите вопрос..." required></textarea></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
-
-<div id="modalCourt" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeCourt">&times;</button><h2>🏛️ Суд</h2><form id="formCourt"><div class="form-group"><label>Ваше ФИО</label><input type="text" id="courtFio" required></div><div class="form-group"><label>ФИО ответчика</label><input type="text" id="courtDefendant" required></div><div class="form-group"><label>Ваш адрес</label><input type="text" id="courtAddress" placeholder="г. Москва, ул. Примерная, д.1" required></div><div class="form-group"><label>Адрес ответчика</label><input type="text" id="courtDefendantAddress" placeholder="г. Москва, ул. Примерная, д.2" required></div><div class="form-group"><label>Причина иска</label><textarea id="courtReason" required></textarea></div><button type="submit" class="btn-submit">📤 Отправить заявку</button></form></div></div>
 
 <div id="modalSupportNew" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeSupportNew">&times;</button><h2>🆘 Новое обращение</h2><form id="formSupportNew"><div class="form-group"><label>Проблема</label><textarea id="supportProblem" placeholder="Опишите..." required></textarea></div><div class="form-group"><label>Срочность</label><select id="supportUrgency" required><option value="не срочно">Не срочно</option><option value="срочно">Срочно</option></select></div><button type="submit" class="btn-submit">📤 Отправить</button></form></div></div>
 
@@ -184,7 +178,7 @@
     const ORDERS_BIN_ID = '6a569af5f5f4af5e298f4479';
 
     let users = [], currentUser = null;
-    let orders = { food: [], cleaning: [], massage: [], legal: [], court: [], applications: [], vacancies: [], roomVisits: [], passes: [], subscriptions: [], supportTickets: [] };
+    let orders = { food: [], cleaning: [], massage: [], applications: [], vacancies: [], roomVisits: [], passes: [], subscriptions: [], supportTickets: [] };
     let wallets = {}, cards = [], promoCodes = [], chats = {}, messages = {};
     let adminCurrentTab = 'subscriptions';
     let refreshInterval = null, supportReplyTarget = null, currentChatId = null;
@@ -589,8 +583,6 @@
                     if (!orders.food) orders.food = [];
                     if (!orders.cleaning) orders.cleaning = [];
                     if (!orders.massage) orders.massage = [];
-                    if (!orders.legal) orders.legal = [];
-                    if (!orders.court) orders.court = [];
                     if (!orders.applications) orders.applications = [];
                     if (!orders.vacancies) orders.vacancies = [];
                     if (!orders.roomVisits) orders.roomVisits = [];
@@ -627,8 +619,6 @@
         { id: 'work', icon: '💼', title: 'Работа', desc: 'Вакансии' },
         { id: 'cleaning', icon: '🧹', title: 'Уборка', desc: 'Заказать' },
         { id: 'massage', icon: '💆', title: 'Массаж', desc: 'Записаться' },
-        { id: 'legal', icon: '⚖️', title: 'Юрист', desc: 'Консультация' },
-        { id: 'court', icon: '🏛️', title: 'Суд', desc: 'Подать иск' },
         { id: 'history', icon: '📋', title: 'История', desc: 'Все заказы' },
         { id: 'messenger', icon: '💬', title: 'Мессенджер', desc: 'Общение' },
         { id: 'profile', icon: '👤', title: 'Профиль', desc: 'Личные данные' },
@@ -722,8 +712,6 @@
             'btnWorkVacancy': 'modalVacancy',
             'btnCleaningOrder': 'modalCleaning',
             'btnMassageOrder': 'modalMassage',
-            'btnLegalOrder': 'modalLegal',
-            'btnCourtOrder': 'modalCourt',
             'btnSupportNew': 'modalSupportNew',
             'btnRoomVisitRequest': 'modalRoomVisitRequest',
             'btnPassOrder': 'modalPassOrder',
@@ -830,7 +818,6 @@
         const closeVera = document.getElementById('closeVeraQuest');
         if (closeVera) {
             closeVera.addEventListener('click', function() {
-                // При закрытии модалки — если квест активен, засчитываем
                 if (veraQuestDeadline && Date.now() < veraQuestDeadline) {
                     finishVeraQuest(false);
                 } else {
@@ -864,7 +851,7 @@
         saveAll().then(() => renderMessages());
     }
 
-    // ===== QR-СКАНЕР =====
+    // ===== QR-СКАНЕР (только абонементы) =====
     let qrScanner = null;
 
     function startQRScanner() {
@@ -883,9 +870,6 @@
                         if (!sub) { showToast('❌ Абонемент не найден'); return; }
                         qrScanner.stop();
                         showQRResult(sub);
-                    } else if (decodedText === 'ADMIN_MASTER') {
-                        qrScanner.stop();
-                        openModal('modalAdminCode');
                     }
                 },
                 function(err) {}
@@ -928,7 +912,7 @@
         closeModal('modalScanQR');
     });
 
-    // ===== КОД АДМИНА =====
+    // ===== КОД АДМИНА (вход по паролю) =====
     document.getElementById('formAdminCode')?.addEventListener('submit', function(e) {
         e.preventDefault();
         const code = document.getElementById('adminCodeInput').value.trim();
@@ -1159,7 +1143,7 @@
     }
 
     // ================================================================
-    // АДМИН-ПАНЕЛЬ
+    // АДМИН-ПАНЕЛЬ (без мастер-QR-кода)
     // ================================================================
     document.querySelectorAll('[id^="adminTab"]').forEach(btn => {
         if (btn) {
@@ -1174,15 +1158,7 @@
         if (currentUser.role !== 'admin') return;
         const container = document.getElementById('adminContent');
         if (!container) return;
-        let masterCodeHtml = `
-            <div style="background:#fef3c7;padding:1rem;border-radius:16px;margin-bottom:1rem;border:1px solid #d4af37;">
-                <p><strong>👑 Ваш мастер-код:</strong> <span style="font-family:monospace;font-size:1.2rem;">ADMIN_MASTER</span></p>
-                <p style="font-size:0.7rem;color:#8b97a8;">Отсканируйте этот QR-код для входа в админку</p>
-                <div id="adminMasterQR" style="display:flex;justify-content:center;margin:0.5rem 0;"></div>
-                <p style="font-size:0.7rem;color:#8b97a8;">Личный код: <strong>ADMIN_MASTER</strong></p>
-            </div>
-        `;
-        let content = masterCodeHtml;
+        let content = '';
         switch (adminCurrentTab) {
             case 'subscriptions': content += renderAdminSubscriptions(); break;
             case 'applications': content += renderAdminApplications(); break;
@@ -1192,19 +1168,6 @@
             default: content += renderAdminSubscriptions();
         }
         container.innerHTML = content;
-        setTimeout(() => {
-            const container = document.getElementById('adminMasterQR');
-            if (container && !container.querySelector('canvas')) {
-                try {
-                    new QRCode(container, {
-                        text: 'ADMIN_MASTER',
-                        width: 150, height: 150,
-                        colorDark: "#000000", colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                } catch(e) { container.innerHTML = '<p style="color:#8b97a8;">QR-код</p>'; }
-            }
-        }, 200);
         bindAdminEvents(container);
     }
 
@@ -1264,8 +1227,6 @@
         if (orders.food) orders.food.forEach(o => allOrders.push({ ...o, typeLabel: '🍕 Еда' }));
         if (orders.cleaning) orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
         if (orders.massage) orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
-        if (orders.legal) orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
-        if (orders.court) orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
         if (orders.subscriptions) orders.subscriptions.forEach(o => allOrders.push({ ...o, typeLabel: '📅 Абонемент' }));
         if (orders.roomVisits) orders.roomVisits.forEach(o => allOrders.push({ ...o, typeLabel: '🚪 Посещение' }));
         if (orders.passes) orders.passes.forEach(o => allOrders.push({ ...o, typeLabel: '🎫 Пропуск' }));
@@ -1755,47 +1716,6 @@
         document.getElementById('massageSubmitBtn').disabled = true;
     });
 
-    // Юрист
-    document.getElementById('formLegal')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fio = document.getElementById('legalFio').value.trim();
-        const date = document.getElementById('legalDate').value;
-        const time = document.getElementById('legalTime').value;
-        const topic = document.getElementById('legalTopic').value.trim();
-        if (!orders.legal) orders.legal = [];
-        orders.legal.push({
-            id: genSid('LEG'), userId: currentUser.id, userFio: currentUser.fio,
-            fio, date, time, topic,
-            status: 'pending', timeCreated: now(), price: null
-        });
-        await saveAll();
-        renderAll();
-        showToast('✅ Заявка отправлена!');
-        closeModal('modalLegal');
-        this.reset();
-    });
-
-    // Суд
-    document.getElementById('formCourt')?.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const fio = document.getElementById('courtFio').value.trim();
-        const defendant = document.getElementById('courtDefendant').value.trim();
-        const address = document.getElementById('courtAddress').value.trim();
-        const defendantAddress = document.getElementById('courtDefendantAddress').value.trim();
-        const reason = document.getElementById('courtReason').value.trim();
-        if (!orders.court) orders.court = [];
-        orders.court.push({
-            id: genSid('CRT'), userId: currentUser.id, userFio: currentUser.fio,
-            fio, defendant, address, defendantAddress, reason,
-            status: 'pending', timeCreated: now(), price: null
-        });
-        await saveAll();
-        renderAll();
-        showToast('✅ Иск подан!');
-        closeModal('modalCourt');
-        this.reset();
-    });
-
     // Поддержка
     document.getElementById('formSupportNew')?.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -1945,41 +1865,6 @@
                 <div class="card-detail"><strong>Сеансов:</strong> ${o.count}</div>
                 <div class="card-detail"><strong>Пожелания:</strong> ${o.note || '—'}</div>
                 ${o.promoDiscount ? `<div class="card-detail"><strong>Скидка:</strong> ${o.promoDiscount}%</div>` : ''}
-                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
-            </div>
-        `).join('');
-    }
-
-    function renderLegal() {
-        const container = document.getElementById('legalContainer');
-        if (!container) return;
-        if (!orders.legal) orders.legal = [];
-        const items = orders.legal.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет записей</div>'; return; }
-        container.innerHTML = items.map(o => `
-            <div class="card">
-                <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span></div>
-                <div class="card-detail"><strong>ФИО:</strong> ${o.fio}</div>
-                <div class="card-detail"><strong>Дата:</strong> ${o.date}</div>
-                <div class="card-detail"><strong>Время:</strong> ${o.time}</div>
-                <div class="card-detail"><strong>Тема:</strong> ${o.topic}</div>
-                <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
-            </div>
-        `).join('');
-    }
-
-    function renderCourt() {
-        const container = document.getElementById('courtContainer');
-        if (!container) return;
-        if (!orders.court) orders.court = [];
-        const items = orders.court.filter(o => o.userId === currentUser.id || currentUser.role === 'admin');
-        if (!items.length) { container.innerHTML = '<div class="empty-state">Нет исков</div>'; return; }
-        container.innerHTML = items.map(o => `
-            <div class="card">
-                <div class="card-header"><span class="card-id">${o.id}</span><span class="card-status status-${statusClass(o.status)}">${statusText(o.status)}</span></div>
-                <div class="card-detail"><strong>Истец:</strong> ${o.fio}</div>
-                <div class="card-detail"><strong>Ответчик:</strong> ${o.defendant}</div>
-                <div class="card-detail"><strong>Причина:</strong> ${o.reason}</div>
                 <div class="card-detail" style="font-size:0.7rem;color:#8b97a8;">${o.timeCreated}</div>
             </div>
         `).join('');
@@ -2220,8 +2105,6 @@
         if (orders.cleaning) orders.cleaning.forEach(o => allOrders.push({ ...o, typeLabel: '🧹 Уборка' }));
         if (orders.applications) orders.applications.forEach(o => allOrders.push({ ...o, typeLabel: '💼 Работа' }));
         if (orders.massage) orders.massage.forEach(o => allOrders.push({ ...o, typeLabel: '💆 Массаж' }));
-        if (orders.legal) orders.legal.forEach(o => allOrders.push({ ...o, typeLabel: '⚖️ Консультация' }));
-        if (orders.court) orders.court.forEach(o => allOrders.push({ ...o, typeLabel: '🏛️ Суд' }));
         if (orders.roomVisits) orders.roomVisits.forEach(o => allOrders.push({ ...o, typeLabel: '🚪 Посещение' }));
         if (orders.passes) orders.passes.forEach(o => allOrders.push({ ...o, typeLabel: '🎫 Пропуск' }));
         if (orders.subscriptions) orders.subscriptions.forEach(o => allOrders.push({ ...o, typeLabel: '📅 Абонемент' }));
@@ -2268,8 +2151,6 @@
         renderApplications();
         renderCleaning();
         renderMassage();
-        renderLegal();
-        renderCourt();
         renderSupport();
         renderPass();
         renderSubscriptions();
@@ -2277,7 +2158,6 @@
         renderWallet();
         renderBank();
         renderRoomVisit();
-        // Панель "АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ" рендерим только если она активна
         const veraPanel = document.getElementById('panel-vera');
         if (veraPanel && veraPanel.classList.contains('active')) renderVeraPanel();
     }
@@ -2307,8 +2187,6 @@
             if (!orders.food) orders.food = [];
             if (!orders.cleaning) orders.cleaning = [];
             if (!orders.massage) orders.massage = [];
-            if (!orders.legal) orders.legal = [];
-            if (!orders.court) orders.court = [];
             if (!orders.applications) orders.applications = [];
             if (!orders.vacancies) orders.vacancies = [];
             if (!orders.roomVisits) orders.roomVisits = [];
@@ -2319,7 +2197,6 @@
                 if (!wallets[u.id]) {
                     wallets[u.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
                 }
-                // Совместимость: если у старого пользователя нет поля questPassedVera — ставим false
                 if (typeof u.questPassedVera === 'undefined') u.questPassedVera = false;
             });
             if (!users.some(u => u.id === '00000')) {
