@@ -8,16 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f5f7fb,#e8ecf4,#dce2ec);color:#1a1a1e;min-height:100vh}.container{max-width:1400px;margin:0 auto;padding:1.5rem}.auth-page{display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#1a1a1e,#2d2d35);padding:1.5rem;position:relative;overflow:hidden}.auth-page::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at center,rgba(184,150,46,0.05),transparent 70%);animation:rotateBg 20s linear infinite}@keyframes rotateBg{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.auth-box{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-radius:40px;padding:3rem;max-width:500px;width:100%;box-shadow:0 40px 80px rgba(0,0,0,0.3);position:relative;z-index:1}.auth-box .logo{font-size:2.8rem;font-weight:300;text-align:center;margin-bottom:.5rem}.auth-box .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}.auth-box .subtitle{text-align:center;color:#8b97a8;font-size:.9rem;margin-bottom:2rem}.auth-tabs{display:flex;gap:0;margin-bottom:2rem;border-radius:60px;overflow:hidden;border:1px solid #e2e8f0}.auth-tabs button{flex:1;padding:.7rem;border:none;background:rgba(255,255,255,0.8);cursor:pointer;font-size:.95rem;font-weight:500;transition:all .3s ease;color:#8b97a8}.auth-tabs button.active{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.2)}.auth-tabs button:hover:not(.active){background:#f0f2f5}.auth-form{display:none}.auth-form.active{display:block;animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.form-group{margin-bottom:1rem}.form-group label{display:block;font-size:.85rem;font-weight:500;color:#4b5563;margin-bottom:4px}.form-group input,.form-group textarea,.form-group select{width:100%;padding:.6rem 1rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.9rem;background:rgba(255,255,255,0.8);transition:all .3s ease;font-family:inherit}.form-group textarea{min-height:80px;resize:vertical}.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}.checkbox-group{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}.checkbox-group label{display:flex;align-items:center;gap:5px;font-size:.85rem;font-weight:400;color:#2d3748;cursor:pointer}.checkbox-group input[type=checkbox]{width:16px;height:16px;accent-color:#b8962e;cursor:pointer}.btn-auth{width:100%;padding:.8rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);margin-top:.5rem;box-shadow:0 4px 15px rgba(0,0,0,0.1)}.btn-auth:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px) scale(1.02);box-shadow:0 8px 30px rgba(184,150,46,0.3)}.auth-error{color:#a14f4f;font-size:.9rem;text-align:center;margin-top:.5rem;display:none}.auth-error.show{display:block}.remember-me{display:flex;align-items:center;gap:8px;margin-top:.5rem}.remember-me input[type=checkbox]{width:18px;height:18px;accent-color:#b8962e;cursor:pointer}.remember-me label{font-size:.9rem;color:#4b5563;cursor:pointer}.check-user-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.6);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:9999}.check-user-overlay.active{display:flex}.check-user-box{background:#fff;border-radius:30px;padding:2.5rem 3rem;max-width:450px;width:100%;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,0.3);animation:fadeIn .3s ease}.check-user-box .avatar-big{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:600;margin:0 auto 1rem;box-shadow:0 8px 30px rgba(184,150,46,0.3)}.check-user-box h2{font-weight:300;color:#1a1a1e;margin-bottom:.3rem}.check-user-box .user-email{color:#8b97a8;font-size:.9rem;margin-bottom:1.5rem}.check-user-box .btn-group{display:flex;gap:1rem;justify-content:center}.check-user-box .btn-group button{padding:.6rem 2rem;border:none;border-radius:60px;font-size:1rem;font-weight:500;cursor:pointer;transition:all .3s ease}.check-user-box .btn-yes{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;box-shadow:0 4px 15px rgba(184,150,46,0.3)}.check-user-box .btn-yes:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(184,150,46,0.4)}.check-user-box .btn-no{background:#e2e8f0;color:#4b5563}.check-user-box .btn-no:hover{background:#a14f4f;color:#fff}.main-page{display:none}.main-page.active{display:block}.main-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding:1rem 0;border-bottom:2px solid #d4af37;margin-bottom:2rem}.main-header .logo{font-size:2rem;font-weight:300}.main-header .logo span{background:linear-gradient(135deg,#b8962e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:400}.main-header .user-info{display:flex;align-items:center;gap:1rem}.main-header .user-info .avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.2rem;box-shadow:0 4px 15px rgba(184,150,46,0.3)}.main-header .user-name{font-weight:500}.main-header .user-role{font-size:.7rem;color:#8b97a8;background:#f0f2f5;padding:.1rem .6rem;border-radius:30px}.btn-logout{padding:.4rem 1.2rem;border:1px solid #e5b3b3;border-radius:60px;background:none;color:#a14f4f;cursor:pointer;transition:.2s;font-size:.8rem}.btn-logout:hover{background:#a14f4f;color:#fff}.sections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem;padding:1rem 0}.section-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.08);cursor:pointer;transition:all .4s cubic-bezier(.34,1.56,.64,1);border:2px solid transparent}.section-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(184,150,46,0.15);border-color:#d4af37}.section-card .section-image{width:100%;height:120px;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,#fef3c7,#fde68a)}.section-card .section-info{padding:.8rem}.section-card .section-info h3{font-size:.95rem;font-weight:500;margin-bottom:.1rem}.section-card .section-info p{color:#8b97a8;font-size:.75rem}.section-card .section-badge{display:inline-block;font-size:.55rem;padding:.05rem .4rem;border-radius:30px;background:#b8962e;color:#fff;margin-top:.2rem}.panels-container{display:none}.panels-container.active{display:block}.service-panel{display:none}.service-panel.active{display:block}.panel-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0}.panel-header h2{font-size:1.3rem;font-weight:300;border-left:4px solid #d4af37;padding-left:1rem}.btn-back{padding:.3rem 1rem;border:1px solid #d0d7e2;border-radius:60px;background:none;cursor:pointer;transition:all .3s ease;font-size:.8rem;color:#4b5563}.btn-back:hover{border-color:#b8962e;color:#b8962e}.btn{padding:.35rem 1.2rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.8rem;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);font-weight:500;box-shadow:0 4px 15px rgba(0,0,0,0.1)}.btn:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-2px) scale(1.02);box-shadow:0 8px 25px rgba(184,150,46,0.3)}.btn-sm{padding:.15rem .7rem;font-size:.65rem;border-radius:40px;border:1px solid #d0d7e2;background:rgba(255,255,255,0.8);cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);color:#4b5563}.btn-sm:hover{border-color:#b8962e;color:#b8962e;transform:translateY(-1px)}.btn-sm.gold{border-color:#d4af37;color:#b8962e}.btn-sm.gold:hover{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff}.btn-sm.danger{border-color:#e5b3b3;color:#a14f4f}.btn-sm.danger:hover{background:#a14f4f;color:#fff}.btn-sm.green{border-color:#27ae60;color:#27ae60}.btn-sm.green:hover{background:#27ae60;color:#fff}.btn-sm.purple{border-color:#8e44ad;color:#8e44ad}.btn-sm.purple:hover{background:#8e44ad;color:#fff}.btn-sm.blue{border-color:#3b82f6;color:#3b82f6}.btn-sm.blue:hover{background:#3b82f6;color:#fff}.card{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-radius:20px;padding:.8rem 1rem;box-shadow:0 4px 15px rgba(0,0,0,0.05);border:1px solid rgba(255,255,255,0.5);transition:all .3s ease}.card:hover{border-color:#d4af37;box-shadow:0 8px 30px rgba(184,150,46,0.12)}.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem;flex-wrap:wrap;gap:4px}.card-id{font-size:.65rem;color:#8b97a8;font-weight:500}.card-status{font-size:.6rem;padding:.05rem .4rem;border-radius:30px;font-weight:500}.card-detail{font-size:.8rem;margin:2px 0}.card-actions{margin-top:.4rem;display:flex;flex-wrap:wrap;gap:4px}.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}.empty-state{color:#8b97a8;text-align:center;padding:1.5rem 0;background:rgba(255,255,255,0.5);border-radius:30px;border:1px dashed #dce2ec;font-size:.85rem}.status-new{background:#e6f0ff;color:#1a4f8b}.status-processing{background:#fff4e0;color:#a86f1a}.status-done{background:#e6f7ed;color:#0f6e4a}.status-cancelled{background:#fde8e8;color:#a14f4f}.status-active{background:#e6f7ed;color:#0f6e4a}.status-closed{background:#f0f0f0;color:#5b5b5b}.status-accepted{background:#e6f7ed;color:#0f6e4a}.status-rejected{background:#fde8e8;color:#a14f4f}.status-pending{background:#fff4e0;color:#a86f1a}.status-approved{background:#d1fae5;color:#065f46}.status-denied{background:#fde8e8;color:#991b1b}.badge{background:#a14f4f;color:#fff;border-radius:30px;padding:.05rem .4rem;font-size:.55rem;margin-left:4px}.badge.gold{background:#b8962e}.modal{background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);border-radius:30px;padding:1.5rem 2rem;box-shadow:0 40px 80px rgba(0,0,0,0.2);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;animation:fadeIn .3s ease}.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,10,14,0.4);backdrop-filter:blur(3px);display:none;justify-content:center;align-items:center;z-index:999;padding:1rem}.modal-overlay.active{display:flex}.modal-close{float:right;font-size:2rem;cursor:pointer;color:#a0aaba;background:none;border:none}.btn-submit{width:100%;padding:.6rem;border:none;border-radius:60px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .3s ease;margin-top:.5rem}.btn-submit:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-3px);box-shadow:0 8px 30px rgba(184,150,46,0.3)}.btn-submit:disabled{opacity:.5;cursor:not-allowed}.btn-submit:disabled:hover{background:linear-gradient(135deg,#1a1a1e,#2d2d35);transform:none;box-shadow:none}.search-box{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}.search-box input{flex:1;min-width:150px;padding:.4rem .8rem;border:1px solid #e2e8f0;border-radius:14px;font-size:.85rem;background:rgba(255,255,255,0.8)}.search-box input:focus{outline:none;border-color:#d4af37;box-shadow:0 0 0 4px rgba(212,175,55,0.06)}.search-box button{padding:.4rem 1rem;border:none;border-radius:14px;background:linear-gradient(135deg,#1a1a1e,#2d2d35);color:#fff;cursor:pointer;transition:all .3s ease;font-size:.8rem}.search-box button:hover{background:linear-gradient(135deg,#b8962e,#d4af37);transform:translateY(-2px)}.user-detail-card{background:rgba(255,255,255,0.9);border-radius:16px;padding:1rem;border:1px solid rgba(212,175,55,0.2);margin-bottom:.5rem}.sort-select{padding:.3rem .8rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.8rem;background:#fff;cursor:pointer}.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(26,26,30,0.95);backdrop-filter:blur(20px);color:#fff;padding:.5rem 1.5rem;border-radius:60px;font-size:.85rem;box-shadow:0 20px 50px rgba(0,0,0,0.3);opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:1000;border:1px solid rgba(212,175,55,0.3)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.history-filter{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}.history-filter select,.history-filter input{padding:.3rem .8rem;border:1px solid #d0d7e2;border-radius:14px;font-size:.8rem;background:#fff}@media(max-width:768px){.auth-box{padding:1.5rem}.modal{padding:1.2rem}.sections-grid{grid-template-columns:1fr 1fr}.check-user-box{padding:1.5rem}}@media(max-width:480px){.sections-grid{grid-template-columns:1fr}}.agreement-scroll{max-height:150px;overflow-y:auto;padding:.3rem .8rem;background:#fafbfc;border-radius:14px;border:1px solid #e2e8f0;font-size:.7rem;line-height:1.6;color:#2d3748;margin-bottom:.8rem}.sticker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:8px 0}.sticker-item{font-size:1.8rem;cursor:pointer;text-align:center;padding:4px;border-radius:12px;border:2px solid transparent;transition:all .2s}.sticker-item:hover{border-color:#d4af37;background:#fef3c7;transform:scale(1.1)}.chat-item{padding:6px 10px;border-radius:12px;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eef2f7}.chat-item:hover{background:#f0f2f5}.chat-item .chat-name{font-weight:500;font-size:.85rem}.chat-item .chat-last{font-size:.7rem;color:#8b97a8}.message-area{max-height:350px;overflow-y:auto;padding:6px;background:#fafbfc;border-radius:16px;border:1px solid #e2e8f0}.message{display:flex;margin-bottom:4px}.message.own{justify-content:flex-end}.message.other{justify-content:flex-start}.message .bubble{max-width:70%;padding:4px 10px;border-radius:16px;font-size:.8rem;word-wrap:break-word}.message.own .bubble{background:linear-gradient(135deg,#b8962e,#d4af37);color:#fff}.message.other .bubble{background:#fff;border:1px solid #e2e8f0}.message .time{font-size:.55rem;color:#8b97a8;margin-left:4px;align-self:flex-end}.file-upload-btn{display:inline-block;padding:4px 10px;border:1px solid #d0d7e2;border-radius:30px;cursor:pointer;font-size:.7rem;transition:all .2s}.file-upload-btn:hover{background:#f0f2f5}.profile-avatar{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #d4af37;margin:0 auto 1rem;display:block}.qr-container{display:flex;justify-content:center;margin:1rem 0}.qr-container canvas{max-width:180px;height:auto}.wallet-balance{font-size:1.8rem;font-weight:300;text-align:center;padding:.8rem;background:#fff;border-radius:20px;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
-        /* === СТИЛИ ДЛЯ РАЗДЕЛА "АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ" === */
-        .quest-modal .modal { max-width: 560px; }
-        .quest-greeting { font-size: 1.05rem; line-height: 1.6; color: #1a1a1e; margin-bottom: 1.5rem; }
-        .quest-answers { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .quest-answers .btn-yes { flex: 1; min-width: 120px; padding: .7rem 1rem; border: none; border-radius: 60px; background: linear-gradient(135deg,#b8962e,#d4af37); color: #fff; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all .3s cubic-bezier(.34,1.56,.64,1); }
-        .quest-answers .btn-yes:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 25px rgba(184,150,46,0.4); }
-        .quest-text { font-size: 1.05rem; line-height: 1.7; color: #1a1a1e; margin-bottom: 1.2rem; padding: 1rem 1.2rem; background: #fef3c7; border-radius: 16px; border: 1px solid #d4af37; }
-        .quest-timer { font-size: 1.2rem; font-weight: 600; color: #b8962e; text-align: center; margin-bottom: 1rem; letter-spacing: .05em; }
-        .quest-timer.expired { color: #a14f4f; }
-        .quest-reward { text-align: center; font-size: .95rem; color: #0f6e4a; margin-top: .5rem; }
     </style>
 </head>
 <body>
@@ -100,16 +90,6 @@
         <div id="panel-pass" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>🎫 Пропуска</h2><button class="btn" id="btnPassOrder">➕ Заказать пропуск</button></div><h3 style="font-weight:300;border-left:4px solid #3b82f6;padding-left:1rem;margin:1rem 0;">Мои пропуска</h3><div id="passContainer" class="cards-grid"><div class="empty-state">Нет пропусков</div></div></div>
         <div id="panel-subscription" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>📅 Абонементы</h2><button class="btn" id="btnSubscriptionOrder">➕ Заказать абонемент</button></div><h3 style="font-weight:300;border-left:4px solid #3b82f6;padding-left:1rem;margin:1rem 0;">Мои абонементы</h3><div id="subscriptionContainer" class="cards-grid"><div class="empty-state">Нет абонементов</div></div></div>
         <div id="panel-admin" class="service-panel"><div class="panel-header"><button class="btn-back" data-back>← Назад</button><h2>👑 Админ-панель</h2></div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;"><button class="btn-sm gold" id="adminTabSubscriptions">📅 Абонементы</button><button class="btn-sm green" id="adminTabApplications">📋 Заказы</button><button class="btn-sm purple" id="adminTabUsers">👥 Пользователи</button><button class="btn-sm blue" id="adminTabSupport">💬 Поддержка</button><button class="btn-sm gold" id="adminTabHistory">📋 История</button></div><div id="adminContent"></div></div>
-        <!-- === ПАНЕЛЬ: АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ === -->
-        <div id="panel-vera" class="service-panel">
-            <div class="panel-header">
-                <button class="btn-back" data-back>← Назад</button>
-                <h2>💌 АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ</h2>
-            </div>
-            <div id="veraContainer">
-                <div class="empty-state">Загрузка...</div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -146,25 +126,6 @@
 
 <div id="modalAgreement" class="modal-overlay"><div class="modal"><button class="modal-close" id="closeAgreement">&times;</button><h2>📄 Соглашение</h2><div style="max-height:400px;overflow-y:auto;font-size:.9rem;line-height:1.6;color:#2d3748;"><h3>1. Общие положения</h3><p>Настоящее соглашение регулирует отношения между AD.Сервисы и Пользователем.</p><h3>2. Права и обязанности</h3><p>Пользователь обязуется предоставлять достоверные данные.</p><h3>3. Ответственность</h3><p>AD.Сервисы не несёт ответственности за действия пользователей.</p><h3>4. Разрешение споров</h3><p>Все споры решаются через поддержку AD.Сервисы.</p><h3>5. Блокировка</h3><p>Администрация оставляет за собой право блокировать пользователей.</p><p style="margin-top:1rem;color:#b8962e;">© 2026 AD.Сервисы</p></div><button class="btn-submit" id="agreementCloseBtn" style="margin-top:1rem;">Закрыть</button></div></div>
 
-<!-- === МОДАЛКА КВЕСТА "АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ" === -->
-<div id="modalVeraQuest" class="modal-overlay quest-modal">
-    <div class="modal">
-        <button class="modal-close" id="closeVeraQuest">&times;</button>
-        <h2>💌 АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ</h2>
-        <div id="veraQuestStep1">
-            <p class="quest-greeting">Доброе утро, Вера Васильевна. что на счёт небольшого квеста?</p>
-            <div class="quest-answers">
-                <button class="btn-yes" id="veraAnswerYes1">да</button>
-                <button class="btn-yes" id="veraAnswerYes2">да</button>
-            </div>
-        </div>
-        <div id="veraQuestStep2" style="display:none;">
-            <div class="quest-text">Приз лежит в комнате обувной, в ящике верхнем. откроете-увидите подарок. удачи в поисках</div>
-            <div class="quest-timer" id="veraTimer">⏳ Осталось: 02:30</div>
-        </div>
-    </div>
-</div>
-
 <div id="toast" class="toast"></div>
 
 <script>
@@ -178,19 +139,13 @@
     const ORDERS_BIN_ID = '6a569af5f5f4af5e298f4479';
 
     let users = [], currentUser = null;
+    // Сохраняем "настоящего" админа, чтобы можно было вернуться из чужого аккаунта
+    let realAdminUser = null;
+
     let orders = { food: [], cleaning: [], massage: [], applications: [], vacancies: [], roomVisits: [], passes: [], subscriptions: [], supportTickets: [] };
     let wallets = {}, cards = [], promoCodes = [], chats = {}, messages = {};
     let adminCurrentTab = 'subscriptions';
     let refreshInterval = null, supportReplyTarget = null, currentChatId = null;
-
-    // === ПЕРЕМЕННЫЕ ДЛЯ КВЕСТА ===
-    let veraQuestTimerInterval = null;
-    let veraQuestDeadline = null;
-    const VERA_QUEST_REWARD = 50;
-    const VERA_QUEST_DURATION_MS = 150000; // 2.5 минуты
-    // Доступ: 03.11.2026 00:00 МСК — 04.11.2026 15:00 МСК включительно
-    const VERA_QUEST_START = new Date('2026-11-03T00:00:00+03:00').getTime();
-    const VERA_QUEST_END = new Date('2026-11-04T15:00:00+03:00').getTime();
 
     // ===== API =====
     async function readBin(id) {
@@ -284,153 +239,6 @@
     function calculateExpiry(value, unit) { const now = new Date(); switch(unit) { case 'minutes': now.setMinutes(now.getMinutes() + parseInt(value)); break; case 'hours': now.setHours(now.getHours() + parseInt(value)); break; case 'days': now.setDate(now.getDate() + parseInt(value)); break; case 'months': now.setMonth(now.getMonth() + parseInt(value)); break; case 'years': now.setFullYear(now.getFullYear() + parseInt(value)); break; default: now.setDate(now.getDate() + parseInt(value)); } return now.toLocaleString('ru-RU'); }
     function getUnitLabel(unit) { const map = { 'minutes': 'мин', 'hours': 'ч', 'days': 'дн', 'months': 'мес', 'years': 'лет' }; return map[unit] || 'дн'; }
 
-    // ===== ПРОВЕРКА ДОСТУПА К КВЕСТУ =====
-    function isVeraQuestAvailable() {
-        const nowMs = Date.now();
-        return nowMs >= VERA_QUEST_START && nowMs <= VERA_QUEST_END;
-    }
-
-    function hasVeraQuestBeenPassed() {
-        if (!currentUser) return true;
-        return !!currentUser.questPassedVera;
-    }
-
-    function hasVeraQuestReward() {
-        if (!currentUser) return false;
-        const w = getWallet(currentUser.id);
-        return (w.transactions || []).some(t => t.type === 'quest_reward' && t.questId === 'vera');
-    }
-
-    // ===== ЛОГИКА КВЕСТА =====
-    function openVeraQuest() {
-        if (!currentUser) return;
-        if (!isVeraQuestAvailable()) {
-            showToast('⏰ Раздел доступен только 03.11.2026 и 04.11.2026 до 15:00 МСК');
-            return;
-        }
-        if (hasVeraQuestBeenPassed()) {
-            showToast('🔒 Вы уже прошли этот квест. Раздел закрыт навсегда.');
-            return;
-        }
-        if (hasVeraQuestReward()) {
-            showToast('🎁 Награда уже получена. Раздел закрыт.');
-            return;
-        }
-        const step1 = document.getElementById('veraQuestStep1');
-        const step2 = document.getElementById('veraQuestStep2');
-        if (step1) step1.style.display = 'block';
-        if (step2) step2.style.display = 'none';
-        openModal('modalVeraQuest');
-    }
-
-    function startVeraQuest() {
-        const step1 = document.getElementById('veraQuestStep1');
-        const step2 = document.getElementById('veraQuestStep2');
-        if (step1) step1.style.display = 'none';
-        if (step2) step2.style.display = 'block';
-
-        veraQuestDeadline = Date.now() + VERA_QUEST_DURATION_MS;
-        updateVeraTimer();
-
-        if (veraQuestTimerInterval) clearInterval(veraQuestTimerInterval);
-        veraQuestTimerInterval = setInterval(function() {
-            const left = veraQuestDeadline - Date.now();
-            if (left <= 0) {
-                clearInterval(veraQuestTimerInterval);
-                veraQuestTimerInterval = null;
-                finishVeraQuest(true);
-            } else {
-                updateVeraTimer();
-            }
-        }, 250);
-    }
-
-    function updateVeraTimer() {
-        const el = document.getElementById('veraTimer');
-        if (!el) return;
-        const left = veraQuestDeadline - Date.now();
-        if (left <= 0) {
-            el.textContent = '⏳ Время истекло';
-            el.classList.add('expired');
-            return;
-        }
-        const totalSec = Math.ceil(left / 1000);
-        const m = Math.floor(totalSec / 60);
-        const s = totalSec % 60;
-        el.textContent = '⏳ Осталось: ' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-        el.classList.remove('expired');
-    }
-
-    async function finishVeraQuest(fromTimer) {
-        if (!currentUser) return;
-        if (veraQuestTimerInterval) { clearInterval(veraQuestTimerInterval); veraQuestTimerInterval = null; }
-        const step2 = document.getElementById('veraQuestStep2');
-        if (step2) step2.style.display = 'none';
-
-        if (hasVeraQuestReward() || hasVeraQuestBeenPassed()) {
-            closeModal('modalVeraQuest');
-            return;
-        }
-
-        // Начисляем 50 ₽
-        const w = getWallet(currentUser.id);
-        w.balance += VERA_QUEST_REWARD;
-        w.transactions.push({
-            id: 'txn_quest_' + Date.now(),
-            type: 'quest_reward',
-            questId: 'vera',
-            amount: VERA_QUEST_REWARD,
-            description: 'Награда за квест «АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ»',
-            time: now()
-        });
-
-        // Помечаем, что квест пройден навсегда
-        currentUser.questPassedVera = true;
-        currentUser.questPassedVeraAt = now();
-
-        await saveAll();
-        showToast('🎁 Награда 50 ₽ зачислена на баланс!');
-        closeModal('modalVeraQuest');
-        renderAll();
-        if (document.getElementById('panelsContainer').classList.contains('active')) {
-            const activePanel = document.querySelector('.service-panel.active');
-            if (activePanel && activePanel.id === 'panel-vera') renderVeraPanel();
-            if (activePanel && activePanel.id === 'panel-wallet') renderWallet();
-        }
-    }
-
-    function renderVeraPanel() {
-        const container = document.getElementById('veraContainer');
-        if (!container) return;
-        if (!currentUser) { container.innerHTML = '<div class="empty-state">Загрузка...</div>'; return; }
-
-        if (!isVeraQuestAvailable()) {
-            container.innerHTML = '<div class="empty-state">⏰ Раздел доступен только 03.11.2026 и 04.11.2026 до 15:00 МСК</div>';
-            return;
-        }
-
-        if (hasVeraQuestBeenPassed()) {
-            container.innerHTML = '<div class="empty-state">🔒 Вы уже прошли этот квест. Раздел закрыт навсегда.</div>';
-            return;
-        }
-
-        if (hasVeraQuestReward()) {
-            container.innerHTML = '<div class="empty-state">🎁 Награда уже получена.</div>';
-            return;
-        }
-
-        container.innerHTML = `
-            <div class="card" style="max-width:520px;margin:2rem auto;text-align:center;">
-                <div style="font-size:2.5rem;margin-bottom:.5rem;">💌</div>
-                <h3 style="font-weight:400;margin-bottom:.6rem;">АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ</h3>
-                <p style="color:#8b97a8;font-size:.85rem;margin-bottom:1rem;">Небольшой квест. Доступен до 04.11.2026 15:00 МСК.</p>
-                <button class="btn" id="openVeraQuestBtn">Открыть</button>
-            </div>
-        `;
-        const btn = document.getElementById('openVeraQuestBtn');
-        if (btn) btn.addEventListener('click', openVeraQuest);
-    }
-
     // ===== АВТОРИЗАЦИЯ =====
     document.querySelectorAll('[data-tab]').forEach(b => {
         if (b) {
@@ -458,6 +266,7 @@
             if (isBanned(user)) { if (err) { err.textContent = '🚫 Аккаунт забанен. Причина: ' + (user.banReason || '—'); err.classList.add('show'); } return; }
             if (err) err.classList.remove('show');
             currentUser = user;
+            realAdminUser = null; // при обычном входе сбрасываем "эмуляцию"
             if (rem) localStorage.setItem('ad_remember', JSON.stringify({ id: user.id }));
             else localStorage.removeItem('ad_remember');
             sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
@@ -477,7 +286,7 @@
             if (!agree) { if (err) { err.textContent = '❌ Примите соглашение'; err.classList.add('show'); } return; }
             if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) { if (err) { err.textContent = '❌ Email уже зарегистрирован'; err.classList.add('show'); } return; }
             if (pass.length < 6) { if (err) { err.textContent = '❌ Пароль минимум 6 символов'; err.classList.add('show'); } return; }
-            const nu = { id: generateId(), fio, email, password: pass, role: 'user', status: 'Пользователь', banned: false, banReason: '', banExpiry: null, questPassedVera: false };
+            const nu = { id: generateId(), fio, email, password: pass, role: 'user', status: 'Пользователь', banned: false, banReason: '', banExpiry: null };
             users.push(nu);
             wallets[nu.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
             await saveAll();
@@ -511,6 +320,7 @@
                         const overlay = document.getElementById('checkUserOverlay');
                         if (overlay) overlay.classList.remove('active');
                         currentUser = user;
+                        realAdminUser = null;
                         sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
                         showMain();
                     };
@@ -539,7 +349,6 @@
         if (panelsContainer) panelsContainer.classList.remove('active');
         document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
         if (refreshInterval) { clearInterval(refreshInterval); refreshInterval = null; }
-        if (veraQuestTimerInterval) { clearInterval(veraQuestTimerInterval); veraQuestTimerInterval = null; }
     }
 
     function showMain() {
@@ -606,7 +415,6 @@
                         if (panelId === 'pass') renderPass();
                         if (panelId === 'history') renderHistory();
                         if (panelId === 'messenger') renderMessenger();
-                        if (panelId === 'vera') renderVeraPanel();
                     }
                 }
             } catch(e) { console.error('❌ Ошибка автообновления:', e); }
@@ -628,7 +436,6 @@
         { id: 'roomvisit', icon: '🚪', title: 'Посещение комнаты', desc: 'Заявки на вход' },
         { id: 'pass', icon: '🎫', title: 'Пропуска', desc: 'Заказать пропуск' },
         { id: 'subscription', icon: '📅', title: 'Абонементы', desc: 'Заказать' },
-        { id: 'vera', icon: '💌', title: 'АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ', desc: 'Квест' },
         { id: 'admin', icon: '👑', title: 'Админка', desc: 'Управление', badge: 'Только админ' }
     ];
 
@@ -637,7 +444,7 @@
         if (!grid) return;
         grid.innerHTML = '';
         sections.forEach(sec => {
-            if (sec.id === 'admin' && currentUser.role !== 'admin') return;
+            if (sec.id === 'admin' && currentUser.role !== 'admin' && !realAdminUser) return;
             const card = document.createElement('div');
             card.className = 'section-card';
             card.dataset.section = sec.id;
@@ -659,6 +466,31 @@
             });
             grid.appendChild(card);
         });
+        // Если мы "внутри" чужого аккаунта — показываем кнопку возврата
+        if (realAdminUser) {
+            const returnCard = document.createElement('div');
+            returnCard.className = 'section-card';
+            returnCard.style.borderColor = '#d4af37';
+            returnCard.innerHTML = `
+                <div class="section-image" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);">↩️</div>
+                <div class="section-info">
+                    <h3>↩️ Вернуться в админа</h3>
+                    <p>Вы сейчас в аккаунте: ${currentUser.fio}</p>
+                </div>
+            `;
+            returnCard.addEventListener('click', returnToAdmin);
+            grid.appendChild(returnCard);
+        }
+    }
+
+    function returnToAdmin() {
+        if (!realAdminUser) return;
+        currentUser = realAdminUser;
+        realAdminUser = null;
+        sessionStorage.setItem('ad_session', JSON.stringify({ id: currentUser.id }));
+        showToast('✅ Возврат в аккаунт администратора');
+        showMain();
+        showPanel('admin');
     }
 
     function showPanel(panelId) {
@@ -680,7 +512,6 @@
         if (panelId === 'roomvisit') renderRoomVisit();
         if (panelId === 'history') renderHistory();
         if (panelId === 'messenger') renderMessenger();
-        if (panelId === 'vera') renderVeraPanel();
     }
 
     function goBack() {
@@ -700,8 +531,8 @@
             sessionStorage.removeItem('ad_session');
             localStorage.removeItem('ad_remember');
             currentUser = null;
+            realAdminUser = null;
             if (refreshInterval) { clearInterval(refreshInterval); refreshInterval = null; }
-            if (veraQuestTimerInterval) { clearInterval(veraQuestTimerInterval); veraQuestTimerInterval = null; }
             showAuth();
         }
     });
@@ -789,7 +620,7 @@
                         div.addEventListener('click', async function() {
                             if (!currentChatId) return;
                             if (!messages[currentChatId]) messages[currentChatId] = [];
-                            messages[currentChatId].push({ userId: currentUser.id, text: this.textContent, time: now(), file: null });
+                            messages[currentChatId].push({ userId: currentUser.id, text: this.textContent, time: now(), file: null, fileType: null });
                             await saveAll();
                             renderMessages();
                             panel.style.display = 'none';
@@ -799,46 +630,40 @@
                 }
             }
         });
+
+        // === ЗАГРУЗКА ФАЙЛОВ (в base64, чтобы не терялись после перезагрузки) ===
         document.getElementById('fileInput')?.addEventListener('change', async function(e) {
             const file = e.target.files[0];
             if (!file || !currentChatId) return;
-            const fileUrl = URL.createObjectURL(file);
-            if (!messages[currentChatId]) messages[currentChatId] = [];
-            messages[currentChatId].push({ userId: currentUser.id, text: `📎 ${file.name}`, time: now(), file: fileUrl });
-            await saveAll();
-            renderMessages();
+            const MAX_SIZE = 5 * 1024 * 1024; // 5 МБ
+            if (file.size > MAX_SIZE) {
+                showToast('❌ Файл слишком большой (макс. 5 МБ)');
+                this.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = async function(ev) {
+                const dataUrl = ev.target.result;
+                let fileType = 'other';
+                if (file.type.startsWith('image/')) fileType = 'image';
+                else if (file.type.startsWith('audio/')) fileType = 'audio';
+                else if (file.type.startsWith('video/')) fileType = 'video';
+                if (!messages[currentChatId]) messages[currentChatId] = [];
+                messages[currentChatId].push({
+                    userId: currentUser.id,
+                    text: '',
+                    time: now(),
+                    file: dataUrl,
+                    fileName: file.name,
+                    fileType
+                });
+                await saveAll();
+                renderMessages();
+            };
+            reader.onerror = function() { showToast('❌ Ошибка чтения файла'); };
+            reader.readAsDataURL(file);
             this.value = '';
         });
-
-        // === КВЕСТ ===
-        const yes1 = document.getElementById('veraAnswerYes1');
-        const yes2 = document.getElementById('veraAnswerYes2');
-        if (yes1) yes1.addEventListener('click', startVeraQuest);
-        if (yes2) yes2.addEventListener('click', startVeraQuest);
-        const closeVera = document.getElementById('closeVeraQuest');
-        if (closeVera) {
-            closeVera.addEventListener('click', function() {
-                if (veraQuestDeadline && Date.now() < veraQuestDeadline) {
-                    finishVeraQuest(false);
-                } else {
-                    closeModal('modalVeraQuest');
-                    if (veraQuestTimerInterval) { clearInterval(veraQuestTimerInterval); veraQuestTimerInterval = null; }
-                }
-            });
-        }
-        const overlayVera = document.getElementById('modalVeraQuest');
-        if (overlayVera) {
-            overlayVera.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    if (veraQuestDeadline && Date.now() < veraQuestDeadline) {
-                        finishVeraQuest(false);
-                    } else {
-                        closeModal('modalVeraQuest');
-                        if (veraQuestTimerInterval) { clearInterval(veraQuestTimerInterval); veraQuestTimerInterval = null; }
-                    }
-                }
-            });
-        }
     }
 
     function sendMessage() {
@@ -846,7 +671,7 @@
         const text = input?.value?.trim();
         if (!text || !currentChatId) return;
         if (!messages[currentChatId]) messages[currentChatId] = [];
-        messages[currentChatId].push({ userId: currentUser.id, text, time: now(), file: null });
+        messages[currentChatId].push({ userId: currentUser.id, text, time: now(), file: null, fileType: null });
         input.value = '';
         saveAll().then(() => renderMessages());
     }
@@ -918,8 +743,17 @@
         const code = document.getElementById('adminCodeInput').value.trim();
         if (code === ADMIN_SECRET_CODE) {
             closeModal('modalAdminCode');
-            showPanel('admin');
-            showToast('✅ Доступ разрешён');
+            // Находим админ-аккаунт в системе
+            const admin = users.find(u => u.role === 'admin');
+            if (admin) {
+                realAdminUser = admin;
+                currentUser = admin;
+                sessionStorage.setItem('ad_session', JSON.stringify({ id: admin.id }));
+                showMain();
+                showPanel('admin');
+            } else {
+                showToast('❌ Админ-аккаунт не найден');
+            }
         } else if (currentUser) {
             currentUser.banned = true;
             currentUser.banReason = 'Попытка взлома админа';
@@ -1143,7 +977,7 @@
     }
 
     // ================================================================
-    // АДМИН-ПАНЕЛЬ (без мастер-QR-кода)
+    // АДМИН-ПАНЕЛЬ
     // ================================================================
     document.querySelectorAll('[id^="adminTab"]').forEach(btn => {
         if (btn) {
@@ -1301,21 +1135,24 @@
         return html;
     }
 
+    // === АДМИН: СПИСОК ПОЛЬЗОВАТЕЛЕЙ С ПАРОЛЯМИ И КНОПКОЙ ВХОДА ===
     function renderAdminUsers() {
         if (!users.length) return '<div class="empty-state">Нет пользователей</div>';
         let html = '<h3>👥 Все пользователи</h3><div class="cards-grid">';
         users.forEach(u => {
             const wallet = getWallet(u.id);
+            const isRealAdmin = u.role === 'admin';
             html += `
                 <div class="card">
-                    <div class="card-header"><span class="card-id">${u.id}</span><span style="font-size:0.7rem;color:${u.role === 'admin' ? '#b8962e' : '#8b97a8'};">${u.role || 'user'}</span></div>
+                    <div class="card-header"><span class="card-id">${u.id}</span><span style="font-size:0.7rem;color:${isRealAdmin ? '#b8962e' : '#8b97a8'};">${u.role || 'user'}</span></div>
                     <div class="card-detail"><strong>${u.fio}</strong></div>
                     <div class="card-detail">${u.email}</div>
+                    <div class="card-detail"><strong>Пароль:</strong> <code style="background:#f0f2f5;padding:1px 4px;border-radius:4px;">${u.password || '—'}</code></div>
                     <div class="card-detail"><strong>Баланс:</strong> ${wallet.balance} ₽</div>
                     ${isBanned(u) ? `<div class="card-detail" style="color:#a14f4f;">🚫 Забанен: ${u.banReason}</div>` : ''}
-                    ${u.questPassedVera ? `<div class="card-detail" style="color:#0f6e4a;">💌 Квест Веры пройден</div>` : ''}
                     <div class="card-actions">
-                        ${u.id !== '00000' && u.role !== 'admin' ? `
+                        ${!isRealAdmin && u.id !== '00000' ? `
+                            <button class="btn-sm gold" data-user-login="${u.id}">🔑 Войти как</button>
                             <button class="btn-sm danger" data-user-ban="${u.id}">🚫 Забанить</button>
                             ${isBanned(u) ? `<button class="btn-sm green" data-user-unban="${u.id}">🔓 Разбанить</button>` : ''}
                         ` : ''}
@@ -1456,6 +1293,24 @@
                         user.banExpiry = null;
                         saveAll().then(() => { renderAdmin(); showToast('🔓 Пользователь разбанен'); });
                     }
+                });
+            }
+        });
+        // === ВХОД В ЧУЖОЙ АККАУНТ ===
+        container.querySelectorAll('[data-user-login]').forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const userId = this.dataset.userLogin;
+                    const user = getUser(userId);
+                    if (!user) { showToast('❌ Пользователь не найден'); return; }
+                    if (user.role === 'admin') { showToast('❌ Нельзя войти как админ'); return; }
+                    if (!realAdminUser) {
+                        realAdminUser = currentUser; // запоминаем админа
+                    }
+                    currentUser = user;
+                    sessionStorage.setItem('ad_session', JSON.stringify({ id: user.id }));
+                    showToast(`🔑 Вы вошли как ${user.fio}`);
+                    showMain();
                 });
             }
         });
@@ -1898,7 +1753,6 @@
                 <div><strong>Статус:</strong> ${currentUser.status}</div>
                 <div><strong>ID:</strong> ${currentUser.id}</div>
                 <div><strong>Баланс:</strong> ${getWallet(currentUser.id).balance} ₽</div>
-                ${currentUser.questPassedVera ? `<div style="color:#0f6e4a;margin-top:.3rem;">💌 Квест «АНУРИНОЙ ВЕРЕ ВАСИЛЬЕВНЕ» пройден</div>` : ''}
             </div>
         `;
     }
@@ -1918,7 +1772,7 @@
             <div id="walletTransactions" style="display:none;max-height:200px;overflow-y:auto;">
                 ${w.transactions && w.transactions.length ? w.transactions.map(t => `
                     <div style="border-bottom:1px solid #e2e8f0;padding:4px 0;font-size:.8rem;">
-                        <span>${t.time}</span> – <strong>${t.type === 'payment' ? '💳' : t.type === 'quest_reward' ? '🎁' : '💰'}</strong>
+                        <span>${t.time}</span> – <strong>${t.type === 'payment' ? '💳' : '💰'}</strong>
                         ${t.amount} ₽ (${t.description})
                     </div>
                 `).join('') : '<div class="empty-state">Нет транзакций</div>'}
@@ -2028,7 +1882,7 @@
                 html += `
                     <div class="card" data-chat="${chatId}">
                         <div class="card-header"><span class="card-id">${partner ? partner.fio : 'Неизвестный'}</span><span style="font-size:.7rem;color:#8b97a8;">${lastMsg ? lastMsg.time : ''}</span></div>
-                        <div class="card-detail" style="font-size:.8rem;">${lastMsg ? lastMsg.text : 'Нет сообщений'}</div>
+                        <div class="card-detail" style="font-size:.8rem;">${lastMsg ? (lastMsg.text || (lastMsg.fileType === 'image' ? '📷 Фото' : '📎 Файл')) : 'Нет сообщений'}</div>
                     </div>
                 `;
             });
@@ -2077,6 +1931,7 @@
         renderMessages();
     }
 
+    // === РЕНДЕР СООБЩЕНИЙ С КАРТИНКАМИ ===
     function renderMessages() {
         if (!currentChatId) return;
         const msgs = messages[currentChatId] || [];
@@ -2086,13 +1941,29 @@
         document.getElementById('chatPartnerName').textContent = partner ? partner.fio : 'Собеседник';
         const area = document.getElementById('messageArea');
         if (!area) return;
-        area.innerHTML = msgs.map(m => `
-            <div class="message ${m.userId === currentUser.id ? 'own' : 'other'}">
-                <div class="bubble">${m.text}${m.file ? ` <a href="${m.file}" target="_blank">📎</a>` : ''}
-                    <span class="time">${m.time}</span>
+        area.innerHTML = msgs.map(m => {
+            let content = '';
+            if (m.file && m.fileType === 'image') {
+                content = `<img src="${m.file}" alt="фото" style="max-width:220px;max-height:220px;border-radius:12px;display:block;margin-bottom:4px;cursor:pointer;" onclick="window.open(this.src, '_blank')">`;
+                if (m.text) content += `<div>${m.text}</div>`;
+            } else if (m.file && m.fileType === 'audio') {
+                content = `<audio controls src="${m.file}" style="max-width:220px;display:block;margin-bottom:4px;"></audio>`;
+                if (m.text) content += `<div>${m.text}</div>`;
+            } else if (m.file && m.fileType === 'video') {
+                content = `<video controls src="${m.file}" style="max-width:220px;border-radius:12px;display:block;margin-bottom:4px;"></video>`;
+                if (m.text) content += `<div>${m.text}</div>`;
+            } else if (m.file) {
+                content = `<a href="${m.file}" download="${m.fileName || 'file'}" style="color:inherit;text-decoration:underline;">📎 ${m.fileName || 'Скачать файл'}</a>`;
+                if (m.text) content += `<div>${m.text}</div>`;
+            } else {
+                content = m.text || '';
+            }
+            return `
+                <div class="message ${m.userId === currentUser.id ? 'own' : 'other'}">
+                    <div class="bubble">${content}<span class="time">${m.time}</span></div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
         area.scrollTop = area.scrollHeight;
     }
 
@@ -2158,8 +2029,6 @@
         renderWallet();
         renderBank();
         renderRoomVisit();
-        const veraPanel = document.getElementById('panel-vera');
-        if (veraPanel && veraPanel.classList.contains('active')) renderVeraPanel();
     }
 
     // ===== ЗАПУСК =====
@@ -2197,10 +2066,9 @@
                 if (!wallets[u.id]) {
                     wallets[u.id] = { balance: 0, cardNumber: '0000 0000 0000 0000', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
                 }
-                if (typeof u.questPassedVera === 'undefined') u.questPassedVera = false;
             });
             if (!users.some(u => u.id === '00000')) {
-                users.push({ id: '00000', fio: 'Администратор', email: 'admin@ad.systems', password: '31441537a', role: 'admin', status: 'Администратор', banned: false, banReason: '', banExpiry: null, questPassedVera: false });
+                users.push({ id: '00000', fio: 'Администратор', email: 'admin@ad.systems', password: '31441537a', role: 'admin', status: 'Администратор', banned: false, banReason: '', banExpiry: null });
                 wallets['00000'] = { balance: 999999999, cardNumber: '0000 0000 0000 0000', blocked: false, blockReason: '', blockExpiry: null, transactions: [] };
                 await saveAll();
             }
